@@ -21,7 +21,6 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Level {
 
     private Level(){
-
     }
 
     private static TiledMap tiledMap;
