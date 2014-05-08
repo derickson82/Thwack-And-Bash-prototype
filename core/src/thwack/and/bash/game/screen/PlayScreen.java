@@ -8,7 +8,7 @@ import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.level.Level;
-import thwack.and.bash.game.util.Util;
+import thwack.and.bash.game.util.Util.Meters;
 import thwack.and.bash.game.util.Util.Pixels;
 
 import com.badlogic.gdx.Gdx;
@@ -39,16 +39,17 @@ public class PlayScreen implements GameScreen{
 	player.update(delta);
 	bat.update(delta);
 	world.step(1 / 60f, 6, 2);
+	Game.getCamera().position.set(Meters.toPixels(player.getX()), Meters.toPixels(player.getY()), 0);
     }
 
     @Override
     public void render(SpriteBatch batch) {
-	batch.begin();
 	Level.render();
+	batch.begin();
 	player.draw(batch);
 	bat.draw(batch);
 	batch.end();
-	box2DRenderer.render(world, Game.getCamera().combined.scl(Util.PIXELS_PER_METER));
+	//box2DRenderer.render(world, Game.getCamera().combined.scl(Util.PIXELS_PER_METER));
     }
 
     @Override

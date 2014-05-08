@@ -51,4 +51,12 @@ public abstract class Entity {
 	return COLLISION_BODY.getFixture();
     }
 
+    public float getX(){
+	return getBody().getPosition().x;
+    }
+
+    public float getY(){
+	return getBody().getPosition().y;
+    }
+
 }
