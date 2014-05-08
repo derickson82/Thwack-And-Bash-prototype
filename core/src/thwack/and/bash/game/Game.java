@@ -1,14 +1,18 @@
 package thwack.and.bash.game;
 
 import thwack.and.bash.game.screen.GameScreen;
-import thwack.and.bash.game.screen.PlayScreen;
+import thwack.and.bash.game.screen.MainMenuScreen;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 
 public class Game extends ApplicationAdapter{
@@ -17,12 +21,26 @@ public class Game extends ApplicationAdapter{
 
     private static SpriteBatch batch;
 
+    //UI STUFF
+    private static BitmapFont fontScalaSansCaps;
+    private static BitmapFont fontScalaSansCond;
+    private static BitmapFont fontScalaSansBlack;
+
+    private static TextureAtlas mainMenuAtlas;
+    private static Skin mainMenuSkin;
+
+    private static TextButtonStyle blueTextButtonStyle;
+
     public static OrthographicCamera getCamera(){
 	return camera;
     }
 
     public static SpriteBatch getBatch(){
 	return batch;
+    }
+
+    public static TextButtonStyle getBlueTextButtonStyle(){
+	return blueTextButtonStyle;
     }
 
     private static GameScreen screen;
@@ -78,7 +96,16 @@ public class Game extends ApplicationAdapter{
 	camera = new OrthographicCamera();
 	camera.setToOrtho(false, 600, 600);
 
-	setScreen(new PlayScreen());
+	mainMenuAtlas = new TextureAtlas(Gdx.files.internal("textureatlas/UI/output/mainMenuAtlas.atlas"));
+	mainMenuSkin = new Skin(mainMenuAtlas);
+
+	blueTextButtonStyle = new TextButtonStyle();
+	blueTextButtonStyle.down = mainMenuSkin.getDrawable("BlueButtonDown");
+	blueTextButtonStyle.over = mainMenuSkin.getDrawable("BlueButtonOver");
+	blueTextButtonStyle.up = mainMenuSkin.getDrawable("BlueButtonUp");
+
+
+	setScreen(new MainMenuScreen());
     }
 
     public void update(){
