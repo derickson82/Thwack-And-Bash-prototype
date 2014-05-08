@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="tileset 1" tilewidth="32" tileheight="32">
-  <image source="../Documents/GitHub/thwack/android/assets/tileset 1.png" width="512" height="512"/>
+ <tileset firstgid="1" name="tileset1" tilewidth="32" tileheight="32">
+  <image source="tileset1.png" width="512" height="512"/>
  </tileset>
  <layer name="ground" width="40" height="40" visible="0">
   <data>

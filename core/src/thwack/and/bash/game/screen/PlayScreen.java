@@ -7,6 +7,7 @@ import thwack.and.bash.game.animation.types.PlayerAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
+import thwack.and.bash.game.level.Level;
 import thwack.and.bash.game.util.Util;
 import thwack.and.bash.game.util.Util.Pixels;
 
@@ -43,6 +44,7 @@ public class PlayScreen implements GameScreen{
     @Override
     public void render(SpriteBatch batch) {
 	batch.begin();
+	Level.render();
 	player.draw(batch);
 	bat.draw(batch);
 	batch.end();
@@ -56,12 +58,14 @@ public class PlayScreen implements GameScreen{
 
     @Override
     public void show() {
+
 	Game.setClearColor(Color.BLUE);
 
 	box2DRenderer = new Box2DDebugRenderer();
 
 	world = new World(new Vector2(0,0), false);
 
+	Level.load("demo.tmx", world);
 
 	//PLAYER START
 	BodyDef bodyDef = new BodyDef();
@@ -122,7 +126,7 @@ public class PlayScreen implements GameScreen{
 
 	MobAnimation batAnimation = new MobAnimation();
 	batAnimation.beginSettingAnimations();
-	batAnimation.setAnimation(new Animation(.333f, flyingRegionsArray), BatAnimationType.FLYING.ID);
+	batAnimation.setAnimation(new Animation(.1f, flyingRegionsArray), BatAnimationType.FLYING.ID);
 	batAnimation.endSettingAnimations();
 
 	bat = new Bat(batAnimation, collisionBody);

@@ -1,7 +1,7 @@
 package thwack.and.bash.game;
 
 import thwack.and.bash.game.screen.GameScreen;
-import thwack.and.bash.game.screen.MainMenuScreen;
+import thwack.and.bash.game.screen.SplashScreen;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -96,7 +96,7 @@ public class Game extends ApplicationAdapter{
 	batch = new SpriteBatch();
 
 	camera = new OrthographicCamera();
-	camera.setToOrtho(false, 600, 600);
+	camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 	font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
 
@@ -110,7 +110,7 @@ public class Game extends ApplicationAdapter{
 	blueTextButtonStyle.font = font;
 	blueTextButtonStyle.fontColor = Color.BLACK;
 
-	setScreen(new MainMenuScreen());
+	setScreen(new SplashScreen());
     }
 
     public void update(){

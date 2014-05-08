@@ -97,7 +97,7 @@ public class MainMenuScreen implements GameScreen{
 
     @Override
     public void dispose() {
-
+	stage.dispose();
     }
 
 }
