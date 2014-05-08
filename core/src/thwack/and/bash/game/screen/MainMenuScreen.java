@@ -42,10 +42,13 @@ public class MainMenuScreen implements GameScreen{
 	TextButton exit = new TextButton("Exit", Game.getBlueTextButtonStyle());
 
 	Table table = new Table();
+	table.setBounds(0, 0, viewport.getViewportWidth(), viewport.getViewportHeight());
 
-	table.add(play).top();
-	table.add(options).center();
-	table.add(exit).bottom();
+	table.add(play).pad(50);
+	table.row();
+	table.add(options).pad(50);
+	table.row();
+	table.add(exit).pad(50);
 
 	stage.addActor(table);
 

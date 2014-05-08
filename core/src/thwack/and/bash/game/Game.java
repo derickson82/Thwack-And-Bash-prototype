@@ -22,9 +22,7 @@ public class Game extends ApplicationAdapter{
     private static SpriteBatch batch;
 
     //UI STUFF
-    private static BitmapFont fontScalaSansCaps;
-    private static BitmapFont fontScalaSansCond;
-    private static BitmapFont fontScalaSansBlack;
+    private static BitmapFont font;
 
     private static TextureAtlas mainMenuAtlas;
     private static Skin mainMenuSkin;
@@ -41,6 +39,10 @@ public class Game extends ApplicationAdapter{
 
     public static TextButtonStyle getBlueTextButtonStyle(){
 	return blueTextButtonStyle;
+    }
+
+    public static BitmapFont getFont(){
+	return font;
     }
 
     private static GameScreen screen;
@@ -96,6 +98,8 @@ public class Game extends ApplicationAdapter{
 	camera = new OrthographicCamera();
 	camera.setToOrtho(false, 600, 600);
 
+	font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+
 	mainMenuAtlas = new TextureAtlas(Gdx.files.internal("textureatlas/UI/output/mainMenuAtlas.atlas"));
 	mainMenuSkin = new Skin(mainMenuAtlas);
 
@@ -103,7 +107,8 @@ public class Game extends ApplicationAdapter{
 	blueTextButtonStyle.down = mainMenuSkin.getDrawable("BlueButtonDown");
 	blueTextButtonStyle.over = mainMenuSkin.getDrawable("BlueButtonOver");
 	blueTextButtonStyle.up = mainMenuSkin.getDrawable("BlueButtonUp");
-
+	blueTextButtonStyle.font = font;
+	blueTextButtonStyle.fontColor = Color.BLACK;
 
 	setScreen(new MainMenuScreen());
     }
@@ -114,10 +119,10 @@ public class Game extends ApplicationAdapter{
 
     @Override
     public void render(){
-	update();
 	clearScreen();
 	camera.update();
 	batch.setProjectionMatrix(camera.combined);
+	update();
 	screen.render(batch);
     }
 
