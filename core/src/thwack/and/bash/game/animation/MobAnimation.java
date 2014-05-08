@@ -17,6 +17,7 @@ public class MobAnimation {
     private Animation[] animations;
     private TextureRegion currentFrame;
 
+    private int stillFrame = 0;
     private int lastDir;
     private int dir;
     private float stateTime = 0;
@@ -35,7 +36,7 @@ public class MobAnimation {
 	    }
 	    stateTime += delta;
 	} else {
-	    stateTime = 0;
+	    stateTime = stillFrame * animations[dir].frameDuration;
 	}
 	currentFrame = animations[dir].getKeyFrame(stateTime, true);
     }
@@ -51,6 +52,17 @@ public class MobAnimation {
     public void setAnimation(Animation animation, int id){
 	if(addingAnimations) {
 	    animations[id] = animation;
+	} else {
+	    System.err.println("You need to call startAddingAnimations() in MOBAnimations class before you can update it");
+	}
+
+    }
+
+    public void setStillAnimationFrame(int frame){
+	if(addingAnimations) {
+	    stillFrame = frame;
+	} else {
+	    System.err.println("You need to call startAddingAnimations() in MOBAnimations class before you can update it");
 	}
     }
 

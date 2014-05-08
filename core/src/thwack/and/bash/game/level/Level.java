@@ -27,7 +27,7 @@ public class Level {
     private static OrthogonalTiledMapRenderer mapRenderer;
 
     public static void render(){
-	mapRenderer.setView(Game.getCamera().combined, Game.getCamera().position.x - Game.getWidth() / 2, Game.getCamera().position.y - Game.getHeight() / 2, Game.getWidth(), Game.getHeight());
+	mapRenderer.setView(Game.getCamera());
 	mapRenderer.render();
     }
 

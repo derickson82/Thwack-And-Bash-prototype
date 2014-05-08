@@ -2,7 +2,8 @@ package thwack.and.bash.game.util;
 
 public class Util {
 
-    public static final float PIXELS_PER_METER = 35f;
+    //EVERY TILE IS ONE METER
+    public static final float PIXELS_PER_METER = 32f;
 
     public static final class Pixels {
 

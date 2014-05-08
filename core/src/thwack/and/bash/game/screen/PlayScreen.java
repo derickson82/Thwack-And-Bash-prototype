@@ -8,12 +8,12 @@ import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.level.Level;
-import thwack.and.bash.game.util.Util;
 import thwack.and.bash.game.util.Util.Meters;
 import thwack.and.bash.game.util.Util.Pixels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,6 +35,8 @@ public class PlayScreen implements GameScreen{
 
     private Box2DDebugRenderer box2DRenderer;
 
+    private FPSLogger fpsLogger;
+
     @Override
     public void update(float delta) {
 	player.update(delta);
@@ -45,12 +47,13 @@ public class PlayScreen implements GameScreen{
 
     @Override
     public void render(SpriteBatch batch) {
+	fpsLogger.log();
 	Level.render();
 	batch.begin();
 	player.draw(batch);
 	bat.draw(batch);
 	batch.end();
-	box2DRenderer.render(world, Game.getCamera().combined.scl(Util.PIXELS_PER_METER));
+	//box2DRenderer.render(world, Game.getCamera().combined.scl(Util.PIXELS_PER_METER));
     }
 
     @Override
@@ -61,13 +64,15 @@ public class PlayScreen implements GameScreen{
     @Override
     public void show() {
 
+	fpsLogger = new FPSLogger();
+
 	Game.setClearColor(Color.BLUE);
 
 	box2DRenderer = new Box2DDebugRenderer();
 
 	world = new World(new Vector2(0,0), false);
 
-	Level.load("demo.tmx", world);
+	Level.load("demo2.tmx", world);
 
 	//PLAYER START
 	BodyDef bodyDef = new BodyDef();
@@ -105,6 +110,7 @@ public class PlayScreen implements GameScreen{
 	playerAnimation.setAnimation(new Animation(.333f, leftRegionsArray), PlayerAnimationType.LEFT.ID);
 	playerAnimation.setAnimation(new Animation(.333f, downRegionsArray), PlayerAnimationType.DOWN.ID);
 	playerAnimation.setAnimation(new Animation(.333f, rightRegionsArray), PlayerAnimationType.RIGHT.ID);
+	playerAnimation.setStillAnimationFrame(1);
 	playerAnimation.endSettingAnimations();
 
 	player = new Player(playerAnimation, collisionBody);
@@ -114,7 +120,7 @@ public class PlayScreen implements GameScreen{
 	//BAT START
 	bodyDef = new BodyDef();
 	bodyDef.position.x = 3;
-	bodyDef.position.y = 3;
+	bodyDef.position.y = 15;
 	bodyDef.type = BodyType.KinematicBody; //So it doesn't fly away
 	shape = new PolygonShape();
 	shape.setAsBox(Pixels.toMeters(64 / 2), Pixels.toMeters(62 / 2));
@@ -129,6 +135,7 @@ public class PlayScreen implements GameScreen{
 	MobAnimation batAnimation = new MobAnimation();
 	batAnimation.beginSettingAnimations();
 	batAnimation.setAnimation(new Animation(.1f, flyingRegionsArray), BatAnimationType.FLYING.ID);
+	batAnimation.setStillAnimationFrame(1);
 	batAnimation.endSettingAnimations();
 
 	bat = new Bat(batAnimation, collisionBody);
