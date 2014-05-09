@@ -28,7 +28,6 @@ public class Bat extends Mob{
 	if(time >= 1) {
 	    updateAI();
 	    time = 0;
-	    System.out.println(ai.getState());
 	}
 	if(ai.getState() == BatState.FLYING_AND_MOVING.STATE){
 	    move(movement);

@@ -8,6 +8,7 @@ import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.level.Level;
+import thwack.and.bash.game.ui.GameUI;
 import thwack.and.bash.game.util.Util.Meters;
 import thwack.and.bash.game.util.Util.Pixels;
 
@@ -32,6 +33,7 @@ public class PlayScreen implements GameScreen{
     private Bat bat;
     private Player player;
     private World world;
+    private GameUI gameUI;
 
     private Box2DDebugRenderer box2DRenderer;
 
@@ -53,7 +55,9 @@ public class PlayScreen implements GameScreen{
 	player.draw(batch);
 	bat.draw(batch);
 	batch.end();
+	gameUI.draw();
 	//box2DRenderer.render(world, Game.getCamera().combined.scl(Util.PIXELS_PER_METER));
+
     }
 
     @Override
@@ -139,6 +143,8 @@ public class PlayScreen implements GameScreen{
 	batAnimation.endSettingAnimations();
 
 	bat = new Bat(batAnimation, collisionBody);
+
+	gameUI = new GameUI();
 
     }
 

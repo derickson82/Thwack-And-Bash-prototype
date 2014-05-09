@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
@@ -27,6 +28,7 @@ public class Game extends ApplicationAdapter{
     private static TextureAtlas mainMenuAtlas;
     private static Skin mainMenuSkin;
 
+    private static ImageButtonStyle slotImageButtonStyle;
     private static TextButtonStyle blueTextButtonStyle;
 
     public static OrthographicCamera getCamera(){
@@ -35,6 +37,10 @@ public class Game extends ApplicationAdapter{
 
     public static SpriteBatch getBatch(){
 	return batch;
+    }
+
+    public static ImageButtonStyle getSlotImageButtonStyle(){
+	return slotImageButtonStyle;
     }
 
     public static TextButtonStyle getBlueTextButtonStyle(){
@@ -109,6 +115,11 @@ public class Game extends ApplicationAdapter{
 	blueTextButtonStyle.up = mainMenuSkin.getDrawable("BlueButtonUp");
 	blueTextButtonStyle.font = font;
 	blueTextButtonStyle.fontColor = Color.BLACK;
+
+	slotImageButtonStyle = new ImageButtonStyle();
+	slotImageButtonStyle.up = mainMenuSkin.getDrawable("BlueButtonUp");
+	slotImageButtonStyle.over = mainMenuSkin.getDrawable("BlueButtonOver");
+	slotImageButtonStyle.disabled = mainMenuSkin.getDrawable("BlueButtonDown");
 
 	setScreen(new SplashScreen());
     }
