@@ -17,7 +17,6 @@ public abstract class Mob extends Entity{
 
     protected MobAnimation mobAnimation;
 
-    //TODO: ADD MOVEMENT TO BOX2D BODY
     public void move(Vector2 movement){
 	getBody().setLinearVelocity(movement);
     }

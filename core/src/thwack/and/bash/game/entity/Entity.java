@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
  * 
  * TODO: Finish entity
  * TODO: add box2d
+ * TODO: Collision handler, if a entity touches another entity
  */
 public abstract class Entity {
 
@@ -34,6 +35,7 @@ public abstract class Entity {
     }
 
     public abstract void update(float delta);
+    // public abstract void interactionWith(Entity e);
 
     public void setPosition(Vector2 pos){
 	getBody().setTransform(pos, getBody().getAngle());
