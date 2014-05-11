@@ -9,7 +9,11 @@ public interface GameScreen{
 
     public void update(float delta);
 
-    public void render (SpriteBatch batch);
+    /*
+     * GameBatch should be everything about the game screen
+     * static batch is the ui around it
+     */
+    public void render (SpriteBatch gameBatch, SpriteBatch staticBatch);
 
     public void resize (int width, int height);
 

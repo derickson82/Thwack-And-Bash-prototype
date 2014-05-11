@@ -13,7 +13,6 @@ import thwack.and.bash.game.util.Util.Meters;
 import thwack.and.bash.game.util.Util.Pixels;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -39,25 +38,37 @@ public class PlayScreen implements GameScreen{
 
     private FPSLogger fpsLogger;
 
+    private Texture background;
+
     @Override
     public void update(float delta) {
 	player.update(delta);
 	bat.update(delta);
 	world.step(1 / 60f, 6, 2);
-	Game.getCamera().position.set(Meters.toPixels(player.getX()), Meters.toPixels(player.getY()), 0);
+	Game.getGameCamera().position.set(Meters.toPixels(player.getX()), (Meters.toPixels(player.getY())), 0);
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch gameBatch, SpriteBatch staticBatch) {
 	fpsLogger.log();
-	Level.render();
-	batch.begin();
-	player.draw(batch);
-	bat.draw(batch);
-	batch.end();
-	gameUI.draw();
-	//box2DRenderer.render(world, Game.getCamera().combined.scl(Util.PIXELS_PER_METER));
 
+	Level.render();
+	gameBatch.begin();
+	player.draw(gameBatch);
+	bat.draw(gameBatch);
+	gameBatch.end();
+
+	staticBatch.begin();
+	drawBackground(staticBatch);
+	staticBatch.end();
+
+	//	gameUI.drawStage();
+	//
+	//	staticBatch.begin();
+	//	gameUI.drawSprites(staticBatch);
+	//	staticBatch.end();
+
+	//box2DRenderer.render(world, Game.getGameCamera().combined.scl(Util.PIXELS_PER_METER));
     }
 
     @Override
@@ -70,8 +81,6 @@ public class PlayScreen implements GameScreen{
 
 	fpsLogger = new FPSLogger();
 
-	Game.setClearColor(Color.BLUE);
-
 	box2DRenderer = new Box2DDebugRenderer();
 
 	world = new World(new Vector2(0,0), false);
@@ -80,8 +89,8 @@ public class PlayScreen implements GameScreen{
 
 	//PLAYER START
 	BodyDef bodyDef = new BodyDef();
-	bodyDef.position.x = Pixels.toMeters(Game.getWidth() / 2);
-	bodyDef.position.y = Pixels.toMeters(Game.getHeight() / 2);
+	bodyDef.position.x = Pixels.toMeters(0); //sets the position of the player
+	bodyDef.position.y = Pixels.toMeters(0);
 	bodyDef.type = BodyType.DynamicBody;
 	PolygonShape shape = new PolygonShape();
 	shape.setAsBox(Pixels.toMeters(35) / 2, Pixels.toMeters(46) / 2);
@@ -125,7 +134,7 @@ public class PlayScreen implements GameScreen{
 	bodyDef = new BodyDef();
 	bodyDef.position.x = 3;
 	bodyDef.position.y = 15;
-	bodyDef.type = BodyType.KinematicBody; //So it doesn't fly away
+	bodyDef.type = BodyType.DynamicBody; //So it doesn't fly away
 	shape = new PolygonShape();
 	shape.setAsBox(Pixels.toMeters(64 / 2), Pixels.toMeters(62 / 2));
 	fixtureDef = new FixtureDef();
@@ -146,6 +155,7 @@ public class PlayScreen implements GameScreen{
 
 	gameUI = new GameUI();
 
+	background = new Texture(Gdx.files.internal("blue_square_menu_background.png"));
     }
 
     @Override
@@ -184,6 +194,11 @@ public class PlayScreen implements GameScreen{
 	    data[i].flip(xMir, yMir);
 	}
 	return data;
+    }
+
+    private void drawBackground(SpriteBatch staticBatch){
+	staticBatch.draw(background, 0, 0 , Game.getWidth(), Game.getHeight() - Game.getGameHeight(), 0, 0, Game.getWidth() / 5, Game.getHeight() - Game.getGameHeight() / 5);
+	staticBatch.draw(background, Game.getGameWidth(), Game.getHeight() - Game.getGameHeight(), Game.getWidth() - Game.getGameWidth(), Game.getHeight() - Game.getGameHeight(), 0, 0, Game.getWidth() - Game.getGameWidth() / 5, Game.getHeight() - Game.getGameHeight() / 5);
     }
 
 }

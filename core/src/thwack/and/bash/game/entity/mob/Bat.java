@@ -43,8 +43,8 @@ public class Bat extends Mob{
 	}
 
 	else if (ai.getState() == BatState.FLYING_AND_MOVING.STATE){
-	    int x = MathUtils.random(0, 1);
-	    int y = MathUtils.random(0, 1);
+	    int x = MathUtils.random(0, 2) - 1;
+	    int y = MathUtils.random(0, 2) - 1;
 	    movement.set(x, y);
 	}
 

@@ -18,9 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class Game extends ApplicationAdapter{
 
-    private static OrthographicCamera camera;
+    private static OrthographicCamera staticCamera;
+    private static OrthographicCamera gameCamera;
 
-    private static SpriteBatch batch;
+    private static SpriteBatch gameBatch;
+    private static SpriteBatch staticBatch;
 
     //UI STUFF
     private static BitmapFont font;
@@ -31,12 +33,20 @@ public class Game extends ApplicationAdapter{
     private static ImageButtonStyle slotImageButtonStyle;
     private static TextButtonStyle blueTextButtonStyle;
 
-    public static OrthographicCamera getCamera(){
-	return camera;
+    public static OrthographicCamera getStaticCamera(){
+	return staticCamera;
     }
 
-    public static SpriteBatch getBatch(){
-	return batch;
+    public static OrthographicCamera getGameCamera(){
+	return gameCamera;
+    }
+
+    public static SpriteBatch getStaticBatch(){
+	return staticBatch;
+    }
+
+    public static SpriteBatch getGameBatch(){
+	return gameBatch;
     }
 
     public static ImageButtonStyle getSlotImageButtonStyle(){
@@ -90,21 +100,34 @@ public class Game extends ApplicationAdapter{
     }
 
     public static float getWidth(){
-	return camera.viewportWidth;
+	return staticCamera.viewportWidth;
     }
 
     public static float getHeight(){
-	return camera.viewportHeight;
+	return staticCamera.viewportHeight;
+    }
+
+    public static float getGameWidth(){
+	return gameCamera.viewportWidth;
+    }
+
+    public static float getGameHeight(){
+	return gameCamera.viewportHeight;
     }
 
     @Override
     public void create(){
-	batch = new SpriteBatch();
+	staticBatch = new SpriteBatch();
+	gameBatch = new SpriteBatch();
 
-	camera = new OrthographicCamera();
-	camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	staticCamera = new OrthographicCamera();
+	staticCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+	gameCamera = new OrthographicCamera();
+	gameCamera.setToOrtho(false, staticCamera.viewportWidth, staticCamera.viewportHeight);
 
 	font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+
 
 	mainMenuAtlas = new TextureAtlas(Gdx.files.internal("textureatlas/UI/output/mainMenuAtlas.atlas"));
 	mainMenuSkin = new Skin(mainMenuAtlas);
@@ -124,17 +147,15 @@ public class Game extends ApplicationAdapter{
 	setScreen(new SplashScreen());
     }
 
-    public void update(){
-	screen.update(Gdx.graphics.getDeltaTime());
-    }
-
     @Override
     public void render(){
 	clearScreen();
-	camera.update();
-	batch.setProjectionMatrix(camera.combined);
-	update();
-	screen.render(batch);
+
+	updateStaticBatch();
+	updateGameBatch();
+
+	screen.update(Gdx.graphics.getDeltaTime());
+	screen.render(gameBatch, staticBatch);
     }
 
     @Override
@@ -155,6 +176,16 @@ public class Game extends ApplicationAdapter{
     @Override
     public void resize(int width, int height){
 	screen.resize(width, height);
+    }
+
+    private void updateStaticBatch(){
+	staticCamera.update();
+	staticBatch.setProjectionMatrix(staticCamera.combined);
+    }
+
+    private void updateGameBatch(){
+	gameCamera.update();
+	gameBatch.setProjectionMatrix(gameCamera.combined);
     }
 
 }

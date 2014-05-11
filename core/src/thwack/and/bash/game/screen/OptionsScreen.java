@@ -10,7 +10,7 @@ public class OptionsScreen implements GameScreen{
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch gameBatch, SpriteBatch staticBatch) {
 
     }
 

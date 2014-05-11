@@ -27,14 +27,18 @@ public class Level {
     private static OrthogonalTiledMapRenderer mapRenderer;
 
     public static void render(){
-	mapRenderer.setView(Game.getCamera());
+	//camera.zoom = 2f;
+	//float quarterHeight = camera.viewportHeight / 4;
+	//TODO: I THINK I'M RENDERING OUTSIDE THE SCREEN; BUT WHAT EVER :)
+	//mapRenderer.setView(camera.combined, camera.position.x - (Game.getWidth() / 2), camera.position.y + quarterHeight - (Game.getHeight() / 2), camera.viewportWidth * camera.zoom, camera.viewportHeight * camera.zoom);
+	mapRenderer.setView(Game.getGameCamera());
 	mapRenderer.render();
     }
 
     public static void load(String tmxLevel, World world){
 	tiledMap = new TmxMapLoader().load("levels/" + tmxLevel);
-	mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, Game.getBatch());
-
+	mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, Game.getGameBatch());
+	Game.getGameCamera().zoom = 0.75f;
 	addBox2D(world);
     }
 
@@ -64,8 +68,6 @@ public class Level {
 	int i = cells.size() - 1;
 	ArrayList<Box2DCell> yCells = new ArrayList<Box2DCell>();
 	while(true){
-	    System.out.println("Cells Size : " + cells.size());
-	    System.out.println("I : " + i);
 	    Box2DCell c = cells.get(0);
 	    float x = c.x;
 	    while(true){

@@ -18,6 +18,10 @@ public abstract class Mob extends Entity{
     protected MobAnimation mobAnimation;
 
     public void move(Vector2 movement){
+	if(movement.x != 0 && movement.y != 0){
+	    movement.x = movement.x * 0.75f;
+	    movement.y = movement.y * 0.75f;
+	}
 	getBody().setLinearVelocity(movement);
     }
 

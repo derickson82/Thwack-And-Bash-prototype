@@ -25,10 +25,10 @@ public class SplashScreen implements GameScreen{
     }
 
     @Override
-    public void render(SpriteBatch batch) {
-	batch.begin();
-	batch.draw(cdiLogo, Game.getWidth() / 2 - cdiLogo.getWidth() / 2, Game.getHeight() / 2 - cdiLogo.getHeight() / 2);
-	batch.end();
+    public void render(SpriteBatch gameBatch, SpriteBatch staticBatch) {
+	staticBatch.begin();
+	staticBatch.draw(cdiLogo, Game.getWidth() / 2 - cdiLogo.getWidth() / 2, Game.getHeight() / 2 - cdiLogo.getHeight() / 2);
+	staticBatch.end();
     }
 
     @Override
