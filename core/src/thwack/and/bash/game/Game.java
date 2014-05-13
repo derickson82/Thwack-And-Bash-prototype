@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -18,174 +19,160 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class Game extends ApplicationAdapter{
 
-    private static OrthographicCamera staticCamera;
-    private static OrthographicCamera gameCamera;
+	private static OrthographicCamera gameCamera;
+	private static OrthographicCamera screenCamera;
 
-    private static SpriteBatch gameBatch;
-    private static SpriteBatch staticBatch;
+	private static SpriteBatch batch;
 
-    //UI STUFF
-    private static BitmapFont font;
+	private static Rectangle mapViewport;
 
-    private static TextureAtlas mainMenuAtlas;
-    private static Skin mainMenuSkin;
+	//UI STUFF
+	private static BitmapFont font;
 
-    private static ImageButtonStyle slotImageButtonStyle;
-    private static TextButtonStyle blueTextButtonStyle;
+	private static TextureAtlas mainMenuAtlas;
+	private static Skin mainMenuSkin;
 
-    public static OrthographicCamera getStaticCamera(){
-	return staticCamera;
-    }
+	private static ImageButtonStyle slotImageButtonStyle;
+	private static TextButtonStyle blueTextButtonStyle;
 
-    public static OrthographicCamera getGameCamera(){
-	return gameCamera;
-    }
+	//	public static OrthographicCamera getGameCamera(){
+	//		return gameCamera;
+	//	}
 
-    public static SpriteBatch getStaticBatch(){
-	return staticBatch;
-    }
-
-    public static SpriteBatch getGameBatch(){
-	return gameBatch;
-    }
-
-    public static ImageButtonStyle getSlotImageButtonStyle(){
-	return slotImageButtonStyle;
-    }
-
-    public static TextButtonStyle getBlueTextButtonStyle(){
-	return blueTextButtonStyle;
-    }
-
-    public static BitmapFont getFont(){
-	return font;
-    }
-
-    private static GameScreen screen;
-    private static GameScreen lastScreen;
-    private static GameScreen nextScreen;
-
-    public static void setScreen(GameScreen screen){
-	if(Game.screen != null){
-	    Game.screen.dispose();
-	    Game.lastScreen = Game.screen;
+	public static OrthographicCamera getScreenCamera(){
+		return screenCamera;
 	}
-	Game.screen = screen;
-	Game.screen.show();
-    }
 
-    public static void startLastScreen(){
-	setScreen(lastScreen);
-    }
+	public static SpriteBatch getBatch(){
+		return batch;
+	}
 
-    public static void setNextScreen(GameScreen nextScreen){
-	Game.nextScreen = nextScreen;
-    }
+	public static Rectangle getMapViewport(){
+		return mapViewport;
+	}
 
-    public static void startNextScreen(){
-	setScreen(nextScreen);
-	nextScreen = null;
-    }
+	public static ImageButtonStyle getSlotImageButtonStyle(){
+		return slotImageButtonStyle;
+	}
 
-    public static GameScreen getCurrentScreen(){
-	return screen;
-    }
+	public static TextButtonStyle getBlueTextButtonStyle(){
+		return blueTextButtonStyle;
+	}
 
-    public static void clearScreen(){
-	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }
+	public static BitmapFont getFont(){
+		return font;
+	}
 
-    public static void setClearColor(Color color){
-	Gdx.gl.glClearColor(color.r, color.g, color.b, color.a);
-    }
+	private static GameScreen screen;
+	private static GameScreen lastScreen;
+	private static GameScreen nextScreen;
 
-    public static float getWidth(){
-	return staticCamera.viewportWidth;
-    }
+	public static void setScreen(GameScreen screen){
+		if(Game.screen != null){
+			Game.screen.dispose();
+			Game.lastScreen = Game.screen;
+		}
+		Game.screen = screen;
+		Game.screen.show();
+	}
 
-    public static float getHeight(){
-	return staticCamera.viewportHeight;
-    }
+	public static void startLastScreen(){
+		setScreen(lastScreen);
+	}
 
-    public static float getGameWidth(){
-	return gameCamera.viewportWidth;
-    }
+	public static void setNextScreen(GameScreen nextScreen){
+		Game.nextScreen = nextScreen;
+	}
 
-    public static float getGameHeight(){
-	return gameCamera.viewportHeight;
-    }
+	public static void startNextScreen(){
+		setScreen(nextScreen);
+		nextScreen = null;
+	}
 
-    @Override
-    public void create(){
-	staticBatch = new SpriteBatch();
-	gameBatch = new SpriteBatch();
+	public static GameScreen getCurrentScreen(){
+		return screen;
+	}
 
-	staticCamera = new OrthographicCamera();
-	staticCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	public static void clearScreen(){
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	}
 
-	gameCamera = new OrthographicCamera();
-	gameCamera.setToOrtho(false, staticCamera.viewportWidth, staticCamera.viewportHeight);
+	public static void setClearColor(Color color){
+		Gdx.gl.glClearColor(color.r, color.g, color.b, color.a);
+	}
 
-	font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+	public static float getWidth(){
+		return screenCamera.viewportWidth;
+	}
+
+	public static float getHeight(){
+		return screenCamera.viewportHeight;
+	}
 
 
-	mainMenuAtlas = new TextureAtlas(Gdx.files.internal("textureatlas/UI/output/mainMenuAtlas.atlas"));
-	mainMenuSkin = new Skin(mainMenuAtlas);
+	@Override
+	public void create(){
+		batch = new SpriteBatch();
 
-	blueTextButtonStyle = new TextButtonStyle();
-	blueTextButtonStyle.down = mainMenuSkin.getDrawable("BlueButtonDown");
-	blueTextButtonStyle.over = mainMenuSkin.getDrawable("BlueButtonOver");
-	blueTextButtonStyle.up = mainMenuSkin.getDrawable("BlueButtonUp");
-	blueTextButtonStyle.font = font;
-	blueTextButtonStyle.fontColor = Color.BLACK;
+		screenCamera = new OrthographicCamera();
+		screenCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-	slotImageButtonStyle = new ImageButtonStyle();
-	slotImageButtonStyle.up = mainMenuSkin.getDrawable("BlueButtonUp");
-	slotImageButtonStyle.over = mainMenuSkin.getDrawable("BlueButtonOver");
-	slotImageButtonStyle.disabled = mainMenuSkin.getDrawable("BlueButtonDown");
+		mapViewport = new Rectangle(1f / 8f * getWidth(), 1f / 8f * getHeight(), 6f / 8f * getWidth(), 6f / 8f * getHeight());
 
-	setScreen(new SplashScreen());
-    }
+		gameCamera = new OrthographicCamera();
+		gameCamera.setToOrtho(false, getWidth(), getHeight());
 
-    @Override
-    public void render(){
-	clearScreen();
+		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
 
-	updateStaticBatch();
-	updateGameBatch();
 
-	screen.update(Gdx.graphics.getDeltaTime());
-	screen.render(gameBatch, staticBatch);
-    }
+		mainMenuAtlas = new TextureAtlas(Gdx.files.internal("textureatlas/UI/output/mainMenuAtlas.atlas"));
+		mainMenuSkin = new Skin(mainMenuAtlas);
 
-    @Override
-    public void dispose(){
-	screen.dispose();
-    }
+		blueTextButtonStyle = new TextButtonStyle();
+		blueTextButtonStyle.down = mainMenuSkin.getDrawable("BlueButtonDown");
+		blueTextButtonStyle.over = mainMenuSkin.getDrawable("BlueButtonOver");
+		blueTextButtonStyle.up = mainMenuSkin.getDrawable("BlueButtonUp");
+		blueTextButtonStyle.font = font;
+		blueTextButtonStyle.fontColor = Color.BLACK;
 
-    @Override
-    public void resume(){
-	screen.resume();
-    }
+		slotImageButtonStyle = new ImageButtonStyle();
+		slotImageButtonStyle.up = mainMenuSkin.getDrawable("BlueButtonUp");
+		slotImageButtonStyle.over = mainMenuSkin.getDrawable("BlueButtonOver");
+		slotImageButtonStyle.disabled = mainMenuSkin.getDrawable("BlueButtonDown");
 
-    @Override
-    public void pause(){
-	screen.pause();
-    }
+		setScreen(new SplashScreen());
+	}
 
-    @Override
-    public void resize(int width, int height){
-	screen.resize(width, height);
-    }
+	@Override
+	public void render(){
+		clearScreen();
 
-    private void updateStaticBatch(){
-	staticCamera.update();
-	staticBatch.setProjectionMatrix(staticCamera.combined);
-    }
+		gameCamera.update();
+		screenCamera.update();
+		batch.setProjectionMatrix(screenCamera.combined);
 
-    private void updateGameBatch(){
-	gameCamera.update();
-	gameBatch.setProjectionMatrix(gameCamera.combined);
-    }
+		screen.update(Gdx.graphics.getDeltaTime());
+		screen.render(batch);
+	}
+
+	@Override
+	public void dispose(){
+		screen.dispose();
+	}
+
+	@Override
+	public void resume(){
+		screen.resume();
+	}
+
+	@Override
+	public void pause(){
+		screen.pause();
+	}
+
+	@Override
+	public void resize(int width, int height){
+		screen.resize(width, height);
+	}
 
 }
