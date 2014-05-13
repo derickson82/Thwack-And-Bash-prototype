@@ -46,13 +46,14 @@ public class PlayScreen implements GameScreen{
 	player.update(delta);
 	bat.update(delta);
 	world.step(1 / 60f, 6, 2);
+
 	Game.getGameCamera().position.set(Meters.toPixels(player.getX()), Meters.toPixels(player.getY()), 0);
     }
 
     @Override
     public void render(SpriteBatch batch) {
-
 	Level.render();
+	batch.setProjectionMatrix(Game.getGameCamera().combined);
 	batch.begin();
 	player.draw(batch);
 	bat.draw(batch);
@@ -65,7 +66,6 @@ public class PlayScreen implements GameScreen{
 	//	staticBatch.begin();
 	//	gameUI.drawSprites(staticBatch);
 	//	staticBatch.end();
-
 	box2DRenderer.render(world, Game.getGameCamera().combined.scl(Util.PIXELS_PER_METER));
     }
 

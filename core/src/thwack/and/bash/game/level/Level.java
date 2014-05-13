@@ -35,15 +35,19 @@ public class Level {
 	mapRenderer.setView(Game.getGameCamera());
 	mapRenderer.render();
 	Gdx.gl.glViewport(0, 0, (int)Game.getWidth(), (int)Game.getHeight());
+	Game.getBatch().setProjectionMatrix(Game.getScreenCamera().combined);
     }
+
 
     public static void load(String tmxLevel, World world){
 	tiledMap = new TmxMapLoader().load("levels/" + tmxLevel);
-	mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+	mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, Game.getBatch());
 	addBox2D(world);
     }
 
     private static void addBox2D(World world){
+	float scaleX = Game.getGameCamera().viewportWidth / Game.getWidth();
+	float scaleY = Game.getGameCamera().viewportHeight / Game.getHeight();
 	float tileSize = 0;
 	ArrayList<Box2DCell> cells = new ArrayList<Box2DCell>();
 	MapLayer mapLayer = tiledMap.getLayers().get("collision");
@@ -84,12 +88,12 @@ public class Level {
 	    float x2 = x - c.x + 1;
 	    if(x2 - 1 >= 1){
 		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.x = Pixels.toMeters(c.x * tileSize + x2 * tileSize / 2);
-		bodyDef.position.y = Pixels.toMeters(c.y * tileSize + tileSize / 2);
+		bodyDef.position.x = Pixels.toMeters(c.x * tileSize + x2 * tileSize / 2) * scaleX;
+		bodyDef.position.y = Pixels.toMeters(c.y * tileSize + tileSize / 2) * scaleY;
 		bodyDef.type = BodyType.StaticBody;
 		Body body = world.createBody(bodyDef);
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(Pixels.toMeters(x2 * tileSize) / 2, Pixels.toMeters(tileSize) / 2);
+		shape.setAsBox(Pixels.toMeters(x2 * tileSize / 2) * scaleX, Pixels.toMeters(tileSize / 2) * scaleY);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.friction = 0;
@@ -126,12 +130,12 @@ public class Level {
 		y2 = 1;
 	    }
 	    BodyDef bodyDef = new BodyDef();
-	    bodyDef.position.x = Pixels.toMeters(c.x * tileSize + tileSize / 2);
-	    bodyDef.position.y = Pixels.toMeters(c.y * tileSize + y2 * tileSize / 2);
+	    bodyDef.position.x = Pixels.toMeters(c.x * tileSize + tileSize / 2) * scaleX;
+	    bodyDef.position.y = Pixels.toMeters(c.y * tileSize + y2 * tileSize / 2) * scaleY;
 	    bodyDef.type = BodyType.StaticBody;
 	    Body body = world.createBody(bodyDef);
 	    PolygonShape shape = new PolygonShape();
-	    shape.setAsBox(Pixels.toMeters(tileSize) / 2, Pixels.toMeters(y2 * tileSize) / 2);
+	    shape.setAsBox(Pixels.toMeters(tileSize / 2) * scaleX, Pixels.toMeters(y2 * tileSize / 2) * scaleY);
 	    FixtureDef fixtureDef = new FixtureDef();
 	    fixtureDef.shape = shape;
 	    fixtureDef.friction = 0;
