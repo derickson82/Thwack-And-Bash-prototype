@@ -120,7 +120,8 @@ public class Game extends ApplicationAdapter{
 	mapViewport = new Rectangle(1f / 8f * getWidth(), 1f / 8f * getHeight(), 6f / 8f * getWidth(), 6f / 8f * getHeight());
 
 	gameCamera = new OrthographicCamera();
-	gameCamera.setToOrtho(false, mapViewport.getWidth(), mapViewport.getHeight());
+	//	gameCamera.setToOrtho(false, mapViewport.getWidth(), mapViewport.getHeight());
+	gameCamera.setToOrtho(false, getWidth(), getHeight());
 
 	font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
 

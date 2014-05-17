@@ -10,7 +10,6 @@ import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.level.Level;
 import thwack.and.bash.game.ui.GameUI;
 import thwack.and.bash.game.util.Util;
-import thwack.and.bash.game.util.Util.Meters;
 import thwack.and.bash.game.util.Util.Pixels;
 
 import com.badlogic.gdx.Gdx;
@@ -46,8 +45,6 @@ public class PlayScreen implements GameScreen{
 	player.update(delta);
 	bat.update(delta);
 	world.step(1 / 60f, 6, 2);
-
-	Game.getGameCamera().position.set(Meters.toPixels(player.getX()), Meters.toPixels(player.getY()), 0);
     }
 
     @Override
@@ -85,8 +82,8 @@ public class PlayScreen implements GameScreen{
 
 	//PLAYER START
 	BodyDef bodyDef = new BodyDef();
-	bodyDef.position.x = Pixels.toMeters(0); //sets the position of the player
-	bodyDef.position.y = Pixels.toMeters(0);
+	bodyDef.position.x = Pixels.toMeters(Game.getMapViewport().x + Game.getMapViewport().width / 2); //sets the position of the player
+	bodyDef.position.y = Pixels.toMeters(Game.getMapViewport().y + Game.getMapViewport().height / 2);
 	bodyDef.type = BodyType.DynamicBody;
 	PolygonShape shape = new PolygonShape();
 	shape.setAsBox(Pixels.toMeters(35) / 2, Pixels.toMeters(46) / 2);

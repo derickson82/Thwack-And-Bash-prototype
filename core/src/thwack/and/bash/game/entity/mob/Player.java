@@ -11,6 +11,8 @@ public class Player extends Mob{
 
     public Player(MobAnimation animation, CollisionBody collisionBody) {
 	super(animation, collisionBody);
+	collisionBody.getBody().setUserData("player");
+	collisionBody.getFixture().setUserData("player");
     }
 
 
