@@ -23,7 +23,7 @@ public class MainMenuScreen implements GameScreen{
     }
 
     @Override
-    public void render(SpriteBatch gameBatch, SpriteBatch staticBatch) {
+    public void render(SpriteBatch batch) {
 	stage.draw();
     }
 
@@ -34,8 +34,8 @@ public class MainMenuScreen implements GameScreen{
 
     @Override
     public void show() {
-	viewport = new ScreenViewport(Game.getStaticCamera());
-	stage = new Stage(viewport, Game.getStaticBatch());
+	viewport = new ScreenViewport(Game.getScreenCamera());
+	stage = new Stage(viewport, Game.getBatch());
 
 	TextButton play = new TextButton("Play", Game.getBlueTextButtonStyle());
 	TextButton options = new TextButton("Options", Game.getBlueTextButtonStyle());

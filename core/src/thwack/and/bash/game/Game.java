@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -18,11 +19,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class Game extends ApplicationAdapter{
 
-    private static OrthographicCamera staticCamera;
     private static OrthographicCamera gameCamera;
+    private static OrthographicCamera screenCamera;
 
-    private static SpriteBatch gameBatch;
-    private static SpriteBatch staticBatch;
+    private static SpriteBatch batch;
+
+    private static Rectangle mapViewport;
 
     //UI STUFF
     private static BitmapFont font;
@@ -33,20 +35,20 @@ public class Game extends ApplicationAdapter{
     private static ImageButtonStyle slotImageButtonStyle;
     private static TextButtonStyle blueTextButtonStyle;
 
-    public static OrthographicCamera getStaticCamera(){
-	return staticCamera;
-    }
-
     public static OrthographicCamera getGameCamera(){
 	return gameCamera;
     }
 
-    public static SpriteBatch getStaticBatch(){
-	return staticBatch;
+    public static OrthographicCamera getScreenCamera(){
+	return screenCamera;
     }
 
-    public static SpriteBatch getGameBatch(){
-	return gameBatch;
+    public static SpriteBatch getBatch(){
+	return batch;
+    }
+
+    public static Rectangle getMapViewport(){
+	return mapViewport;
     }
 
     public static ImageButtonStyle getSlotImageButtonStyle(){
@@ -100,31 +102,26 @@ public class Game extends ApplicationAdapter{
     }
 
     public static float getWidth(){
-	return staticCamera.viewportWidth;
+	return screenCamera.viewportWidth;
     }
 
     public static float getHeight(){
-	return staticCamera.viewportHeight;
+	return screenCamera.viewportHeight;
     }
 
-    public static float getGameWidth(){
-	return gameCamera.viewportWidth;
-    }
-
-    public static float getGameHeight(){
-	return gameCamera.viewportHeight;
-    }
 
     @Override
     public void create(){
-	staticBatch = new SpriteBatch();
-	gameBatch = new SpriteBatch();
+	batch = new SpriteBatch();
 
-	staticCamera = new OrthographicCamera();
-	staticCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	screenCamera = new OrthographicCamera();
+	screenCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+	mapViewport = new Rectangle(1f / 8f * getWidth(), 1f / 8f * getHeight(), 6f / 8f * getWidth(), 6f / 8f * getHeight());
 
 	gameCamera = new OrthographicCamera();
-	gameCamera.setToOrtho(false, staticCamera.viewportWidth, staticCamera.viewportHeight);
+	//gameCamera.setToOrtho(false, mapViewport.getWidth(), mapViewport.getHeight());
+	gameCamera.setToOrtho(false, getWidth(), getHeight());
 
 	font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
 
@@ -151,11 +148,12 @@ public class Game extends ApplicationAdapter{
     public void render(){
 	clearScreen();
 
-	updateStaticBatch();
-	updateGameBatch();
+	gameCamera.update();
+	screenCamera.update();
+	batch.setProjectionMatrix(screenCamera.combined);
 
 	screen.update(Gdx.graphics.getDeltaTime());
-	screen.render(gameBatch, staticBatch);
+	screen.render(batch);
     }
 
     @Override
@@ -176,16 +174,6 @@ public class Game extends ApplicationAdapter{
     @Override
     public void resize(int width, int height){
 	screen.resize(width, height);
-    }
-
-    private void updateStaticBatch(){
-	staticCamera.update();
-	staticBatch.setProjectionMatrix(staticCamera.combined);
-    }
-
-    private void updateGameBatch(){
-	gameCamera.update();
-	gameBatch.setProjectionMatrix(gameCamera.combined);
     }
 
 }

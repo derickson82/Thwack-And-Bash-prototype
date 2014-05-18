@@ -7,25 +7,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public interface GameScreen{
 
-    public void update(float delta);
+	public void update(float delta);
 
-    /*
-     * GameBatch should be everything about the game screen
-     * static batch is the ui around it
-     */
-    public void render (SpriteBatch gameBatch, SpriteBatch staticBatch);
+	public void render (SpriteBatch batch);
 
-    public void resize (int width, int height);
+	public void resize (int width, int height);
 
-    public void show ();
+	public void show ();
 
-    public void hide ();
+	public void hide ();
 
-    public void resume ();
+	public void resume ();
 
-    public void pause ();
+	public void pause ();
 
-    public void dispose ();
+	public void dispose ();
 
 
 }
