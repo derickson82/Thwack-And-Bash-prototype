@@ -11,6 +11,6 @@ public class MainActivity extends AndroidApplication {
         super.onCreate(savedInstanceState);
   
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-        Game1 game = new Game1();
+        thwack.and.bash.game.Game game = new thwack.and.bash.game.Game();
     }   
 }
