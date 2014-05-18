@@ -1,6 +1,5 @@
 package thwack.and.bash.game.util;
 
-
 public class Util {
 
 
@@ -18,7 +17,7 @@ public class Util {
 
     }
 
-    public static final class Pixels {
+    public static final class Pixels{
 
 	public static final float toMeters(float pixels){
 	    return pixels / Values.PIXELS_PER_METER;

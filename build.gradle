@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.3'
+        classpath 'com.android.tools.build:gradle:0.9+'
     }
 }
 
@@ -41,6 +42,23 @@ project(":desktop") {
     }
 }
 
+project(":android") {
+    apply plugin: "android"
+
+    configurations { natives }
+
+    dependencies {
+        //defines dependencies for the :android project, depends on the :core project,
+        //and also the android backends and all platform natives. Note the 'natives' classifier
+        //in this project
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"        
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+    }
+}
+
 project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
@@ -69,10 +87,13 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:1.2"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile fileTree(dir: 'libs', include : '*.jar') 
+        compile "aurelienribon:tweenengine:6.3.3"
+        compile "aurelienribon:tweenengine:6.3.3:sources"
+        compile fileTree(dir: 'libs', include : '*.jar')
     }
 }
 
 tasks.eclipse.doLast {
     delete ".project"
 }
+

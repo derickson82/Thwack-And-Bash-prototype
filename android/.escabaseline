@@ -1,0 +1,16 @@
+# Enerjy Software baseline data (files=3, problems=12).
+path: /my-gdx-game-android/gen/com/me/mygdxgame/BuildConfig.java
+problem: JAVA0014:JAVA0014 Class 'BuildConfig' with only static members has non-private constructor
+problem: JAVA0068:JAVA0068 Modifiers not declared in recommended order
+problem: JAVA0116:JAVA0116 Missing javadoc: field 'DEBUG'
+path: /my-gdx-game-android/gen/com/me/mygdxgame/R.java
+problem: JAVA0014:JAVA0014 Class 'R' with only static members has non-private constructor
+problem: JAVA0024:JAVA0024 Empty class 'attr'
+problem: JAVA0014:JAVA0014 Class 'drawable' with only static members has non-private constructor
+problem: JAVA0116:JAVA0116 Missing javadoc: field 'ic_launcher'
+problem: JAVA0014:JAVA0014 Class 'layout' with only static members has non-private constructor
+problem: JAVA0116:JAVA0116 Missing javadoc: field 'main'
+problem: JAVA0014:JAVA0014 Class 'string' with only static members has non-private constructor
+problem: JAVA0116:JAVA0116 Missing javadoc: field 'app_name'
+path: /my-gdx-game-android/src/com/me/mygdxgame/MainActivity.java
+problem: JAVA0005:JAVA0005 Imports not in specified order
