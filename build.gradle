@@ -87,9 +87,9 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:1.2"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile "aurelienribon:tweenengine:6.3.3"
-        compile "aurelienribon:tweenengine:6.3.3:sources"
-        compile fileTree(dir: 'libs', include : '*.jar')
+//        compile "aurelienribon:tweenengine:6.3.3"
+//        compile "aurelienribon:tweenengine:6.3.3:sources"
+        compile fileTree(dir: './libs', include : '*.jar')
     }
 }
 
