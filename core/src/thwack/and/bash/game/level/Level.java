@@ -62,6 +62,10 @@ public class Level {
 	player = (Player) Entity.getEntity("player");
     }
 
+    public static World getWorld(){
+	return world;
+    }
+
     //Shall fix this
     private static void addBox2D(){
 	float tileSize = 0;
