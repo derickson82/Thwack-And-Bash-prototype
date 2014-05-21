@@ -1,3 +1,4 @@
+
 package thwack.and.bash.game.collision;
 
 import aurelienribon.bodyeditor.BodyEditorLoader;
@@ -10,25 +11,25 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class CollisionBody {
 
-    public CollisionBody(BodyDef bodyDef, FixtureDef fixtureDef, World world){
-	body = world.createBody(bodyDef);
-	fixture = body.createFixture(fixtureDef);
-    }
+	public CollisionBody (BodyDef bodyDef, FixtureDef fixtureDef, World world) {
+		body = world.createBody(bodyDef);
+		fixture = body.createFixture(fixtureDef);
+	}
 
-    //TODO: ADD THIS SHIT
-    public CollisionBody(BodyEditorLoader loader, BodyDef bodyDef, FixtureDef fixtureDef, World world){
+	// TODO: ADD THIS SHIT
+	public CollisionBody (BodyEditorLoader loader, BodyDef bodyDef, FixtureDef fixtureDef, World world) {
 
-    }
+	}
 
-    private Body body;
-    private Fixture fixture;
+	private Body body;
+	private Fixture fixture;
 
-    public Body getBody(){
-	return body;
-    }
+	public Body getBody () {
+		return body;
+	}
 
-    public Fixture getFixture(){
-	return fixture;
-    }
+	public Fixture getFixture () {
+		return fixture;
+	}
 
 }
