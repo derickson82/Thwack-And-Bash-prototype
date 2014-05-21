@@ -1,11 +1,20 @@
 
 package thwack.and.bash.game.util;
 
+import thwack.and.bash.game.collision.CollisionBody;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -92,5 +101,54 @@ public class Util {
 		}
 
 	}
+
+	public static final class Box2D{
+
+		/**
+		 * 
+		 * @param p = position, meters
+		 * @param s = size, how big the sprite is, not half of it
+		 * @param w = world
+		 * @return
+		 */
+		public static final CollisionBody createSimpleDynamicBody(Vector2 p, Vector2 s, World w){
+
+			BodyDef bodyDef = new BodyDef();
+			bodyDef.type = BodyType.DynamicBody;
+			bodyDef.position.set(p.x, p.y);
+
+			PolygonShape shape = new PolygonShape();
+			shape.setAsBox(s.x / 2, s.y / 2);
+
+			FixtureDef fixtureDef = new FixtureDef();
+			fixtureDef.shape = shape;
+			fixtureDef.density = 0;
+			fixtureDef.friction = 0;
+			fixtureDef.restitution = 0;
+
+			return new CollisionBody(bodyDef, fixtureDef, w);
+		}
+
+	}
+
+
+	public static final TextureRegion[] toArray (TextureRegion[][] array2D, int width, int height) {
+		TextureRegion[] array = new TextureRegion[width * height];
+		int index = 0;
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				array[index++] = array2D[j][i];
+			}
+		}
+		return array;
+	}
+
+	public static final TextureRegion[] flipRegions (TextureRegion[] data, boolean xMir, boolean yMir) {
+		for (int i = 0; i < data.length; i++) {
+			data[i].flip(xMir, yMir);
+		}
+		return data;
+	}
+
 
 }

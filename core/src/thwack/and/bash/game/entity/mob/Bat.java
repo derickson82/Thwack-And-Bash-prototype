@@ -5,14 +5,20 @@ import thwack.and.bash.game.animation.MobAnimation;
 import thwack.and.bash.game.animation.types.BatAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.mob.ai.AI;
+import thwack.and.bash.game.util.Util;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class Bat extends Mob {
 
-	public Bat (MobAnimation animation, CollisionBody collisionBody) {
-		super(animation, collisionBody);
+	public Bat (CollisionBody collisionBody) {
+		super(collisionBody);
+		super.initMobAnimation(createMobAnimation());
 		ai = new AI();
 		movement = new Vector2(0, 0);
 	}
@@ -24,7 +30,7 @@ public class Bat extends Mob {
 	@Override
 	public void update (float delta) {
 		mobAnimation.update(delta, BatAnimationType.FLYING.ID);
-		SPRITE.setRegion(mobAnimation.getCurrentFrame());
+		sprite.setRegion(mobAnimation.getCurrentFrame());
 		time += delta;
 		if (time >= 1) {
 			updateAI();
@@ -58,6 +64,20 @@ public class Bat extends Mob {
 
 		private final int STATE;
 
+	}
+
+	@Override
+	public MobAnimation createMobAnimation () {
+		Texture flyingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/bat_64x62.png"));
+		TextureRegion[][] flyingRegions2DArray = TextureRegion.split(flyingRegionsSheet, 64, 52);
+		TextureRegion[] flyingRegionsArray = Util.toArray(flyingRegions2DArray, 3, 1);
+
+		MobAnimation batAnimation = new MobAnimation();
+		batAnimation.beginSettingAnimations();
+		batAnimation.setAnimation(new Animation(.1f, flyingRegionsArray), BatAnimationType.FLYING.ID);
+		batAnimation.setStillAnimationFrame(1);
+		batAnimation.endSettingAnimations();
+		return batAnimation;
 	}
 
 }

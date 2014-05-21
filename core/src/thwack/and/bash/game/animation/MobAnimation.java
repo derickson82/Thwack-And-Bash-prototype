@@ -3,42 +3,42 @@ package thwack.and.bash.game.animation;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.ObjectMap;
 
 //Starting with three animation, one for each direction
 //TODO: ADD SPRITE ANIMATION RETURN CAPABILITY
 public class MobAnimation {
 
 	public MobAnimation () {
-		animations = new Animation[ANIMATIONS];
+		animations = new ObjectMap<Integer, Animation>();
 	}
 
-	private static final int ANIMATIONS = 4;
 
-	private Animation[] animations;
+	private ObjectMap<Integer, Animation> animations;
 	private TextureRegion currentFrame;
 
 	private int stillFrame = 0;
-	private int lastDir;
-	private int dir;
+	private int lastAnimationKey;
+	private int animationKey;
 	private float stateTime = 0;
 	private boolean addingAnimations;
 
 	// TODO: ADD ATTACKING STATE AND SUCH
-	public void update (float delta, int newDir) {
+	public void update (float delta, int newAnimationKey) {
 		if (addingAnimations) {
 			System.err.println("You need to call endAddingAnimations() in MOBAnimations class before you can update it");
 		}
-		if (newDir != -1) {
-			dir = newDir;
-			if (lastDir != dir) {
+		if (newAnimationKey != -1) {
+			animationKey = newAnimationKey;
+			if (lastAnimationKey != animationKey) {
 				stateTime = -delta;
-				lastDir = dir;
+				lastAnimationKey = animationKey;
 			}
 			stateTime += delta;
 		} else {
-			stateTime = stillFrame * animations[dir].frameDuration;
+			stateTime = stillFrame * animations.get(animationKey).frameDuration;
 		}
-		currentFrame = animations[dir].getKeyFrame(stateTime, true);
+		currentFrame = animations.get(animationKey).getKeyFrame(stateTime, true);
 	}
 
 	public TextureRegion getCurrentFrame () {
@@ -49,9 +49,9 @@ public class MobAnimation {
 		addingAnimations = true;
 	}
 
-	public void setAnimation (Animation animation, int id) {
+	public void setAnimation (Animation animation, int animationKey) {
 		if (addingAnimations) {
-			animations[id] = animation;
+			animations.put(animationKey, animation);
 		} else {
 			System.err.println("You need to call startAddingAnimations() in MOBAnimations class before you can update it");
 		}
@@ -71,8 +71,8 @@ public class MobAnimation {
 	}
 
 	// TODO: FIX THIS METHOD; IT'S WEIRD
-	public TextureRegion getStartAnimation (int ID) {
-		return animations[ID].getKeyFrames()[0];
+	public TextureRegion getStartAnimation (int animationKey) {
+		return animations.get(animationKey).getKeyFrames()[0];
 	}
 
 }

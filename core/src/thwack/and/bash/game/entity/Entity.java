@@ -20,12 +20,12 @@ import com.badlogic.gdx.utils.Array;
 public abstract class Entity {
 
 	public Entity (Sprite sprite, CollisionBody body) {
-		SPRITE = sprite;
+		this.sprite = sprite;
 		COLLISION_BODY = body;
 		entities.add(this);
 	}
 
-	protected final Sprite SPRITE;
+	protected Sprite sprite;
 	protected final CollisionBody COLLISION_BODY;
 
 	// TODO: FIX THIS : TEST METHOD TO SOLVE A PROBLEM;
@@ -42,11 +42,12 @@ public abstract class Entity {
 	}
 
 	public void draw (SpriteBatch batch) {
-		if (SPRITE.getTexture() != null) {
-			SPRITE.setPosition(Meters.toPixels(getBody().getPosition().x) - SPRITE.getWidth() / 2,
-				Meters.toPixels(getBody().getPosition().y) - SPRITE.getHeight() / 2);
-			SPRITE.setRotation((float)Math.toDegrees(getBody().getAngle()));
-			SPRITE.draw(batch);
+		if (sprite.getTexture() != null) {
+			sprite.setPosition(Meters.toPixels(getBody().getPosition().x) - sprite.getWidth() / 2, Meters.toPixels(getBody().getPosition().y) - sprite.getHeight() / 2);
+			sprite.setRotation((float)Math.toDegrees(getBody().getAngle()));
+			sprite.draw(batch);
+		} else {
+			System.out.println("Entity with the name + " + COLLISION_BODY.getBody().getUserData() + "'s Texture is null");
 		}
 	}
 
@@ -87,7 +88,7 @@ public abstract class Entity {
 	}
 
 	public Sprite getSprite () {
-		return SPRITE;
+		return sprite;
 	}
 
 	public Body getBody () {

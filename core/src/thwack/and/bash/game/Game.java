@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Game extends ApplicationAdapter {
 
-	private static final SpriteBatch BATCH = createBatch();
+	private static SpriteBatch batch;
 
 	private static GameScreen screen;
 	private static GameScreen lastScreen;
@@ -63,6 +63,8 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		batch = new SpriteBatch();
+
 		setScreen(new SplashScreen());
 	}
 
@@ -72,9 +74,10 @@ public class Game extends ApplicationAdapter {
 
 		Objects.SCREEN_CAMERA.update();
 		Objects.GAME_CAMERA.update();
+		//batch.setTransformMatrix(Objects.SCREEN_CAMERA.combined);
 
 		screen.update(Gdx.graphics.getDeltaTime());
-		screen.render(BATCH);
+		screen.render(batch);
 	}
 
 	@Override
@@ -95,10 +98,6 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void resize (int width, int height) {
 		screen.resize(width, height);
-	}
-
-	private static final SpriteBatch createBatch () {
-		return new SpriteBatch();
 	}
 
 }
