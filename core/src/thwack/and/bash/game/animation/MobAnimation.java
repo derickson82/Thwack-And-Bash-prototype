@@ -74,7 +74,22 @@ public class MobAnimation {
 
 	// TODO: FIX THIS METHOD; IT'S WEIRD
 	public TextureRegion getStartAnimation(int ID) {
-		return animations[ID].getKeyFrames()[0];
+//		return animations[ID].getKeyFrames()[0];
+		TextureRegion ret = null;
+		TextureRegion textureRegion[] = null;
+		if(animations != null) {
+			Animation a = animations[ID];
+			if(a != null) {
+				textureRegion = a.getKeyFrames();
+				if(textureRegion.length > 0) {
+					ret = textureRegion[0];
+				}
+			} else {
+				System.out.println("MobAnimation: not able to get animation by ID [" + ID + "], is that a correct ID or is animation setup properly?");
+			}
+		}
+
+		return ret;
 	}
 
 }

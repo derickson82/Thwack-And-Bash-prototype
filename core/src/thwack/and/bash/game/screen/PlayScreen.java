@@ -4,9 +4,11 @@ import thwack.and.bash.game.Game;
 import thwack.and.bash.game.animation.MobAnimation;
 import thwack.and.bash.game.animation.types.BatAnimationType;
 import thwack.and.bash.game.animation.types.PlayerAnimationType;
+import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
+import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.level.Level;
 import thwack.and.bash.game.ui.GameUI;
 import thwack.and.bash.game.util.Util.Pixels;
@@ -30,6 +32,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class PlayScreen implements GameScreen{
 
     private Bat bat;
+    private Snake snake;
     private Player player;
     private GameUI gameUI;
 
@@ -135,9 +138,6 @@ public class PlayScreen implements GameScreen{
 	Texture flyingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/bat_64x62.png"));
 	TextureRegion[][] flyingRegions2DArray = TextureRegion.split(flyingRegionsSheet, 64, 52);
 	TextureRegion[] flyingRegionsArray = toArray(flyingRegions2DArray, 3, 1);
-
-	//TODO put a snake here
-	//"snake-walking_84x64.png";
 	
 	MobAnimation batAnimation = new MobAnimation();
 	batAnimation.beginSettingAnimations();
@@ -146,6 +146,19 @@ public class PlayScreen implements GameScreen{
 	batAnimation.endSettingAnimations();
 
 	bat = new Bat(batAnimation, collisionBody);
+
+	Texture side_winderingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/snake-walking_84x64.png"));
+	TextureRegion[][] side_winderingRegions2DArray = TextureRegion.split(side_winderingRegionsSheet, 84, 64);
+	TextureRegion[] side_winderingRegionsArray = toArray(side_winderingRegions2DArray, 2, 1);
+
+	MobAnimation snakeAnimation = new MobAnimation();
+	snakeAnimation.beginSettingAnimations();
+	snakeAnimation.setAnimation(new Animation(.1f, side_winderingRegionsArray), SnakeAnimationType.SIDE_WINDERING.ID);
+	snakeAnimation.setStillAnimationFrame(1);
+	snakeAnimation.endSettingAnimations();
+	
+	//TODO JT1 to fix NPE
+//	snake = new Snake(snakeAnimation, collisionBody);
 
 	gameUI = new GameUI();
 
