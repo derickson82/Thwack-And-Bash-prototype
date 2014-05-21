@@ -136,6 +136,9 @@ public class PlayScreen implements GameScreen{
 	TextureRegion[][] flyingRegions2DArray = TextureRegion.split(flyingRegionsSheet, 64, 52);
 	TextureRegion[] flyingRegionsArray = toArray(flyingRegions2DArray, 3, 1);
 
+	//TODO put a snake here
+	//"snake-walking_84x64.png";
+	
 	MobAnimation batAnimation = new MobAnimation();
 	batAnimation.beginSettingAnimations();
 	batAnimation.setAnimation(new Animation(.1f, flyingRegionsArray), BatAnimationType.FLYING.ID);
