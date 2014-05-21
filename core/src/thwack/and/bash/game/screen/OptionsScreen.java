@@ -1,46 +1,47 @@
+
 package thwack.and.bash.game.screen;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class OptionsScreen implements GameScreen{
+public class OptionsScreen implements GameScreen {
 
 	@Override
-	public void update(float delta) {
+	public void update (float delta) {
 
 	}
 
 	@Override
-	public void render(SpriteBatch batch) {
+	public void render (SpriteBatch batch) {
 
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize (int width, int height) {
 
 	}
 
 	@Override
-	public void show() {
+	public void show () {
 
 	}
 
 	@Override
-	public void hide() {
+	public void hide () {
 
 	}
 
 	@Override
-	public void resume() {
+	public void resume () {
 
 	}
 
 	@Override
-	public void pause() {
+	public void pause () {
 
 	}
 
 	@Override
-	public void dispose() {
+	public void dispose () {
 
 	}
 
