@@ -9,6 +9,6 @@
 	<classpathentry sourcepath="C:/Users/ATAN/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.0.0/9ba000afd55a68e0ef5402649f8f0b1208a1e871/gdx-controllers-1.0.0-sources.jar" kind="lib" path="C:/Users/ATAN/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.0.0/5c290f051c8a6da816d666ec42eebe8344fbf890/gdx-controllers-1.0.0.jar" exported="true"/>
 	<classpathentry sourcepath="C:/Users/ATAN/.m2/repository/aurelienribon/tweenengine/6.3.3/tweenengine-6.3.3-sources.jar" kind="lib" path="C:/Users/ATAN/.m2/repository/aurelienribon/tweenengine/6.3.3/tweenengine-6.3.3.jar" exported="true"/>
 	<classpathentry kind="lib" path="C:/Users/ATAN/.m2/repository/aurelienribon/tweenengine/6.3.3/tweenengine-6.3.3-sources.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/ag/demo/Thwack-And-Bash-prototype_develop/core/libs/bodyeditor-loader.jar.jar" exported="true"/>
-	<classpathentry kind="lib" path="C:/Users/ag/demo/Thwack-And-Bash-prototype_develop/core/libs/tween-engine-api.jar.jar" exported="true"/>
+	<classpathentry kind="lib" path="C:/Users/ag/demo/Thwack-And-Bash-prototype_snake/core/libs/bodyeditor-loader.jar.jar" exported="true"/>
+	<classpathentry kind="lib" path="C:/Users/ag/demo/Thwack-And-Bash-prototype_snake/core/libs/tween-engine-api.jar.jar" exported="true"/>
 </classpath>
