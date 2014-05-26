@@ -1,7 +1,6 @@
 package thwack.and.bash.game.entity.mob;
 
 import thwack.and.bash.game.animation.MobAnimation;
-import thwack.and.bash.game.animation.types.BatAnimationType;
 import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.mob.ai.AI;
@@ -29,7 +28,7 @@ public class Snake extends Mob {
 
 	@Override
 	public void update(float delta) {
-		mobAnimation.update(delta, BatAnimationType.FLYING.ID);
+		mobAnimation.update(delta, SnakeAnimationType.SIDE_WINDERING.ID);
 		sprite.setRegion(mobAnimation.getCurrentFrame());
 		time += delta;
 		if (time >= 1) {
@@ -75,7 +74,7 @@ public class Snake extends Mob {
 
 		MobAnimation snakeAnimation = new MobAnimation();
 		snakeAnimation.beginSettingAnimations();
-		snakeAnimation.setAnimation(new Animation(.1f, windingRegionsArray), BatAnimationType.FLYING.ID);
+		snakeAnimation.setAnimation(new Animation(.1f, windingRegionsArray), SnakeAnimationType.SIDE_WINDERING.ID);
 		snakeAnimation.setStillAnimationFrame(1);
 		snakeAnimation.endSettingAnimations();
 		return snakeAnimation;
