@@ -73,6 +73,12 @@ public class PlayScreen implements GameScreen {
 			new Vector2(3, 15), //Position
 			new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 			world));
+		
+		Bat snake = new Bat(Box2D.createSimpleDynamicBody(
+				new Vector2(3, 15), //Position
+				new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
+				world));
+
 
 		gameUI = new GameUI();
 

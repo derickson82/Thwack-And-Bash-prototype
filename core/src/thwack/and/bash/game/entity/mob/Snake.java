@@ -1,4 +1,3 @@
-
 package thwack.and.bash.game.entity.mob;
 
 import thwack.and.bash.game.animation.MobAnimation;
@@ -17,8 +16,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Snake extends Mob {
 
-	public Snake (CollisionBody collisionBody) {
+	public Snake(MobAnimation animation, CollisionBody collisionBody) {
 		super(collisionBody);
+		super.initMobAnimation(createMobAnimation());
 		ai = new AI();
 		movement = new Vector2(0, 0);
 	}
@@ -28,7 +28,7 @@ public class Snake extends Mob {
 	private float time = 0;
 
 	@Override
-	public void update (float delta) {
+	public void update(float delta) {
 		mobAnimation.update(delta, BatAnimationType.FLYING.ID);
 		sprite.setRegion(mobAnimation.getCurrentFrame());
 		time += delta;
@@ -41,7 +41,7 @@ public class Snake extends Mob {
 		}
 	}
 
-	private void updateAI () {
+	private void updateAI() {
 		ai.setState(MathUtils.random(0, 1));
 
 		if (ai.getState() == State.STOP.STATE) {
@@ -56,11 +56,10 @@ public class Snake extends Mob {
 
 	}
 
-	// TODO is this necessary, we already have an enum type in thwack.and.bash.game.animation.types.SnakeAnimationType, can we
-// reuse that?
+	//TODO is this necessary, we already have an enum type in thwack.and.bash.game.animation.types.SnakeAnimationType, can we reuse that?
 	private enum State {
 		STOP(0), SIDE_WINDERING(1);
-		State (int state) {
+		State(int state) {
 			STATE = state;
 		}
 
@@ -70,18 +69,16 @@ public class Snake extends Mob {
 
 	@Override
 	public MobAnimation createMobAnimation () {
-		Texture side_winderingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/snake-walking_84x64.png"));
-		TextureRegion[][] side_winderingRegions2DArray = TextureRegion.split(side_winderingRegionsSheet, 84, 64);
-		TextureRegion[] side_winderingRegionsArray = Util.toArray(side_winderingRegions2DArray, 2, 1);
+		Texture windingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/snake-walking_84x64.png"));
+		TextureRegion[][] windingRegions2DArray = TextureRegion.split(windingRegionsSheet, 84, 64);
+		TextureRegion[] windingRegionsArray = Util.toArray(windingRegions2DArray, 3, 1);
 
 		MobAnimation snakeAnimation = new MobAnimation();
 		snakeAnimation.beginSettingAnimations();
-		snakeAnimation.setAnimation(new Animation(.1f, side_winderingRegionsArray), SnakeAnimationType.SIDE_WINDERING.ID);
+		snakeAnimation.setAnimation(new Animation(.1f, windingRegionsArray), BatAnimationType.FLYING.ID);
 		snakeAnimation.setStillAnimationFrame(1);
 		snakeAnimation.endSettingAnimations();
 		return snakeAnimation;
 	}
-
-	//
 
 }
