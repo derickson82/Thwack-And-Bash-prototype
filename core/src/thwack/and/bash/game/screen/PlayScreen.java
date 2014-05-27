@@ -34,6 +34,7 @@ public class PlayScreen implements GameScreen {
 	public void update (float delta) {
 		player.update(delta);
 		bat.update(delta);
+		snake.update(delta);
 		Level.update(delta);
 	}
 
@@ -44,6 +45,7 @@ public class PlayScreen implements GameScreen {
 		batch.begin();
 		player.draw(batch);
 		bat.draw(batch);
+		snake.draw(batch);
 		batch.end();
 
 		// gameUI.drawStage();
