@@ -4,6 +4,7 @@ package thwack.and.bash.game.screen;
 import thwack.and.bash.game.Game;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
+import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.level.Level;
 import thwack.and.bash.game.ui.GameUI;
 import thwack.and.bash.game.util.Util.Box2D;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class PlayScreen implements GameScreen {
 
 	private Bat bat;
+	private Snake snake;
 	private Player player;
 	private GameUI gameUI;
 
@@ -74,7 +76,7 @@ public class PlayScreen implements GameScreen {
 			new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 			world));
 		
-		Bat snake = new Bat(Box2D.createSimpleDynamicBody(
+		snake = new Snake(Box2D.createSimpleDynamicBody(
 				new Vector2(3, 15), //Position
 				new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 				world));

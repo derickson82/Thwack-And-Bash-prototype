@@ -1,6 +1,7 @@
 package thwack.and.bash.game.entity.mob;
 
 import thwack.and.bash.game.animation.MobAnimation;
+import thwack.and.bash.game.animation.types.BatAnimationType;
 import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.mob.ai.AI;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Snake extends Mob {
 
-	public Snake(MobAnimation animation, CollisionBody collisionBody) {
+	public Snake(CollisionBody collisionBody) {
 		super(collisionBody);
 		super.initMobAnimation(createMobAnimation());
 		ai = new AI();
@@ -28,14 +29,14 @@ public class Snake extends Mob {
 
 	@Override
 	public void update(float delta) {
-		mobAnimation.update(delta, SnakeAnimationType.SIDE_WINDERING.ID);
+		mobAnimation.update(delta, SnakeAnimationType.IDLING.ID);
 		sprite.setRegion(mobAnimation.getCurrentFrame());
 		time += delta;
 		if (time >= 1) {
 			updateAI();
 			time = 0;
 		}
-		if (ai.getState() == State.SIDE_WINDERING.STATE) {
+		if (ai.getState() == State.IDLING.STATE) {
 			move(movement);
 		}
 	}
@@ -43,11 +44,11 @@ public class Snake extends Mob {
 	private void updateAI() {
 		ai.setState(MathUtils.random(0, 1));
 
-		if (ai.getState() == State.STOP.STATE) {
+		if (ai.getState() == State.IDLING.STATE) {
 			movement.set(0, 0);
 		}
 
-		else if (ai.getState() == State.SIDE_WINDERING.STATE) {
+		else if (ai.getState() == State.WINDING.STATE) {
 			int x = MathUtils.random(0, 2) - 1;
 			int y = MathUtils.random(0, 2) - 1;
 			movement.set(x, y);
@@ -57,7 +58,7 @@ public class Snake extends Mob {
 
 	//TODO is this necessary, we already have an enum type in thwack.and.bash.game.animation.types.SnakeAnimationType, can we reuse that?
 	private enum State {
-		STOP(0), SIDE_WINDERING(1);
+		IDLING(0), WINDING(1);
 		State(int state) {
 			STATE = state;
 		}
@@ -74,7 +75,7 @@ public class Snake extends Mob {
 
 		MobAnimation snakeAnimation = new MobAnimation();
 		snakeAnimation.beginSettingAnimations();
-		snakeAnimation.setAnimation(new Animation(.1f, windingRegionsArray), SnakeAnimationType.SIDE_WINDERING.ID);
+		snakeAnimation.setAnimation(new Animation(.1f, windingRegionsArray), SnakeAnimationType.IDLING.ID);
 		snakeAnimation.setStillAnimationFrame(1);
 		snakeAnimation.endSettingAnimations();
 		return snakeAnimation;
