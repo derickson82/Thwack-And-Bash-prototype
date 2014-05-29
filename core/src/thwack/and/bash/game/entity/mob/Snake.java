@@ -1,6 +1,7 @@
 package thwack.and.bash.game.entity.mob;
 
 import thwack.and.bash.game.animation.MobAnimation;
+import thwack.and.bash.game.animation.SnakeMove1;
 import thwack.and.bash.game.animation.types.BatAnimationType;
 import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
@@ -36,29 +37,22 @@ public class Snake extends Mob {
 			updateAI();
 			time = 0;
 		}
-		if (ai.getState() == State.IDLING.STATE) {
+		if (ai.getState() == State.WINDERING.STATE) {
 			move(movement);
 		}
 	}
 
 	private void updateAI() {
-		ai.setState(MathUtils.random(0, 1));
+		ai.setState(SnakeAnimationType.WINDERING.ID);
 
-		if (ai.getState() == State.IDLING.STATE) {
-			movement.set(0, 0);
-		}
-
-		else if (ai.getState() == State.WINDING.STATE) {
-			int x = MathUtils.random(0, 2) - 1;
-			int y = MathUtils.random(0, 2) - 1;
-			movement.set(x, y);
-		}
-
+		SnakeMove1 m1 = new SnakeMove1(movement.x, movement.y);
+		m1.move(8, 225);
+		movement.set(m1.getX(), m1.getY());
 	}
 
 	//TODO is this necessary, we already have an enum type in thwack.and.bash.game.animation.types.SnakeAnimationType, can we reuse that?
 	private enum State {
-		IDLING(0), WINDING(1);
+		IDLING(0), WINDERING(1);
 		State(int state) {
 			STATE = state;
 		}

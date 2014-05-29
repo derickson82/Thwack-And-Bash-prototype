@@ -79,7 +79,7 @@ public class PlayScreen implements GameScreen {
 			world));
 		
 		snake = new Snake(Box2D.createSimpleDynamicBody(
-				new Vector2(3, 15), //Position
+				new Vector2(6, 15), //initial position
 				new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 				world));
 
