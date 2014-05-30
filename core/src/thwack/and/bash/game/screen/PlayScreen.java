@@ -2,6 +2,7 @@
 package thwack.and.bash.game.screen;
 
 import thwack.and.bash.game.Game;
+import thwack.and.bash.game.GameDebug;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
@@ -12,6 +13,7 @@ import thwack.and.bash.game.util.Util.Objects;
 import thwack.and.bash.game.util.Util.Pixels;
 import thwack.and.bash.game.util.Util.Values;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -79,7 +81,7 @@ public class PlayScreen implements GameScreen {
 			world));
 		
 		snake = new Snake(Box2D.createSimpleDynamicBody(
-				new Vector2(6, 15), //initial position
+				new Vector2(GameDebug.CURRENT_WIDTH, GameDebug.CURRENT_HEIGHT /* TODO will get the real one one day! */), //initial position
 				new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 				world));
 

@@ -1,4 +1,3 @@
-
 package thwack.and.bash.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,10 +10,18 @@ import thwack.and.bash.game.util.Util.Objects;
 
 public class GameDebug extends Game implements GameScreen {
 
+//	private Stage stage;
+//	private ScreenViewport viewport;
+	public static final int CURRENT_WIDTH = 20;
+	public static final int CURRENT_HEIGHT = 18;
+	
 	@Override
 	public void create () {
 		super.create();
 		
+//		viewport = new ScreenViewport(Objects.SCREEN_CAMERA);
+//		stage = new Stage(viewport);
+
 		//set to any screen that you work on - no need splash or whatever that slows you down! :)
 		setScreen(new PlayScreen());
 	}
