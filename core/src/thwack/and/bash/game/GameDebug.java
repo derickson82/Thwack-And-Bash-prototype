@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.screen.GameScreen;
 import thwack.and.bash.game.screen.PlayScreen;
 import thwack.and.bash.game.util.Util.Objects;
@@ -12,8 +13,6 @@ public class GameDebug extends Game implements GameScreen {
 
 //	private Stage stage;
 //	private ScreenViewport viewport;
-	public static final int CURRENT_WIDTH = 20;
-	public static final int CURRENT_HEIGHT = 18;
 	
 	@Override
 	public void create () {
@@ -22,8 +21,16 @@ public class GameDebug extends Game implements GameScreen {
 //		viewport = new ScreenViewport(Objects.SCREEN_CAMERA);
 //		stage = new Stage(viewport);
 
+		GameScreen screen = null;
 		//set to any screen that you work on - no need splash or whatever that slows you down! :)
-		setScreen(new PlayScreen());
+		screen = new PlayScreen();
+		setScreen(screen);
+		Snake snake = ((PlayScreen)screen).getSnake();
+		//speed up for test ;)
+		if(snake != null) {
+			snake.setWinderingSpeed(snake.getWinderingSpeed()*7);
+			snake.setDirectionChangeSpeed(1000);
+		}
 	}
 
 	@Override

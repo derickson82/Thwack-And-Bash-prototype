@@ -32,6 +32,10 @@ public class PlayScreen implements GameScreen {
 
 	private FPSLogger fpsLogger;
 
+	public Snake getSnake() {
+		return snake;
+	}
+
 	@Override
 	public void update (float delta) {
 		player.update(delta);
@@ -81,7 +85,7 @@ public class PlayScreen implements GameScreen {
 			world));
 		
 		snake = new Snake(Box2D.createSimpleDynamicBody(
-				new Vector2(GameDebug.CURRENT_WIDTH, GameDebug.CURRENT_HEIGHT /* TODO will get the real one one day! */), //initial position
+				new Vector2(Snake.getSurWidth(), Snake.getSurHeight() /* TODO will get the real one one day! */), //initial position
 				new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 				world));
 

@@ -1,13 +1,8 @@
 package thwack.and.bash.game.animation;
 
-public class SnakeMove1 {
+public class SnakeWinding {
 	private float x;
 	private float y;
-
-	public SnakeMove1(float x, float y) {
-		this.x = x;
-		this.y = y;
-	}
 
 	public float getX() {
 		return x;
@@ -15,6 +10,11 @@ public class SnakeMove1 {
 
 	public float getY() {
 		return y;
+	}
+
+	public SnakeWinding(float x, float y) {
+		this.x = x;
+		this.y = y;
 	}
 
 	public void move(float speed, float direction) {
