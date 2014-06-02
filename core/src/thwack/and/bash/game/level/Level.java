@@ -8,6 +8,7 @@ import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.util.Util.Objects;
 import thwack.and.bash.game.util.Util.Pixels;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 /*
  * THIS IS NOT THE FINAL VERSION,
@@ -35,6 +37,8 @@ public class Level {
 	private Level () {
 	}
 
+	private static Array<Entity> entities;
+
 	private static World world;
 	private static OrthogonalTiledMapRenderer mapRenderer;
 	private static TiledMap tiledMap;
@@ -43,11 +47,17 @@ public class Level {
 
 	public static void update (float delta) {
 		world.step(1 / 60f, 6, 2);
+		for(int i = 0; i < entities.size; i++){
+			entities.get(i).update(delta);
+		}
 	}
 
-	public static void render () {
+	public static void render (SpriteBatch batch) {
 		mapRenderer.setView(Objects.GAME_CAMERA);
 		mapRenderer.render();
+		for(int i = 0; i < entities.size; i++){
+			entities.get(i).draw(batch);
+		}
 	}
 
 	public static void load (String tmxLevel, World world) {
@@ -56,11 +66,26 @@ public class Level {
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		addBox2D();
 		setContactListener();
-		player = (Player)Entity.getEntity("player");
+		entities = new Array<Entity>();
 	}
 
 	public static World getWorld () {
 		return world;
+	}
+
+	public static void addEntities(Entity... e){
+		for(int i = 0; i < e.length; i++){
+			entities.add(e[i]);
+			if(e[i].getBody().getUserData().equals("player")){
+				Level.player = (Player)e[i];
+			}
+		}
+	}
+
+	public static void removeEntities(Entity... e){
+		for(int i = 0; i < e.length; i++){
+			entities.removeValue(e[i], true);
+		}
 	}
 
 	// Shall fix this

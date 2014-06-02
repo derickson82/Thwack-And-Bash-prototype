@@ -20,8 +20,6 @@ import com.badlogic.gdx.physics.box2d.World;
 //ALL THIS CODE IS USED FOR THE GAMES PROTOTYPE, IT'S NOT FINAL
 public class PlayScreen implements GameScreen {
 
-	private Bat bat;
-	private Player player;
 	private GameUI gameUI;
 
 	private Box2DDebugRenderer box2DRenderer;
@@ -37,7 +35,7 @@ public class PlayScreen implements GameScreen {
 
 	@Override
 	public void render (SpriteBatch batch) {
-		Level.render();
+		Level.render(batch);
 		batch.setProjectionMatrix(Objects.GAME_CAMERA.combined);
 		batch.begin();
 		player.draw(batch);
@@ -64,15 +62,15 @@ public class PlayScreen implements GameScreen {
 
 		World world = new World(new Vector2(0, 0), false);
 
-		player = new Player(Box2D.createSimpleDynamicBody(
+		Level.addEntities(new Player(Box2D.createSimpleDynamicBody(
 			new Vector2(Pixels.toMeters(Game.getWidth() / 2), Pixels.toMeters(Game.getHeight() / 2)), // Position
 			new Vector2(Pixels.toMeters(35), Pixels.toMeters(46)), // Size
-			world));
+			world)));
 
-		bat = new Bat(Box2D.createSimpleDynamicBody(
+		Level.addEntities(new Bat(Box2D.createSimpleDynamicBody(
 			new Vector2(3, 15), //Position
 			new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
-			world));
+			world)));
 
 		gameUI = new GameUI();
 
