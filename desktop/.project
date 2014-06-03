@@ -18,7 +18,7 @@
 		<link>
 			<name>assets</name>
 			<type>2</type>
-			<location>C:/Users/ag/demo/Thwack-And-Bash-prototype_develop/android/assets</location>
+			<locationURI>PARENT-1-PROJECT_LOC/core/assets</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
