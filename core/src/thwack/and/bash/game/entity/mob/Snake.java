@@ -51,7 +51,7 @@ public class Snake extends Mob {
 	private float wTime = 0;
 	private Vector2 lastMovement;
 	private float winderingSpeed = 8;
-	private float directionChangeSpeed = 100;
+	private float directionChangeSpeed = .3f;
 	private double idlingCounter = 0;
 	private double idlingPeriod = 8;	//in seconds
 	private float originalBodyDirection = -1;
@@ -73,6 +73,18 @@ public class Snake extends Mob {
 	}
 
 	@Override
+	public void move (Vector2 movement) {
+		super.move(movement);
+
+//		if(ai.getState() == SnakeAnimationType.REVERSE.ID) {
+//			movement.x = -movement.x;
+//			movement.y = -movement.y;
+//			getBody().setLinearVelocity(movement);
+//		}
+
+	}
+
+	@Override
 	public void update(float delta) {
 		time += delta;
 		wTime += delta;
@@ -88,15 +100,31 @@ public class Snake extends Mob {
 		move(movement);
 	}
 
+	private Vector2 translate(Vector2 pos, Vector2 offset) {
+		Vector2 newPos = new Vector2();
+		newPos.x = pos.x + offset.x;
+		newPos.y = pos.y + offset.y;
+		
+		return newPos;
+	}
+	
 	private void updateAI(float delta) {
 		if (ai.getState() == State.IDLING.STATE) {
 			idlingCounter++;
 		}
+//		else
+//		if(ai.getState() == SnakeAnimationType.REVERSE.ID) {
+//			SnakeWinding m1 = new SnakeWinding(movement.x, movement.y);
+//			m1.move(winderingSpeed , 10);
+//			movement.set(m1.getX(), m1.getY());
+//		}
+		else
 		if(lastMovement == null || ai.getState() == SnakeAnimationType.WINDERING.ID) {
 			SnakeWinding m1 = new SnakeWinding(movement.x, movement.y);
 			m1.move(winderingSpeed , 210);
 			movement.set(m1.getX(), m1.getY());
-		} else {
+		} 
+		else {
 			//change direction
 			SnakeChangingDirection m2 = new SnakeChangingDirection(movement.x, movement.y);
 			m2.move(directionChangeSpeed, -1, delta);
@@ -106,10 +134,19 @@ public class Snake extends Mob {
 			if(originalBodyDirection == -1) {
 				originalBodyDirection = getBody().getAngle();
 			}
-			getBody().setTransform(getBody().getPosition(), m2.getAngle());
+			getBody().setTransform(translate(getBody().getPosition(), m2.getPosition()), m2.getAngle());
 
 			movement.set(m2.getX(), m2.getY());
 		}
+		
+		if(getBody().getPosition().x < 0) {
+			//reverse the snake direction
+			ai.setState(SnakeAnimationType.REVERSE.ID);
+		}
+//		if(getBody().getPosition().y > surHeight/2) {
+//			//reverse the snake direction
+//			movement.set(-movement.x, -movement.y);
+//		}
 		if(lastMovement == movement) {
 			ai.setState(SnakeAnimationType.IDLING.ID);
 		}
@@ -124,7 +161,7 @@ public class Snake extends Mob {
 
 	//TODO is this necessary, we already have an enum type in thwack.and.bash.game.animation.types.SnakeAnimationType, can we reuse that?
 	private enum State {
-		IDLING(0), WINDERING(1);
+		IDLING(0), WINDERING(1), REVERSE(2);
 		State(int state) {
 			STATE = state;
 		}

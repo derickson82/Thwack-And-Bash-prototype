@@ -15,7 +15,7 @@ public class DesktopLauncher {
 		config.resizable = false;
 		config.useGL30 = false;
 		config.vSyncEnabled = false;
-		new LwjglApplication(new Game(), config);
-//		new LwjglApplication(new GameDebug(), config);	//use this if you like! :)
+//		new LwjglApplication(new Game(), config);
+		new LwjglApplication(new GameDebug(), config);	//use this if you like! :)
 	}
 }

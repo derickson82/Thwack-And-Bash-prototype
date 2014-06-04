@@ -2,7 +2,8 @@ package thwack.and.bash.game.animation.types;
 
 public enum SnakeAnimationType {
 	IDLING(0),	//set initial animation
-	WINDERING(1);
+	WINDERING(1),
+	REVERSE(2);
 	
 	private SnakeAnimationType(int id) {
 		this.ID = id;

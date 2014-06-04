@@ -3,6 +3,8 @@ package thwack.and.bash.game.animation;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.Position;
+
 import com.badlogic.gdx.math.Vector2;
 
 public class SnakeChangingDirection {
@@ -71,7 +73,7 @@ public class SnakeChangingDirection {
 	}
 
 	public void move(float speed, float direction, float delta) {
-		doSnakeMove(delta, delta, delta);
+		doSnakeMove(speed, direction, delta);
 
 		System.out.println(this.getClass() + ": angle = " + angle);
 	}
@@ -114,6 +116,23 @@ public class SnakeChangingDirection {
 		if (head.pastPositions.size() > 10000) {
 			head.pastPositions.remove(0);
 		}
+		
+		x = head.pastPositions.get(0).x;
+		y = head.pastPositions.get(0).y;		
+//		x = head.pastPositions.get(head.pastPositions.size()-1).x;
+//		y = head.pastPositions.get(head.pastPositions.size()-1).y;		
+//		x = body.get(head.pastPositions.size()-1).position.x = x;
+//		y = body.get(head.pastPositions.size()-1).position.y = y;
+//		x = body.get(0).position.x = x;
+//		y = body.get(0).position.y = y;
+	}
+
+	public Vector2 getPosition() {
+		Vector2 pos = new Vector2();
+		pos.x = x;
+		pos.y = y;
+
+		return pos;
 	}
 
 	private void doSimpleRotate(float speed, float direction, float delta) {
