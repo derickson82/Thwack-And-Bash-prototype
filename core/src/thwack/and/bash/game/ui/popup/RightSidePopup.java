@@ -1,85 +1,74 @@
-
 package thwack.and.bash.game.ui.popup;
 
-import java.util.Iterator;
+import thwack.and.bash.game.Game;
 
-import thwack.and.bash.game.tween.VectorTweener;
-import thwack.and.bash.game.util.Util.Objects;
-
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class Popup {
+public class RightSidePopup extends Popup{
 
-	public Popup(){
-		init();
-		layout();
-		pos = new Vector2();
-		pos.x = hidePosition().x;
-		pos.y = hidePosition().y;
+	private static final Vector2 SIZE = new Vector2(Game.getWidth() / 6, Game.getHeight()), HIDE = new Vector2(Game.getWidth(), 0), SHOW = new Vector2(Game.getWidth() - SIZE.x, 0);
+	private Sprite background;
+
+	@Override
+	public void init() {
+		background = new Sprite(new Texture(Gdx.files.internal("blue_square_menu_background.png")));
+		background.getTexture().setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		background.setSize(SIZE.x, SIZE.y);
 	}
 
-	public Vector2 pos;
-
-	private static final float DURATION = 0.25f;
-
-	private boolean hidden = true;
-	private boolean tweening = false;
-
-	public final void toggle (){
-		if(tweening){
-			killTarget(getName());
-		}
-		hidden = !hidden;
-		tweening = true;
-		Vector2 target;
-		if(hidden){
-			target = hidePosition();
-		} else{
-			target = showPosition();
-		}
-		Tween
-		.to(pos, VectorTweener.POSITION_XY, DURATION)
-		.target(target.x, target.y)
-		.ease(Quint.INOUT)
-		.setCallback(new TweenCallback(){
-			@Override
-			public void onEvent(int type, BaseTween<?> source) {
-				tweening = false;
-			}
-		})
-		.setUserData(getName())
-		.start(Objects.TWEEN_MANAGER);
+	@Override
+	public void layout() {
+		background.setU2(SIZE.x / 5);
+		background.setV2(SIZE.y / 5);
 	}
 
-	public final boolean isCompletlyHidden(){
-		return hidden && !tweening;
+	@Override
+	public void draw(SpriteBatch batch) {
+		background.draw(batch);
 	}
 
-	private boolean killTarget(String name){
-		Iterator<BaseTween<?>> i = Objects.TWEEN_MANAGER.getObjects().iterator();
-		while(i.hasNext()){
-			BaseTween<?> bt = i.next();
-			if(bt.getUserData().equals(name)){
-				bt.kill();
-			}
-			return true;
-		}
-		return false;
+	@Override
+	public void update(float delta) {
+		background.setPosition(pos.x, pos.y);
 	}
 
-	public abstract void init();
+	@Override
+	public void show() {
 
-	public abstract void layout ();
+	}
 
-	public abstract void draw (SpriteBatch batch);
+	@Override
+	public void hide() {
 
-	public abstract void update (float delta);
+	}
 
-	public abstract void show ();
+	@Override
+	public Vector2 hidePosition(){
+		return HIDE.cpy();
+	}
 
-	public abstract void hide ();
+	@Override
+	public Vector2 showPosition() {
+		return SHOW.cpy();
+	}
 
-	public abstract Vector2 hidePosition ();
+
+
+	@Override
+	public Vector2 size() {
+		return SIZE;
+	}
+
+
+
+	@Override
+	public String getName(){
+		return "LeftSidePopup";
+	}
 
 }

@@ -1,6 +1,7 @@
 
 package thwack.and.bash.game.ui;
 
+import thwack.and.bash.game.ui.popup.LeftSidePopup;
 import thwack.and.bash.game.ui.popup.Popup;
 import thwack.and.bash.game.ui.popup.RightSidePopup;
 

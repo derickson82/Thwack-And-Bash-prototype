@@ -5,6 +5,7 @@ import thwack.and.bash.game.screen.GameScreen;
 import thwack.and.bash.game.screen.SplashScreen;
 import thwack.and.bash.game.tween.VectorTweener;
 import thwack.and.bash.game.util.Util.Objects;
+import aurelienribon.tweenengine.Tween;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

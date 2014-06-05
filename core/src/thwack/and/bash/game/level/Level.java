@@ -37,7 +37,6 @@ public class Level {
 	private Level () {
 	}
 
-	private static Array<Entity> entities;
 
 	private static World world;
 	private static OrthogonalTiledMapRenderer mapRenderer;
@@ -56,7 +55,6 @@ public class Level {
 	public static void render (SpriteBatch batch) {
 		mapRenderer.setView(Objects.GAME_CAMERA);
 		mapRenderer.render();
-<<<<<<< HEAD
 		boolean needToEnd = false;
 		if(!batch.isDrawing()) {
 			batch.begin();
@@ -68,11 +66,6 @@ public class Level {
 		if(needToEnd){
 			batch.end();
 		}
-=======
-		for(int i = 0; i < entities.size; i++){
-			entities.get(i).draw(batch);
-		}
->>>>>>> 53a516b36ecf5beaa071f7a6c160e408f9180e14
 	}
 
 	public static void load (String tmxLevel, World world) {
@@ -82,7 +75,6 @@ public class Level {
 		addBox2D();
 		setContactListener();
 		entities = new Array<Entity>();
-<<<<<<< HEAD
 	}
 
 	public static void addEntity(Entity e){
@@ -112,15 +104,12 @@ public class Level {
 
 	public static void removeEntities(Array<Entity> e){
 		entities.removeAll(e, true);
-=======
->>>>>>> 53a516b36ecf5beaa071f7a6c160e408f9180e14
 	}
 
 	public static World getWorld () {
 		return world;
 	}
 
-<<<<<<< HEAD
 	private static void checkIfPlayer(Entity e){
 		if(e instanceof Player){
 			player = (Player) e;
@@ -131,28 +120,15 @@ public class Level {
 		for(Entity e : e2){
 			if(e instanceof Player){
 				player = (Player)e;
-=======
-	public static void addEntities(Entity... e){
-		for(int i = 0; i < e.length; i++){
-			entities.add(e[i]);
-			if(e[i].getBody().getUserData().equals("player")){
-				Level.player = (Player)e[i];
->>>>>>> 53a516b36ecf5beaa071f7a6c160e408f9180e14
 			}
 		}
 	}
 
-<<<<<<< HEAD
 	private static void checkIfPlayer(Array<Entity> e2){
 		for(int i = 0; i < e2.size; i++){
 			if(e2.get(i) instanceof Player) {
 				player = (Player) e2.get(i);
 			}
-=======
-	public static void removeEntities(Entity... e){
-		for(int i = 0; i < e.length; i++){
-			entities.removeValue(e[i], true);
->>>>>>> 53a516b36ecf5beaa071f7a6c160e408f9180e14
 		}
 	}
 

@@ -2,6 +2,7 @@
 package thwack.and.bash.game.util;
 
 import thwack.and.bash.game.collision.CollisionBody;
+import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
