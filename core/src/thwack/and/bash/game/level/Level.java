@@ -8,6 +8,7 @@ import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.util.Util.Objects;
 import thwack.and.bash.game.util.Util.Pixels;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 /*
  * THIS IS NOT THE FINAL VERSION,
@@ -40,14 +42,29 @@ public class Level {
 	private static TiledMap tiledMap;
 
 	private static Player player;
+	private static Array<Entity> entities;
 
 	public static void update (float delta) {
 		world.step(1 / 60f, 6, 2);
+		for(int i = 0; i < entities.size; i++){
+			entities.get(i).update(delta);
+		}
 	}
 
-	public static void render () {
+	public static void render (SpriteBatch batch) {
 		mapRenderer.setView(Objects.GAME_CAMERA);
 		mapRenderer.render();
+		boolean needToEnd = false;
+		if(!batch.isDrawing()) {
+			batch.begin();
+			needToEnd = true;
+		}
+		for(int i = 0; i < entities.size; i++){
+			entities.get(i).draw(batch);
+		}
+		if(needToEnd){
+			batch.end();
+		}
 	}
 
 	public static void load (String tmxLevel, World world) {
@@ -56,7 +73,33 @@ public class Level {
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		addBox2D();
 		setContactListener();
-		player = (Player)Entity.getEntity("player");
+		entities = new Array<Entity>();
+	}
+
+	public static void addEntity(Entity e){
+		entities.add(e);
+	}
+
+	public static void addEntities(Entity[] e){
+		entities.addAll(e);
+	}
+
+	public static void addEntities(Array<Entity> e){
+		entities.addAll(e);
+	}
+
+	public static void removeEntity(Entity e){
+		entities.removeValue(e, true);
+	}
+
+	public static void removeEntities(Entity[] e2){
+		for(Entity e : e2) {
+			entities.removeValue(e, true);
+		}
+	}
+
+	public static void removeEntities(Array<Entity> e){
+		entities.removeAll(e, true);
 	}
 
 	public static World getWorld () {
