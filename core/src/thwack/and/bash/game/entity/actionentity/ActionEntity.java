@@ -7,7 +7,9 @@ import thwack.and.bash.game.entity.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /*
- * Weapon, Magic,
+ * An Entity which has an icon for Inventory, it does an action which is unique.
+ * 
+ * TODO: Add action methods like startAction, endAction, interruptAction.
  */
 public abstract class ActionEntity extends Entity {
 
@@ -38,3 +40,4 @@ public abstract class ActionEntity extends Entity {
 	}
 
 }
+
