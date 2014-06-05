@@ -1,5 +1,6 @@
 package thwack.and.bash.game.entity.mob;
 
+import thwack.and.bash.game.animation.AnimatedSprite;
 import thwack.and.bash.game.animation.MobAnimation;
 import thwack.and.bash.game.animation.SnakeChangingDirection;
 import thwack.and.bash.game.animation.SnakeWinding;
@@ -42,7 +43,8 @@ public class Snake extends Mob {
 		super.initMobAnimation(createMobAnimation());
 		ai = new AI();
 		movement = new Vector2(0, 0);
-		ai.setState(SnakeAnimationType.WINDERING.ID);	//if it is not idling, it better be moving!
+//		ai.setState(SnakeAnimationType.WINDERING.ID);	//if it is not idling, it better be moving!
+		ai.setState(SnakeAnimationType.ATTACK.ID);
 	}
 
 	private AI ai;
@@ -53,8 +55,11 @@ public class Snake extends Mob {
 	private float winderingSpeed = 8;
 	private float directionChangeSpeed = .3f;
 	private double idlingCounter = 0;
+	private double attackCounter = 0;
 	private double idlingPeriod = 8;	//in seconds
 	private float originalBodyDirection = -1;
+	private double attackPeriod = 3000;
+	private int totalAttackFrames = 0;
 	
 	public float getWinderingSpeed() {
 		return winderingSpeed;
@@ -112,6 +117,13 @@ public class Snake extends Mob {
 		if (ai.getState() == State.IDLING.STATE) {
 			idlingCounter++;
 		}
+		else
+		if (ai.getState() == State.ATTACK.STATE) {
+			AnimatedSprite attackSprite = new AnimatedSprite("textureatlas/play/input/snake-attack_79x41.png", 1, 3);
+			totalAttackFrames = attackSprite.getFrameCols()*attackSprite.getFrameCols();
+			sprite.setRegion(attackSprite.getAnimation().getKeyFrame(delta%totalAttackFrames));
+			attackCounter++;
+		}
 //		else
 //		if(ai.getState() == SnakeAnimationType.REVERSE.ID) {
 //			SnakeWinding m1 = new SnakeWinding(movement.x, movement.y);
@@ -153,6 +165,11 @@ public class Snake extends Mob {
 		if (idlingCounter > idlingPeriod ) {
 			getBody().setTransform(getBody().getPosition(), originalBodyDirection);
 			ai.setState(SnakeAnimationType.WINDERING.ID);
+			idlingCounter = 0;
+		}
+		if (attackCounter > attackPeriod  ) {
+			ai.setState(SnakeAnimationType.IDLING.ID);
+			attackCounter = 0;
 		}
 		lastMovement = movement;
 		
@@ -161,7 +178,7 @@ public class Snake extends Mob {
 
 	//TODO is this necessary, we already have an enum type in thwack.and.bash.game.animation.types.SnakeAnimationType, can we reuse that?
 	private enum State {
-		IDLING(0), WINDERING(1), REVERSE(2);
+		IDLING(0), WINDERING(1), REVERSE(2), ATTACK(3);
 		State(int state) {
 			STATE = state;
 		}
