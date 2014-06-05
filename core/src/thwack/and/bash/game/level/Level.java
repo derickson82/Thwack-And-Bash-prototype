@@ -77,14 +77,17 @@ public class Level {
 	}
 
 	public static void addEntity(Entity e){
+		checkIfPlayer(e);
 		entities.add(e);
 	}
 
 	public static void addEntities(Entity[] e){
+		checkIfPlayer(e);
 		entities.addAll(e);
 	}
 
 	public static void addEntities(Array<Entity> e){
+		checkIfPlayer(e);
 		entities.addAll(e);
 	}
 
@@ -104,6 +107,28 @@ public class Level {
 
 	public static World getWorld () {
 		return world;
+	}
+
+	private static void checkIfPlayer(Entity e){
+		if(e instanceof Player){
+			player = (Player) e;
+		}
+	}
+
+	private static void checkIfPlayer(Entity[] e2){
+		for(Entity e : e2){
+			if(e instanceof Player){
+				player = (Player)e;
+			}
+		}
+	}
+
+	private static void checkIfPlayer(Array<Entity> e2){
+		for(int i = 0; i < e2.size; i++){
+			if(e2.get(i) instanceof Player) {
+				player = (Player) e2.get(i);
+			}
+		}
 	}
 
 	// Shall fix this
