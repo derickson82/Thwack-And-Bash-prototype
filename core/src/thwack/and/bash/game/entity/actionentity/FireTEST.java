@@ -1,3 +1,4 @@
+
 package thwack.and.bash.game.entity.actionentity;
 
 import thwack.and.bash.game.collision.CollisionBody;
@@ -6,23 +7,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class FireTEST extends ActionEntity{
+public class FireTEST extends ActionEntity {
 
-    public FireTEST(Sprite sprite, CollisionBody body) {
-	super(sprite, body);
-	iconSprite = new Sprite(new Texture(Gdx.files.internal("fire.png")));
-    }
+	public FireTEST (Sprite sprite, CollisionBody body) {
+		super(sprite, body);
+		iconSprite = new Sprite(new Texture(Gdx.files.internal("fire.png")));
+	}
 
-    private Sprite iconSprite;
+	private Sprite iconSprite;
 
-    @Override
-    public Sprite getIconSprite() {
-	return iconSprite;
-    }
+	@Override
+	public Sprite getIconSprite () {
+		return iconSprite;
+	}
 
-    @Override
-    public void update(float delta) {
+	@Override
+	public void update (float delta) {
 
-    }
+	}
 
 }

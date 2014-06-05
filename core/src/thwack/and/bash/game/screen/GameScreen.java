@@ -1,13 +1,12 @@
+
 package thwack.and.bash.game.screen;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-/**
- * A version on libgdx's screen, adds update
- */
-public interface GameScreen{
+/** A version on libgdx's screen, adds update */
+public interface GameScreen {
 
-	public void update(float delta);
+	public void update (float delta);
 
 	public void render (SpriteBatch batch);
 
@@ -22,6 +21,5 @@ public interface GameScreen{
 	public void pause ();
 
 	public void dispose ();
-
 
 }
