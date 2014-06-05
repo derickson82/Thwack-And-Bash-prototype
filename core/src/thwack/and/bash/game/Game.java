@@ -3,6 +3,7 @@ package thwack.and.bash.game;
 
 import thwack.and.bash.game.screen.GameScreen;
 import thwack.and.bash.game.screen.SplashScreen;
+import thwack.and.bash.game.tween.VectorTweener;
 import thwack.and.bash.game.util.Util.Objects;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class Game extends ApplicationAdapter {
 
@@ -65,6 +67,7 @@ public class Game extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 
+		Tween.registerAccessor(Vector2.class, new VectorTweener());
 		setScreen(new SplashScreen());
 	}
 
@@ -72,11 +75,14 @@ public class Game extends ApplicationAdapter {
 	public void render () {
 		clearScreen();
 
+		float delta = Gdx.graphics.getDeltaTime();
+
 		Objects.SCREEN_CAMERA.update();
 		Objects.GAME_CAMERA.update();
+		Objects.TWEEN_MANAGER.update(delta);
 		//batch.setTransformMatrix(Objects.SCREEN_CAMERA.combined);
 
-		screen.update(Gdx.graphics.getDeltaTime());
+		screen.update(delta);
 		screen.render(batch);
 	}
 
