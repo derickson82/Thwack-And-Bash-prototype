@@ -27,9 +27,18 @@ public class RightSidePopup extends Popup{
 		background.setV2(SIZE.y / 5);
 	}
 
+
 	@Override
 	public void draw(SpriteBatch batch) {
+		boolean needToEnd = false;
+		if(!batch.isDrawing()){
+			batch.begin();
+			needToEnd = true;
+		}
 		background.draw(batch);
+		if(needToEnd){
+			batch.end();
+		}
 	}
 
 	@Override

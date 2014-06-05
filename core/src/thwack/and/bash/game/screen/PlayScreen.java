@@ -29,19 +29,15 @@ public class PlayScreen implements GameScreen {
 	@Override
 	public void update (float delta) {
 		Level.update(delta);
+		gameUI.update(delta);
 	}
 
 	@Override
 	public void render (SpriteBatch batch) {
 		batch.setProjectionMatrix(Objects.GAME_CAMERA.combined);
 		Level.render(batch);
-
-		// gameUI.drawStage();
-		//
-		// staticBatch.begin();
-		// gameUI.drawSprites(staticBatch);
-		// staticBatch.end();
 		box2DRenderer.render(Level.getWorld(), Objects.GAME_CAMERA.combined.scl(Values.PIXELS_PER_METER));
+		gameUI.render(batch);
 	}
 
 	@Override
@@ -56,6 +52,8 @@ public class PlayScreen implements GameScreen {
 
 		World world = new World(new Vector2(0, 0), false);
 
+		Level.load("demo2.tmx", world);
+
 		Level.addEntity(new Player(Box2D.createSimpleDynamicBody(
 			new Vector2(Pixels.toMeters(Game.getWidth() / 2), Pixels.toMeters(Game.getHeight() / 2)), // Position
 			new Vector2(Pixels.toMeters(35), Pixels.toMeters(46)), // Size
@@ -68,7 +66,6 @@ public class PlayScreen implements GameScreen {
 
 		gameUI = new GameUI();
 
-		Level.load("demo2.tmx", world);
 
 	}
 

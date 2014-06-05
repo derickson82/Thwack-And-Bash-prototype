@@ -29,7 +29,15 @@ public class LeftSidePopup extends Popup{
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		boolean needToEnd = false;
+		if(!batch.isDrawing()){
+			batch.begin();
+			needToEnd = true;
+		}
 		background.draw(batch);
+		if(needToEnd){
+			batch.end();
+		}
 	}
 
 	@Override

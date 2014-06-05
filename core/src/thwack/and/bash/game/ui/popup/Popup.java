@@ -70,6 +70,10 @@ public abstract class Popup {
 
 	public abstract void layout ();
 
+	/**
+	 * Make popup.draw draw everything from array? Much easier code
+	 * @param batch
+	 */
 	public abstract void draw (SpriteBatch batch);
 
 	public abstract void update (float delta);
