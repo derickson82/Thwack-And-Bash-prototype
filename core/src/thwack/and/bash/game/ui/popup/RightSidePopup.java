@@ -1,57 +1,85 @@
 
 package thwack.and.bash.game.ui.popup;
 
+import java.util.Iterator;
+
+import thwack.and.bash.game.tween.VectorTweener;
+import thwack.and.bash.game.util.Util.Objects;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class RightSidePopup extends Popup {
+public abstract class Popup {
 
-	@Override
-	public void layout () {
-		// TODO Auto-generated method stub
-
+	public Popup(){
+		init();
+		layout();
+		pos = new Vector2();
+		pos.x = hidePosition().x;
+		pos.y = hidePosition().y;
 	}
 
-	@Override
-	public void draw (SpriteBatch staticBatch) {
-		// TODO Auto-generated method stub
+	public Vector2 pos;
 
+	private static final float DURATION = 0.25f;
+
+	private boolean hidden = true;
+	private boolean tweening = false;
+
+	public final void toggle (){
+		if(tweening){
+			killTarget(getName());
+		}
+		hidden = !hidden;
+		tweening = true;
+		Vector2 target;
+		if(hidden){
+			target = hidePosition();
+		} else{
+			target = showPosition();
+		}
+		Tween
+		.to(pos, VectorTweener.POSITION_XY, DURATION)
+		.target(target.x, target.y)
+		.ease(Quint.INOUT)
+		.setCallback(new TweenCallback(){
+			@Override
+			public void onEvent(int type, BaseTween<?> source) {
+				tweening = false;
+			}
+		})
+		.setUserData(getName())
+		.start(Objects.TWEEN_MANAGER);
 	}
 
-	@Override
-	public void update (float delta) {
-		// TODO Auto-generated method stub
-
+	public final boolean isCompletlyHidden(){
+		return hidden && !tweening;
 	}
 
-	@Override
-	public void show () {
-		// TODO Auto-generated method stub
-
+	private boolean killTarget(String name){
+		Iterator<BaseTween<?>> i = Objects.TWEEN_MANAGER.getObjects().iterator();
+		while(i.hasNext()){
+			BaseTween<?> bt = i.next();
+			if(bt.getUserData().equals(name)){
+				bt.kill();
+			}
+			return true;
+		}
+		return false;
 	}
 
-	@Override
-	public void hide () {
-		// TODO Auto-generated method stub
+	public abstract void init();
 
-	}
+	public abstract void layout ();
 
-	@Override
-	public Vector2 hidePosition () {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract void draw (SpriteBatch batch);
 
-	@Override
-	public Vector2 showPosition () {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract void update (float delta);
 
-	@Override
-	public Vector2 size () {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract void show ();
+
+	public abstract void hide ();
+
+	public abstract Vector2 hidePosition ();
 
 }

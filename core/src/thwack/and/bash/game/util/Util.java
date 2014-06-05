@@ -33,6 +33,8 @@ public class Util {
 
 		public static final ImageButtonStyle SLOT_IMAGE_BUTTON_STYLE = Init.createSlotImageButtonStyle();
 		public static final TextButtonStyle BLUE_TEXT_BUTTON_STYLE = Init.createBlueTextButtonStyle();
+
+		public static final TweenManager TWEEN_MANAGER = Init.createTweenManager();
 	}
 
 	public static final class Values {
@@ -100,6 +102,9 @@ public class Util {
 			return new Skin(Objects.MAIN_MENU_ATLAS);
 		}
 
+		private static final TweenManager createTweenManager(){
+			return new TweenManager();
+		}
 	}
 
 	public static final class Box2D{
