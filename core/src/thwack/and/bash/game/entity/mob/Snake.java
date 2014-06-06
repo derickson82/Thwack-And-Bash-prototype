@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Snake extends Mob {
 
-	private float WINDERING_INTERVAL = .5f;	//lower is faster
+	private float WINDERING_INTERVAL = .25f;	//lower is faster
 	private static int surWidth = 20;	//generally it's the length of the first element (columns) of the tmx but does not have to be
 	private static int surHeight = 18;	//gennerally the total rows of the tmx but does not have to be
 	final int TILE_SIZE = 32;	//this generally is fixed during the game and could be retrieved from a common constant
@@ -43,8 +43,8 @@ public class Snake extends Mob {
 		super.initMobAnimation(createMobAnimation());
 		ai = new AI();
 		movement = new Vector2(0, 0);
-//		ai.setState(SnakeAnimationType.WINDERING.ID);	//if it is not idling, it better be moving!
-		ai.setState(SnakeAnimationType.ATTACK.ID);
+		ai.setState(SnakeAnimationType.WINDERING.ID);	//if it is not idling, it better be moving!
+//		ai.setState(SnakeAnimationType.ATTACK.ID);
 	}
 
 	private AI ai;
@@ -52,15 +52,20 @@ public class Snake extends Mob {
 	private float time = 0;
 	private float wTime = 0;
 	private Vector2 lastMovement;
-	private float winderingSpeed = 8;
-	private float directionChangeSpeed = .3f;
+	private float winderingSpeed = 6;
+	private float directionChangeSpeed = .5f;
 	private double idlingCounter = 0;
 	private double attackCounter = 0;
-	private double idlingPeriod = 8;	//in seconds
+	private double idlingPeriod = 2;	//in seconds
 	private float originalBodyDirection = -1;
 	private double attackPeriod = 3000;
 	private int totalAttackFrames = 0;
-	
+//	private int STILL_FRAME_FLAG = -1;
+	private int STILL_FRAME_INDEX = 0;
+	MobAnimation snakeAnimation;
+	Animation nativeAnimation;
+	TextureRegion[] windingRegionsArray;
+
 	public float getWinderingSpeed() {
 		return winderingSpeed;
 	}
@@ -81,12 +86,16 @@ public class Snake extends Mob {
 	public void move (Vector2 movement) {
 		super.move(movement);
 
-//		if(ai.getState() == SnakeAnimationType.REVERSE.ID) {
-//			movement.x = -movement.x;
-//			movement.y = -movement.y;
+//		if (ai.getState() != State.IDLING.STATE) {
+//			if (movement.x != 0 && movement.y != 0) {
+//				movement.x = movement.x * 0.75f;
+//				movement.y = movement.y * 0.75f;
+//			}
 //			getBody().setLinearVelocity(movement);
 //		}
-
+//		else
+//		if(ai.getState() == SnakeAnimationType.REVERSE.ID) {
+//		}
 	}
 
 	@Override
@@ -115,6 +124,7 @@ public class Snake extends Mob {
 	
 	private void updateAI(float delta) {
 		if (ai.getState() == State.IDLING.STATE) {
+			//mobAnimation.update(delta, STILL_FRAME_FLAG);	//this does not work for some reason, oh well until then
 			idlingCounter++;
 		}
 		else
@@ -160,12 +170,24 @@ public class Snake extends Mob {
 //			movement.set(-movement.x, -movement.y);
 //		}
 		if(lastMovement == movement) {
-			ai.setState(SnakeAnimationType.IDLING.ID);
+			try {
+				doNothing();
+				ai.setState(SnakeAnimationType.IDLING.ID);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if (idlingCounter > idlingPeriod ) {
-			getBody().setTransform(getBody().getPosition(), originalBodyDirection);
-			ai.setState(SnakeAnimationType.WINDERING.ID);
-			idlingCounter = 0;
+			getBody().setTransform(getBody().getPosition(), getBody().getAngle() + (2 - delta));	//head to the left clockwise a bit
+			try {
+				move();
+				ai.setState(SnakeAnimationType.WINDERING.ID);
+				idlingCounter = 0;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if (attackCounter > attackPeriod  ) {
 			ai.setState(SnakeAnimationType.IDLING.ID);
@@ -187,17 +209,42 @@ public class Snake extends Mob {
 
 	}
 
+	private void doNothing() throws Exception {
+		if(snakeAnimation == null) throw new Exception("MobAnimation is null or empty!");
+
+		snakeAnimation.beginSettingAnimations();
+		nativeAnimation = new Animation(.1f, windingRegionsArray[STILL_FRAME_INDEX]);
+		snakeAnimation.setAnimation(nativeAnimation, SnakeAnimationType.IDLING.ID);
+		snakeAnimation.setStillAnimationFrame(STILL_FRAME_INDEX);
+		snakeAnimation.endSettingAnimations();
+	}
+
+	private void move() throws Exception {
+		if(snakeAnimation == null) throw new Exception("MobAnimation is null or empty!");
+
+		snakeAnimation.beginSettingAnimations();
+		nativeAnimation = new Animation(.1f, windingRegionsArray);
+//		snakeAnimation.setAnimation(nativeAnimation, SnakeAnimationType.WINDERING.ID);	//for some reason this crash mobAnimation!!! :o
+		snakeAnimation.setAnimation(nativeAnimation, SnakeAnimationType.IDLING.ID);
+		snakeAnimation.setStillAnimationFrame(STILL_FRAME_INDEX);
+		snakeAnimation.endSettingAnimations();
+	}
+
 	@Override
-	public MobAnimation createMobAnimation () {
+	public MobAnimation createMobAnimation() {
 		Texture windingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/snake-walking_84x64.png"));
 		TextureRegion[][] windingRegions2DArray = TextureRegion.split(windingRegionsSheet, 84, 64);
-		TextureRegion[] windingRegionsArray = Util.toArray(windingRegions2DArray, 3, 1);
+//		TextureRegion[] windingRegionsArray = Util.toArray(windingRegions2DArray, 3, 1);
+		windingRegionsArray = Util.toArray(windingRegions2DArray, 3, 1);
 
-		MobAnimation snakeAnimation = new MobAnimation();
-		snakeAnimation.beginSettingAnimations();
-		snakeAnimation.setAnimation(new Animation(.1f, windingRegionsArray), SnakeAnimationType.IDLING.ID);
-		snakeAnimation.setStillAnimationFrame(1);
-		snakeAnimation.endSettingAnimations();
+//		MobAnimation snakeAnimation = new MobAnimation();
+		snakeAnimation = new MobAnimation();
+		try {
+			move();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return snakeAnimation;
 	}
 

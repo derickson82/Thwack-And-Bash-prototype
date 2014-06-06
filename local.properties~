@@ -1,0 +1,4 @@
+#Change the following based on your platform and environment
+sdk.dir=C:/android-sdk-win
+#sdk.dir=C:/Users/ATAN/AppData/Local/Android/android-sdk
+#sdk.dir=/Applications/adt-bundle-mac-x86_64-20140321
