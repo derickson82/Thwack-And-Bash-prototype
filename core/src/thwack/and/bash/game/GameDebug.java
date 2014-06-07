@@ -28,7 +28,7 @@ public class GameDebug extends Game implements GameScreen {
 		Snake snake = ((PlayScreen)screen).getSnake();
 		//speed up for test ;)
 		if(snake != null) {
-			snake.setWinderingSpeed(snake.getWinderingSpeed()*7);
+			snake.setWinderingSpeed(snake.getWinderingSpeed()*10);
 			snake.setDirectionChangeSpeed(1000);
 		}
 	}

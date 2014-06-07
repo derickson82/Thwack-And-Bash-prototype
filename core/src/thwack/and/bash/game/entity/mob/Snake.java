@@ -21,7 +21,8 @@ public class Snake extends Mob {
 	private static int surWidth = 20;	//generally it's the length of the first element (columns) of the tmx but does not have to be
 	private static int surHeight = 18;	//gennerally the total rows of the tmx but does not have to be
 	final int TILE_SIZE = 32;	//this generally is fixed during the game and could be retrieved from a common constant
-
+	final float PI = 3.1415f;
+	
 	public static int getSurWidth() {
 		return surWidth;
 	}
@@ -52,7 +53,7 @@ public class Snake extends Mob {
 	private float time = 0;
 	private float wTime = 0;
 	private Vector2 lastMovement;
-	private float winderingSpeed = 6;
+	private float winderingSpeed = 20;
 	private float directionChangeSpeed = .5f;
 	private double idlingCounter = 0;
 	private double attackCounter = 0;
@@ -122,6 +123,14 @@ public class Snake extends Mob {
 		return newPos;
 	}
 	
+	private float toRadian(float degree) {
+		return (degree/180)*PI;
+	}
+	
+	private float toDegree(float radian) {
+		return radian*180/PI;
+	}
+
 	private void updateAI(float delta) {
 		if (ai.getState() == State.IDLING.STATE) {
 			//mobAnimation.update(delta, STILL_FRAME_FLAG);	//this does not work for some reason, oh well until then
@@ -144,7 +153,7 @@ public class Snake extends Mob {
 		if(lastMovement == null || ai.getState() == SnakeAnimationType.WINDERING.ID) {
 			SnakeWinding m1 = new SnakeWinding(movement.x, movement.y);
 			m1.move(winderingSpeed , 210);
-			movement.set(m1.getX(), m1.getY());
+			movement.set(m1.getX()/2, m1.getY()/2);
 		} 
 		else {
 			//change direction
@@ -156,9 +165,8 @@ public class Snake extends Mob {
 			if(originalBodyDirection == -1) {
 				originalBodyDirection = getBody().getAngle();
 			}
-			getBody().setTransform(translate(getBody().getPosition(), m2.getPosition()), m2.getAngle());
-
-			movement.set(m2.getX(), m2.getY());
+//			getBody().setTransform(getBody().getPosition(), toRadian(getBody().getAngle())*delta);
+			getBody().setTransform(m2.getPosition(), toRadian(m2.getAngle())*delta);
 		}
 		
 		if(getBody().getPosition().x < 0) {
@@ -179,7 +187,6 @@ public class Snake extends Mob {
 			}
 		}
 		if (idlingCounter > idlingPeriod ) {
-			getBody().setTransform(getBody().getPosition(), getBody().getAngle() + (2 - delta));	//head to the left clockwise a bit
 			try {
 				move();
 				ai.setState(SnakeAnimationType.WINDERING.ID);
