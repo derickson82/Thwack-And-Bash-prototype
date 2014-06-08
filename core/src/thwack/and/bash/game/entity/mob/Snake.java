@@ -6,13 +6,17 @@ import thwack.and.bash.game.animation.SnakeChangingDirection;
 import thwack.and.bash.game.animation.SnakeWinding;
 import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
+import thwack.and.bash.game.collision.SnakeGuard;
 import thwack.and.bash.game.entity.mob.ai.AI;
+import thwack.and.bash.game.test.RendererDebug;
 import thwack.and.bash.game.util.Util;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 public class Snake extends Mob {
@@ -46,6 +50,10 @@ public class Snake extends Mob {
 		movement = new Vector2(0, 0);
 		ai.setState(SnakeAnimationType.WINDERING.ID);	//if it is not idling, it better be moving!
 //		ai.setState(SnakeAnimationType.ATTACK.ID);
+		//line of sight setup
+		Vector2 foreHeadPos = new Vector2().set(sprite.getWidth()/2, sprite.getHeight()/2);	//supposed to be its head but set it to be casting from its tummy instead :)
+		Vector2 furthestFrontSightPos = new Vector2().set(sprite.getX() - sprite.getWidth()*2, sprite.getY() + sprite.getHeight());	//yes, it can only see so much!
+		losFront = new SnakeGuard(foreHeadPos, furthestFrontSightPos);
 	}
 
 	private AI ai;
@@ -66,6 +74,18 @@ public class Snake extends Mob {
 	MobAnimation snakeAnimation;
 	Animation nativeAnimation;
 	TextureRegion[] windingRegionsArray;
+	private SnakeGuard losFront;
+	private SnakeGuard losLeft;
+	private SnakeGuard losRight;
+	public RendererDebug shapeRenderer;	//it will be populated only during debug
+	
+	public SnakeGuard getLosFront() {
+		return losFront;
+	}
+
+	public void setLosFront(SnakeGuard losFront) {
+		this.losFront = losFront;
+	}
 
 	public float getWinderingSpeed() {
 		return winderingSpeed;
@@ -83,6 +103,15 @@ public class Snake extends Mob {
 		this.directionChangeSpeed = directionChangeSpeed;
 	}
 
+	@Override
+	public void draw (SpriteBatch batch) {
+		super.draw(batch);
+		
+		if(shapeRenderer != null) {
+			((RendererDebug)shapeRenderer).render(batch);
+		}
+	}
+	
 	@Override
 	public void move (Vector2 movement) {
 		super.move(movement);

@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Game extends ApplicationAdapter {
 
-	private static SpriteBatch batch;
+	protected static SpriteBatch batch;
 
 	private static GameScreen screen;
 	private static GameScreen lastScreen;
