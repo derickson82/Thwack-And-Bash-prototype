@@ -1,5 +1,6 @@
-package thwack.and.bash.game;
+package thwack.and.bash.game.test;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -8,11 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import thwack.and.bash.game.Game;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.screen.GameScreen;
 import thwack.and.bash.game.screen.PlayScreen;
-import thwack.and.bash.game.test.RendererDebug;
+import thwack.and.bash.game.util.Util.Meters;
 import thwack.and.bash.game.util.Util.Objects;
+import thwack.and.bash.game.util.Util.Pixels;
 
 public class GameDebug extends Game implements GameScreen {
 
@@ -56,8 +59,19 @@ public class GameDebug extends Game implements GameScreen {
 	public void drawLine(ShapeRenderer targetGO, Vector2 start, Vector2 end) {
 		targetGO.begin(ShapeType.Line);
 		targetGO.identity();
+		float dx = Meters.toPixels(start.x);
+		float dy = Meters.toPixels(start.y);
+		start.x = dx;
+		start.y = dy;
+		end.x = dx - snake.getSprite().getWidth()*4/3;
+		end.y = dy - snake.getSprite().getHeight()*4/3;
 		targetGO.line(start, end);
 		targetGO.end();
+		
+//		targetGO.begin(ShapeType.Filled);
+//		targetGO.identity();
+//		targetGO.box(Meters.toPixels(start.x), Meters.toPixels(start.y), 0, snake.getSprite().getWidth()/2, snake.getSprite().getHeight()/2, 0);
+//		targetGO.end();
 	}
 
 	@Override
@@ -72,9 +86,10 @@ public class GameDebug extends Game implements GameScreen {
 
 		renderer.setProjectionMatrix(batch.getProjectionMatrix());
 		renderer.setTransformMatrix(batch.getTransformMatrix());
+        renderer.translate(snake.getX(), snake.getY(), 0);
 
 		// review snake los
-		drawLine(renderer, snake.getLosFront().getStartLOS(), snake
+		drawLine(renderer, snake.getPosition(), snake
 				.getLosFront().getEndLOS());
 		//renderer.rect(0, 0, getWidth(), getHeight());
 

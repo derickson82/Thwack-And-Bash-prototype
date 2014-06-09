@@ -2,11 +2,11 @@
 package thwack.and.bash.game.screen;
 
 import thwack.and.bash.game.Game;
-import thwack.and.bash.game.GameDebug;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.level.Level;
+import thwack.and.bash.game.test.GameDebug;
 import thwack.and.bash.game.ui.GameUI;
 import thwack.and.bash.game.util.Util.Box2D;
 import thwack.and.bash.game.util.Util.Objects;
