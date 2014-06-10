@@ -77,7 +77,6 @@ public class Snake extends Mob {
 	private SnakeGuard losFront;
 	private SnakeGuard losLeft;
 	private SnakeGuard losRight;
-	public RendererDebug shapeRenderer;	//it will be populated only during debug
 	
 	public SnakeGuard getLosFront() {
 		return losFront;
@@ -106,10 +105,6 @@ public class Snake extends Mob {
 	@Override
 	public void draw (SpriteBatch batch) {
 		super.draw(batch);
-		
-		if(shapeRenderer != null) {
-			((RendererDebug)shapeRenderer).render(batch);
-		}
 	}
 	
 	@Override

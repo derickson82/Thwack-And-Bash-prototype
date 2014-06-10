@@ -35,6 +35,10 @@ public class PlayScreen implements GameScreen {
 	public Snake getSnake() {
 		return snake;
 	}
+	
+	public void setSnake(Snake snake) {
+		this.snake = snake;
+	}
 
 	@Override
 	public void update (float delta) {

@@ -25,7 +25,7 @@ public class GameDebug extends Game implements GameScreen {
 
 	class SnakeShapeRenderer extends ShapeRenderer implements RendererDebug {
 		public void render(SpriteBatch batch) {
-			draw((ShapeRenderer)snake.shapeRenderer, batch, 1);
+			draw((ShapeRenderer)((SnakeDebug)snake).shapeRenderer, batch, 1);
 		}
 	}
 	
@@ -41,9 +41,11 @@ public class GameDebug extends Game implements GameScreen {
 		// slows you down! :)
 		screen = new PlayScreen();
 		setScreen(screen);
-		snake = ((PlayScreen) screen).getSnake();
-		snake.shapeRenderer = new SnakeShapeRenderer();	//note: it is snake own shapeRenderer, that is the trick! ;)
-		((ShapeRenderer)snake.shapeRenderer).setColor(Color.RED);
+		Snake realSnake = ((PlayScreen) screen).getSnake();
+		snake = new SnakeDebug(realSnake.getCollisionBody());
+		((PlayScreen) screen).setSnake(snake);	//replace with fake snake!
+		((SnakeDebug)snake).shapeRenderer = new SnakeShapeRenderer();	//note: it is snake own shapeRenderer, that is the trick! ;)
+		((ShapeRenderer)((SnakeDebug)snake).shapeRenderer).setColor(Color.RED);
 		// speed up for test ;)
 		if (snake != null) {
 			snake.setWinderingSpeed(snake.getWinderingSpeed() * 10);
