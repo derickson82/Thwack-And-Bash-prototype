@@ -69,6 +69,20 @@ public class GameDebug extends Game implements GameScreen {
 		end.y = dy - snake.getSprite().getHeight()*4/3;
 		targetGO.line(start, end);
 		targetGO.end();
+
+		targetGO.begin(ShapeType.Line);
+		targetGO.identity();
+		//TODO just test here for now
+		snake.getLosFront().setStartLOS(start);
+		snake.getLosFront().setEndLOS(end);
+		//TODO just test here for now
+		start.x = Meters.toPixels(snake.getLosFront().getCollision().x);
+		start.y = Meters.toPixels(snake.getLosFront().getCollision().y);
+		end.x = Meters.toPixels(snake.getLosFront().getNormal().x);
+		end.y = Meters.toPixels(snake.getLosFront().getNormal().y);
+		targetGO.line(start, end);		
+		targetGO.end();
+		
 		
 //		targetGO.begin(ShapeType.Filled);
 //		targetGO.identity();

@@ -18,6 +18,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class Snake extends Mob {
 
@@ -27,6 +29,14 @@ public class Snake extends Mob {
 	final int TILE_SIZE = 32;	//this generally is fixed during the game and could be retrieved from a common constant
 	final float PI = 3.1415f;
 	
+	public World getWorld() {
+		return world;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
+	}
+
 	public static int getSurWidth() {
 		return surWidth;
 	}
@@ -77,7 +87,8 @@ public class Snake extends Mob {
 	private SnakeGuard losFront;
 	private SnakeGuard losLeft;
 	private SnakeGuard losRight;
-	
+	private World world;
+
 	public SnakeGuard getLosFront() {
 		return losFront;
 	}
@@ -135,6 +146,12 @@ public class Snake extends Mob {
 		if (time >= 1) {
 			updateAI(delta);
 			time = 0;
+		}
+		
+		if(world != null) {
+			world.rayCast(losFront, losFront.getStartLOS(), losFront.getEndLOS());
+		} else {
+			System.out.println("World is empty or null. Collision detection would not work!");
 		}
 		move(movement);
 	}

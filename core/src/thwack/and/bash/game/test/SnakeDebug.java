@@ -27,6 +27,8 @@ public class SnakeDebug extends Snake {
 	public SnakeDebug(CollisionBody collisionBody) {
 		super(collisionBody);
 		// TODO Auto-generated constructor stub
+		
+		setWorld(collisionBody.getBody().getWorld());
 	}
 
 	@Override

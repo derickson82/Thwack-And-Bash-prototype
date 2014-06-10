@@ -51,6 +51,8 @@ public class SnakeGuard implements RayCastCallback {
 		System.out.println("collision point = [" + collision.x + "," + collision.y + "]");
 		SnakeGuard.this.normal.set(normal).add(point);
 		
+		//collision point = [2.1652417,31.0] seems to be the last visible contact for the 210 direction
+
 		return NEAREST;
 	}
 
