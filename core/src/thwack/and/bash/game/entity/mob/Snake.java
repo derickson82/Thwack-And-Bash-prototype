@@ -8,8 +8,8 @@ import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.collision.SnakeGuard;
 import thwack.and.bash.game.entity.mob.ai.AI;
-import thwack.and.bash.game.test.RendererDebug;
 import thwack.and.bash.game.util.Util;
+import thwack.and.bash.game.util.Util.Meters;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,8 +17,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Snake extends Mob {
@@ -60,7 +60,9 @@ public class Snake extends Mob {
 		movement = new Vector2(0, 0);
 		ai.setState(SnakeAnimationType.WINDERING.ID);	//if it is not idling, it better be moving!
 //		ai.setState(SnakeAnimationType.ATTACK.ID);
+
 		//line of sight setup
+		setWorld(collisionBody.getBody().getWorld());
 		Vector2 foreHeadPos = new Vector2().set(sprite.getWidth()/2, sprite.getHeight()/2);	//supposed to be its head but set it to be casting from its tummy instead :)
 		Vector2 furthestFrontSightPos = new Vector2().set(sprite.getX() - sprite.getWidth()*2, sprite.getY() + sprite.getHeight());	//yes, it can only see so much!
 		losFront = new SnakeGuard(foreHeadPos, furthestFrontSightPos);
@@ -116,8 +118,28 @@ public class Snake extends Mob {
 	@Override
 	public void draw (SpriteBatch batch) {
 		super.draw(batch);
+		
+		handleCollision(getPosition(), losFront.getEndLOS());
 	}
 	
+	public void handleCollision(Vector2 start, Vector2 end) {
+		//LOS
+		float dx = Meters.toPixels(start.x);
+		float dy = Meters.toPixels(start.y);
+		start.x = dx;
+		start.y = dy;
+		end.x = dx - getSprite().getWidth()*4/3;
+		end.y = dy - getSprite().getHeight()*4/3;
+
+		//collision point with normal line
+		getLosFront().setStartLOS(start);
+		getLosFront().setEndLOS(end);
+		start.x = Meters.toPixels(getLosFront().getCollision().x);
+		start.y = Meters.toPixels(getLosFront().getCollision().y);
+		end.x = Meters.toPixels(getLosFront().getNormal().x);
+		end.y = Meters.toPixels(getLosFront().getNormal().y);
+	}
+
 	@Override
 	public void move (Vector2 movement) {
 		super.move(movement);

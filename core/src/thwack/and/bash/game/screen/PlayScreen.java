@@ -97,7 +97,6 @@ public class PlayScreen implements GameScreen {
 				new Vector2(Snake.getSurWidth(), Snake.getSurHeight() /* TODO will get the real one one day! */), //initial position
 				new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 				world));
-		snake.setWorld(world);
 
 		gameUI = new GameUI();
 

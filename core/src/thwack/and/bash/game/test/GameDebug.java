@@ -59,6 +59,7 @@ public class GameDebug extends Game implements GameScreen {
 	}
 
 	public void drawLine(ShapeRenderer targetGO, Vector2 start, Vector2 end) {
+		//drawing LOS
 		targetGO.begin(ShapeType.Line);
 		targetGO.identity();
 		float dx = Meters.toPixels(start.x);
@@ -70,12 +71,11 @@ public class GameDebug extends Game implements GameScreen {
 		targetGO.line(start, end);
 		targetGO.end();
 
+		//drawing collision point with normal line
 		targetGO.begin(ShapeType.Line);
 		targetGO.identity();
-		//TODO just test here for now
 		snake.getLosFront().setStartLOS(start);
 		snake.getLosFront().setEndLOS(end);
-		//TODO just test here for now
 		start.x = Meters.toPixels(snake.getLosFront().getCollision().x);
 		start.y = Meters.toPixels(snake.getLosFront().getCollision().y);
 		end.x = Meters.toPixels(snake.getLosFront().getNormal().x);
@@ -102,11 +102,10 @@ public class GameDebug extends Game implements GameScreen {
 
 		renderer.setProjectionMatrix(batch.getProjectionMatrix());
 		renderer.setTransformMatrix(batch.getTransformMatrix());
-        renderer.translate(snake.getX(), snake.getY(), 0);
+//        renderer.translate(snake.getX(), snake.getY(), 0);
 
 		// review snake los
-		drawLine(renderer, snake.getPosition(), snake
-				.getLosFront().getEndLOS());
+		drawLine(renderer, snake.getPosition(), snake.getLosFront().getEndLOS());
 		//renderer.rect(0, 0, getWidth(), getHeight());
 
 		batch.begin();

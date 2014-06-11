@@ -1,5 +1,8 @@
 package thwack.and.bash.game.collision;
 
+import thwack.and.bash.game.util.Util.Meters;
+
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
@@ -42,7 +45,7 @@ public class SnakeGuard implements RayCastCallback {
 	public Vector2 getNormal() {
 		return normal;
 	}
-
+	
 	@Override
 	public float reportRayFixture(Fixture fixture, Vector2 point,
 			Vector2 normal, float fraction) {
