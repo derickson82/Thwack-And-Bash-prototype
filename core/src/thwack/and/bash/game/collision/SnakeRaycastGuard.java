@@ -55,6 +55,9 @@ public class SnakeRaycastGuard implements SnakeGuard, RayCastCallback {
 	public float reportRayFixture(Fixture fix, Vector2 point,
 			Vector2 normal, float fraction) {
 		
+        if (fix.getFilterData().categoryBits == 0)
+		    return NO_MORE_HIT_RESULTS;	//don't give a shit
+
 		collision.set(point);
 		//collision point = [2.1652417,31.0] seems to be the last visible contact for the 210 direction
 		SnakeRaycastGuard.this.normal.set(normal).add(point);
@@ -67,7 +70,7 @@ public class SnakeRaycastGuard implements SnakeGuard, RayCastCallback {
 		if (fix.getBody().getUserData().equals("tile")) {
 			System.out.println("tile collision point = [" + collision.x + "," + collision.y + "]");
             visible = false;
-		    return NO_MORE_HIT_RESULTS;	//give me the rest of the current hit
+		    return NO_MORE_HIT_RESULTS;	//don't give a shit
 		}
 
 		return NEAREST_ONLY;
