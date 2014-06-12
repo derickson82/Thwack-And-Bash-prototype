@@ -67,20 +67,21 @@ public class GameDebug extends Game implements GameScreen {
 		start.x = dx;
 		start.y = dy;
 		end.x = dx - snake.getSprite().getWidth()*4/3;
-		end.y = dy - snake.getSprite().getHeight()*4/3;
+//		end.y = dy - snake.getSprite().getHeight()*4/3;
+		end.y = dy;
 		targetGO.line(start, end);
 		targetGO.end();
 
 		//drawing collision point with normal line
 		targetGO.begin(ShapeType.Line);
 		targetGO.identity();
-		snake.getLosFront().setStartLOS(start);
-		snake.getLosFront().setEndLOS(end);
-		start.x = Meters.toPixels(snake.getLosFront().getCollision().x);
-		start.y = Meters.toPixels(snake.getLosFront().getCollision().y);
-		end.x = Meters.toPixels(snake.getLosFront().getNormal().x);
-		end.y = Meters.toPixels(snake.getLosFront().getNormal().y);
-		targetGO.line(start, end);		
+//		snake.getLosFront().setStartLOS(start);
+//		snake.getLosFront().setEndLOS(end);
+//		start.x = Meters.toPixels(snake.getLosFront().getCollision().x/2);
+//		start.y = Meters.toPixels(snake.getLosFront().getCollision().y/2);
+//		end.x = Meters.toPixels(snake.getLosFront().getNormal().x/2);
+//		end.y = Meters.toPixels(snake.getLosFront().getNormal().y/2);
+//		targetGO.line(start, end);		
 		targetGO.end();
 		
 		
@@ -106,9 +107,21 @@ public class GameDebug extends Game implements GameScreen {
 
 		// review snake los
 		drawLine(renderer, snake.getPosition(), snake.getLosFront().getEndLOS());
+//		drawLine(renderer, snake.getLosFront().getStartLOS(), snake.getLosFront().getEndLOS());
 		//renderer.rect(0, 0, getWidth(), getHeight());
 
+		drawCross(renderer, ((Vector2)snake.getLosFront().getCollision()).x, ((Vector2)snake.getLosFront().getCollision()).y);
+
 		batch.begin();
+	}
+
+	public void drawCross(ShapeRenderer shapeRenderer, float x, float y) {
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.identity();
+		shapeRenderer.setColor(255, 0, 0, 0.5f);
+		shapeRenderer.line(x - 10, y, x + 10, y); // horizontal line
+		shapeRenderer.line(x, y + 10, x, y - 10); // vertical line
+		shapeRenderer.end();
 	}
 
 	@Override

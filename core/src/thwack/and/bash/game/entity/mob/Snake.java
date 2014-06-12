@@ -7,6 +7,7 @@ import thwack.and.bash.game.animation.SnakeWinding;
 import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.collision.SnakeGuard;
+import thwack.and.bash.game.collision.SnakeRaycastGuard;
 import thwack.and.bash.game.entity.mob.ai.AI;
 import thwack.and.bash.game.util.Util;
 import thwack.and.bash.game.util.Util.Meters;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Snake extends Mob {
@@ -65,7 +67,7 @@ public class Snake extends Mob {
 		setWorld(collisionBody.getBody().getWorld());
 		Vector2 foreHeadPos = new Vector2().set(sprite.getWidth()/2, sprite.getHeight()/2);	//supposed to be its head but set it to be casting from its tummy instead :)
 		Vector2 furthestFrontSightPos = new Vector2().set(sprite.getX() - sprite.getWidth()*2, sprite.getY() + sprite.getHeight());	//yes, it can only see so much!
-		losFront = new SnakeGuard(foreHeadPos, furthestFrontSightPos);
+		losFront = new SnakeRaycastGuard(foreHeadPos, furthestFrontSightPos);	//TODO this is the crapiest guard ever invented!
 	}
 
 	private AI ai;
@@ -87,8 +89,8 @@ public class Snake extends Mob {
 	Animation nativeAnimation;
 	TextureRegion[] windingRegionsArray;
 	private SnakeGuard losFront;
-	private SnakeGuard losLeft;
-	private SnakeGuard losRight;
+//	private SnakeGuard losLeft;
+//	private SnakeGuard losRight;
 	private World world;
 
 	public SnakeGuard getLosFront() {
@@ -119,9 +121,10 @@ public class Snake extends Mob {
 	public void draw (SpriteBatch batch) {
 		super.draw(batch);
 		
-		handleCollision(getPosition(), losFront.getEndLOS());
+//		handleCollision(getPosition(), losFront.getEndLOS());
 	}
 	
+	/** TODO this cause box2d to crash !!! */
 	public void handleCollision(Vector2 start, Vector2 end) {
 		//LOS
 		float dx = Meters.toPixels(start.x);
@@ -133,11 +136,11 @@ public class Snake extends Mob {
 
 		//collision point with normal line
 		getLosFront().setStartLOS(start);
-		getLosFront().setEndLOS(end);
-		start.x = Meters.toPixels(getLosFront().getCollision().x);
-		start.y = Meters.toPixels(getLosFront().getCollision().y);
-		end.x = Meters.toPixels(getLosFront().getNormal().x);
-		end.y = Meters.toPixels(getLosFront().getNormal().y);
+		getLosFront().setStartLOS(end);
+		start.x = Meters.toPixels(((Vector2)getLosFront().getCollision()).x);
+		start.y = Meters.toPixels(((Vector2)getLosFront().getCollision()).y);
+		end.x = Meters.toPixels(((Vector2)getLosFront().getNormal()).x);
+		end.y = Meters.toPixels(((Vector2)getLosFront().getNormal()).y);
 	}
 
 	@Override
@@ -171,9 +174,10 @@ public class Snake extends Mob {
 		}
 		
 		if(world != null) {
-			world.rayCast(losFront, losFront.getStartLOS(), losFront.getEndLOS());
+			if(losFront == null) System.err.println("Guard is empty or null");
+			world.rayCast((RayCastCallback) losFront, losFront.getStartLOS(), losFront.getEndLOS());
 		} else {
-			System.out.println("World is empty or null. Collision detection would not work!");
+			System.err.println("World is empty or null. Collision detection would not work!");
 		}
 		move(movement);
 	}

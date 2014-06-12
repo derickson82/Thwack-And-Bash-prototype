@@ -6,7 +6,7 @@ import thwack.and.bash.game.animation.SnakeChangingDirection;
 import thwack.and.bash.game.animation.SnakeWinding;
 import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
-import thwack.and.bash.game.collision.SnakeGuard;
+import thwack.and.bash.game.collision.SnakeRaycastGuard;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.entity.mob.ai.AI;
 import thwack.and.bash.game.test.RendererDebug;
