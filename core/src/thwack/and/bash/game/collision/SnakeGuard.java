@@ -10,6 +10,8 @@ import com.badlogic.gdx.physics.box2d.RayCastCallback;
 public class SnakeGuard implements RayCastCallback {
 
 	private static final int NEAREST = -1;
+	private static final int NONE = 0;
+
 	/**
 	 * LOS = Line of sight
 	 * Collision = current collision point
@@ -47,13 +49,22 @@ public class SnakeGuard implements RayCastCallback {
 	}
 	
 	@Override
-	public float reportRayFixture(Fixture fixture, Vector2 point,
+	public float reportRayFixture(Fixture fix, Vector2 point,
 			Vector2 normal, float fraction) {
 		
 		collision.set(point);
 		System.out.println("collision point = [" + collision.x + "," + collision.y + "]");
 		SnakeGuard.this.normal.set(normal).add(point);
 		
+		if (fix!=null){
+			if (fix.getBody()!=null){
+				if (fix.getBody().getUserData()!=null){
+//					if (((UserData)fix.getBody().getUserData()).id > -1){
+						return NONE;
+//					}
+				}							
+			}
+		}
 		//collision point = [2.1652417,31.0] seems to be the last visible contact for the 210 direction
 
 		return NEAREST;
