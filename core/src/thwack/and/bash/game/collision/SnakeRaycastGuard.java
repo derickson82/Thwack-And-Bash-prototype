@@ -3,6 +3,7 @@ package thwack.and.bash.game.collision;
 import thwack.and.bash.game.entity.Entity;
 import thwack.and.bash.game.util.Util.Meters;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -62,13 +63,13 @@ public class SnakeRaycastGuard implements SnakeGuard, RayCastCallback {
 		//collision point = [2.1652417,31.0] seems to be the last visible contact for the 210 direction
 		SnakeRaycastGuard.this.normal.set(normal).add(point);
 
-		if (fix.getBody().getUserData().equals("player")) {
-			System.out.println("player collision point = [" + collision.x + "," + collision.y + "]");
+		if (fix.getBody().getUserData().equals(SnakeCollisionHelper.PLAYER_ID)) {
+			Gdx.app.log(this.getClass().getName(), "player collision point = [" + collision.x + "," + collision.y + "]");
 		    return fraction;	//give me the rest of the current hit
 		}
 
 		if (fix.getBody().getUserData().equals("tile")) {
-			System.out.println("tile collision point = [" + collision.x + "," + collision.y + "]");
+			Gdx.app.log(this.getClass().getName(), "tile collision point = [" + collision.x + "," + collision.y + "]");
             visible = false;
 		    return NO_MORE_HIT_RESULTS;	//don't give a shit
 		}

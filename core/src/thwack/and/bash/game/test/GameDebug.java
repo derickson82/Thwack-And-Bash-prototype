@@ -103,14 +103,12 @@ public class GameDebug extends Game implements GameScreen {
 
 		renderer.setProjectionMatrix(batch.getProjectionMatrix());
 		renderer.setTransformMatrix(batch.getTransformMatrix());
-//        renderer.translate(snake.getX(), snake.getY(), 0);
 
 		// review snake los
-		drawLine(renderer, snake.getPosition(), snake.getLosFront().getEndLOS());
-//		drawLine(renderer, snake.getLosFront().getStartLOS(), snake.getLosFront().getEndLOS());
+//		drawLine(renderer, snake.getPosition(), snake.getLosFront().getEndLOS());
 		//renderer.rect(0, 0, getWidth(), getHeight());
 
-		drawCross(renderer, ((Vector2)snake.getLosFront().getCollision()).x, ((Vector2)snake.getLosFront().getCollision()).y);
+//		drawCross(renderer, ((Vector2)snake.getLosFront().getCollision()).x, ((Vector2)snake.getLosFront().getCollision()).y);
 
 		batch.begin();
 	}
