@@ -2,11 +2,11 @@
 package thwack.and.bash.game.screen;
 
 import thwack.and.bash.game.Game;
-import thwack.and.bash.game.GameDebug;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.level.Level;
+import thwack.and.bash.game.test.GameDebug;
 import thwack.and.bash.game.ui.GameUI;
 import thwack.and.bash.game.util.Util.Box2D;
 import thwack.and.bash.game.util.Util.Objects;
@@ -27,13 +27,22 @@ public class PlayScreen implements GameScreen {
 	private Snake snake;
 	private Player player;
 	private GameUI gameUI;
+	private World world;
 
 	private Box2DDebugRenderer box2DRenderer;
 
 	private FPSLogger fpsLogger;
 
+	public void setSnake(Snake snake) {
+		this.snake = snake;
+	}
+
 	public Snake getSnake() {
 		return snake;
+	}
+	
+	public World getWorld() {
+		return world;
 	}
 
 	@Override
@@ -72,7 +81,7 @@ public class PlayScreen implements GameScreen {
 
 		box2DRenderer = new Box2DDebugRenderer();
 
-		World world = new World(new Vector2(0, 0), false);
+		world = new World(new Vector2(0, 0), false);
 
 		player = new Player(Box2D.createSimpleDynamicBody(
 			new Vector2(Pixels.toMeters(Game.getWidth() / 2), Pixels.toMeters(Game.getHeight() / 2)), // Position
@@ -88,7 +97,6 @@ public class PlayScreen implements GameScreen {
 				new Vector2(Snake.getSurWidth(), Snake.getSurHeight() /* TODO will get the real one one day! */), //initial position
 				new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 				world));
-
 
 		gameUI = new GameUI();
 
