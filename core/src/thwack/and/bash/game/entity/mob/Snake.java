@@ -248,14 +248,22 @@ public class Snake extends Mob {
 			getBody().setTransform(m2.getPosition(), toRadian(m2.getAngle())*delta);
 		}
 		
-		if(getBody().getPosition().x < 0) {
-			//reverse the snake direction
-			ai.setState(SnakeAnimationType.REVERSE.ID);
-		}
+//		if(getBody().getPosition().x < 0) {
+//			//reverse the snake direction
+//			ai.setState(SnakeAnimationType.REVERSE.ID);
+//		}
 //		if(getBody().getPosition().y > surHeight/2) {
 //			//reverse the snake direction
 //			movement.set(-movement.x, -movement.y);
 //		}
+		if(((SnakeBox2dGuard)los).isPlayerNearby()) {
+			ai.setState(SnakeAnimationType.ATTACK.ID);
+			//attackCounter = 0;
+		}
+//		else {
+//			ai.setState(SnakeAnimationType.WINDERING.ID);
+//		}
+		else
 		if(lastMovement == movement) {
 			try {
 				doNothing();
@@ -265,6 +273,7 @@ public class Snake extends Mob {
 				e.printStackTrace();
 			}
 		}
+
 		if (idlingCounter > idlingPeriod ) {
 			try {
 				move();
