@@ -58,4 +58,7 @@ nb-configuration.xml
 
 .gradle
 build/
-local.properties 
+/local.properties 
+core/desktop/.classpath 
+core/core/.classpath 
+core/html/.classpath 
