@@ -58,23 +58,29 @@ public class Snake extends Mob {
 		this.surHeight = surHeight;
 	}
 	
+	public AI getAi() {
+		return ai;
+	}
+
 	public Snake(CollisionBody collisionBody) {
 		super(collisionBody);
 		super.initMobAnimation(createMobAnimation());
+		if(collisionBody != null) {
 		collisionBody.getBody().setUserData(SnakeCollisionHelper.SNAKE_ID);
 		collisionBody.getFixture().setUserData(SnakeCollisionHelper.SNAKE_ID);
+		setWorld(collisionBody.getBody().getWorld());
+        world.setContactListener((ContactListener) los);
+		//line of sight setup
+		Vector2 foreHeadPos = new Vector2().set(sprite.getWidth()/2, sprite.getHeight()/2);	//supposed to be its head but set it to be casting from its tummy instead :)
+		Vector2 furthestFrontSightPos = new Vector2().set(sprite.getX() - sprite.getWidth()*2, sprite.getY() + sprite.getHeight());	//yes, it can only see so much!
+//		losFront = new SnakeRaycastGuard(foreHeadPos, furthestFrontSightPos);	//TODO this is the crapiest guard ever invented!
+		los = new SnakeBox2dGuard(foreHeadPos, furthestFrontSightPos);
+		}
 		ai = new AI();
 		movement = new Vector2(0, 0);
 		ai.setState(SnakeAnimationType.WINDERING.ID);	//if it is not idling, it better be moving!
 //		ai.setState(SnakeAnimationType.ATTACK.ID);
 
-		//line of sight setup
-		setWorld(collisionBody.getBody().getWorld());
-		Vector2 foreHeadPos = new Vector2().set(sprite.getWidth()/2, sprite.getHeight()/2);	//supposed to be its head but set it to be casting from its tummy instead :)
-		Vector2 furthestFrontSightPos = new Vector2().set(sprite.getX() - sprite.getWidth()*2, sprite.getY() + sprite.getHeight());	//yes, it can only see so much!
-//		losFront = new SnakeRaycastGuard(foreHeadPos, furthestFrontSightPos);	//TODO this is the crapiest guard ever invented!
-		los = new SnakeBox2dGuard(foreHeadPos, furthestFrontSightPos);
-        world.setContactListener((ContactListener) los);
 	}
 
 	private AI ai;
@@ -210,7 +216,7 @@ public class Snake extends Mob {
 		return radian*180/PI;
 	}
 
-	private void updateAI(float delta) {
+	public void updateAI(float delta) {
 		if (ai.getState() == State.IDLING.STATE) {
 			//mobAnimation.update(delta, STILL_FRAME_FLAG);	//this does not work for some reason, oh well until then
 			idlingCounter++;
@@ -315,7 +321,10 @@ public class Snake extends Mob {
 	}
 
 	private void move() throws Exception {
-		if(snakeAnimation == null) throw new Exception("MobAnimation is null or empty!");
+		if(snakeAnimation == null) {
+			System.err.println("MobAnimation is null or empty!");
+			return;
+		}
 
 		snakeAnimation.beginSettingAnimations();
 		nativeAnimation = new Animation(.1f, windingRegionsArray);
@@ -327,6 +336,7 @@ public class Snake extends Mob {
 
 	@Override
 	public MobAnimation createMobAnimation() {
+		if(Gdx.files != null) {
 		Texture windingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/snake-walking_84x64.png"));
 		TextureRegion[][] windingRegions2DArray = TextureRegion.split(windingRegionsSheet, 84, 64);
 //		TextureRegion[] windingRegionsArray = Util.toArray(windingRegions2DArray, 3, 1);
@@ -334,6 +344,7 @@ public class Snake extends Mob {
 
 //		MobAnimation snakeAnimation = new MobAnimation();
 		snakeAnimation = new MobAnimation();
+		}
 		try {
 			move();
 		} catch (Exception e) {

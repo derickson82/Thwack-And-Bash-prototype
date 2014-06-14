@@ -17,7 +17,9 @@ public abstract class Mob extends Entity {
 
 	protected final void initMobAnimation(MobAnimation mobAnimation){
 		this.mobAnimation = mobAnimation;
-		sprite = new Sprite((mobAnimation.getStartAnimation(0)));
+		if(mobAnimation != null) {
+			sprite = new Sprite((mobAnimation.getStartAnimation(0)));
+		}
 	}
 
 	protected MobAnimation mobAnimation;

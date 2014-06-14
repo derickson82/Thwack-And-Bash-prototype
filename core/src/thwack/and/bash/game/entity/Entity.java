@@ -64,7 +64,9 @@ public abstract class Entity {
 	}
 
 	public void setPosition (Vector2 pos) {
-		getBody().setTransform(pos, getBody().getAngle());
+		if (getBody()!=null) {
+			getBody().setTransform(pos, getBody().getAngle());
+		}
 	}
 
 	public void setPosition (float x, float y) {
@@ -92,7 +94,7 @@ public abstract class Entity {
 	}
 
 	public Body getBody () {
-		return COLLISION_BODY.getBody();
+		return COLLISION_BODY!=null?COLLISION_BODY.getBody():null;
 	}
 
 	public Fixture getFixture () {
