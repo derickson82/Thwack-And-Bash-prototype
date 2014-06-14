@@ -2,8 +2,14 @@ apply plugin: "java"
 
 sourceCompatibility = 1.6
 
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.java.srcDirs = [ "src/", "test/" ]
 
+dependencies {
+	compile 'junit:junit:4.10'
+//	compile 'com.darwinsys:hirondelle-date4j:1.5.1'
+	compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+}
+    
 eclipse.project {
     name = appName + "-core"
 }
