@@ -61,9 +61,14 @@ public class Util {
 	private static final class Init {
 
 		private static final OrthographicCamera createGameCamera () {
-			OrthographicCamera c = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			c.setToOrtho(false);
-			return c;
+			OrthographicCamera ret = null;
+			try {
+				ret = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+				ret.setToOrtho(false);
+			} catch (Exception e) {
+				System.err.println("Util.java unable to create camera, hopefully this is just a run from a unit test! ;)");
+			}
+			return ret;
 		}
 
 		private static final OrthographicCamera createScreenCamera () {
@@ -71,33 +76,59 @@ public class Util {
 		}
 
 		private static final BitmapFont createStandardFont () {
-			return new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+			BitmapFont ret = null;
+			try {
+				ret = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));
+			} catch (Exception e) {
+				System.err.println("Util.java unable to create standard font, hopefully this is just a run from a unit test! ;)");
+			}
+			return ret;
 		}
 
 		private static final TextButtonStyle createBlueTextButtonStyle () {
 			TextButtonStyle blueTextButtonStyle = new TextButtonStyle();
-			blueTextButtonStyle.down = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonDown");
-			blueTextButtonStyle.over = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonOver");
-			blueTextButtonStyle.up = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonUp");
-			blueTextButtonStyle.font = Objects.STANDARD_FONT;
-			blueTextButtonStyle.fontColor = Color.BLACK;
+			try {
+				blueTextButtonStyle.down = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonDown");
+				blueTextButtonStyle.over = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonOver");
+				blueTextButtonStyle.up = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonUp");
+				blueTextButtonStyle.font = Objects.STANDARD_FONT;
+				blueTextButtonStyle.fontColor = Color.BLACK;
+			} catch (Exception e) {
+				System.err.println("Util.java error in createBlueTextButtonStyle(): error="+e+", hopefully this is just a run from a unit test! ;)");
+			}
 			return blueTextButtonStyle;
 		}
 
 		private static final ImageButtonStyle createSlotImageButtonStyle () {
 			ImageButtonStyle slotImageButtonStyle = new ImageButtonStyle();
-			slotImageButtonStyle.up = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonUp");
-			slotImageButtonStyle.over = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonOver");
-			slotImageButtonStyle.disabled = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonDown");
+			try {
+				slotImageButtonStyle.up = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonUp");
+				slotImageButtonStyle.over = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonOver");
+				slotImageButtonStyle.disabled = Objects.MAIN_MENU_SKIN.getDrawable("BlueButtonDown");
+			} catch (Exception e) {
+				System.err.println("Util.java error in createSlotImageButtonStyle(): error="+e+", hopefully this is just a run from a unit test! ;)");
+			}
 			return slotImageButtonStyle;
 		}
 
 		private static final TextureAtlas createMainMenuAtlas () {
-			return new TextureAtlas(Gdx.files.internal("textureatlas/UI/output/mainMenuAtlas.atlas"));
+			TextureAtlas ret = null;
+			try {
+				ret = new TextureAtlas(Gdx.files.internal("textureatlas/UI/output/mainMenuAtlas.atlas"));
+			} catch (Exception e) {
+				System.err.println("Util.java unable to create main menu atlas, hopefully this is just a run from a unit test! ;)");
+			}
+			return ret;
 		}
 
 		private static final Skin createMainMenuSkin () {
-			return new Skin(Objects.MAIN_MENU_ATLAS);
+			Skin ret = null;
+			try {
+				ret = new Skin(Objects.MAIN_MENU_ATLAS);
+			} catch (Exception e) {
+				System.err.println("Util.java unable to create main menu skin, hopefully this is just a run from a unit test! ;)");
+			}
+			return ret;
 		}
 
 	}
@@ -112,7 +143,8 @@ public class Util {
 		 * @return
 		 */
 		public static final CollisionBody createSimpleDynamicBody(Vector2 p, Vector2 s, World w){
-
+			CollisionBody ret = null;
+			try {
 			BodyDef bodyDef = new BodyDef();
 			bodyDef.type = BodyType.DynamicBody;
 			bodyDef.position.set(p.x, p.y);
@@ -126,7 +158,11 @@ public class Util {
 			fixtureDef.friction = 0;
 			fixtureDef.restitution = 0;
 
-			return new CollisionBody(bodyDef, fixtureDef, w);
+			ret = new CollisionBody(bodyDef, fixtureDef, w);
+			} catch (Exception e) {
+				System.err.println("Util.java error in createSimpleDynamicBody(): error="+e+", hopefully this is just a run from a unit test! ;)");
+			}
+			return ret;
 		}
 
 	}

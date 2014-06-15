@@ -15,13 +15,13 @@ public class DesktopLauncher {
 		config.resizable = false;
 		config.useGL30 = false;
 		config.vSyncEnabled = false;
-//		new LwjglApplication(new Game(), config);
+		new LwjglApplication(new Game(), config);
 		/**
 		 * You have two options to make this work:
 		 * 1. Comment it (the code below) out and use the real Game class (the code above)!
 		 * 2. Add the "test/" folder and use it as a source folder :)
 		 * The choice is yours!
 		 */
-		new LwjglApplication(new GameDebug(), config);	//use this if you like! :)
+//		new LwjglApplication(new GameDebug(), config);	//use this if you like! :)
 	}
 }

@@ -5,6 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public interface RendererDebug {
 
 	//just this one for now
-	public void render(SpriteBatch batch);
+	public void render(SpriteBatch batch, GameDebug gameDebug, MobDebug mobDebug);
 
 }

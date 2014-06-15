@@ -336,7 +336,7 @@ public class Snake extends Mob {
 
 	@Override
 	public MobAnimation createMobAnimation() {
-		if(Gdx.files != null) {
+		try {
 		Texture windingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/snake-walking_84x64.png"));
 		TextureRegion[][] windingRegions2DArray = TextureRegion.split(windingRegionsSheet, 84, 64);
 //		TextureRegion[] windingRegionsArray = Util.toArray(windingRegions2DArray, 3, 1);
@@ -344,6 +344,9 @@ public class Snake extends Mob {
 
 //		MobAnimation snakeAnimation = new MobAnimation();
 		snakeAnimation = new MobAnimation();
+		} catch (Exception e) {
+			//allow headless run
+			System.err.println("Snake.java: error="+e+", hopefully this is just a run from a unit test! ;)");
 		}
 		try {
 			move();

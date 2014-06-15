@@ -20,9 +20,26 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
-public class SnakeDebug extends Snake {
+public class SnakeDebug extends Snake implements MobDebug {
 
-	public RendererDebug shapeRenderer;
+	private GameDebug gameDebug;
+	private RendererDebug shapeRenderer;
+	
+	public GameDebug getGameDebug() {
+		return gameDebug;
+	}
+
+	public void setGameDebug(GameDebug gameDebug) {
+		this.gameDebug = gameDebug;
+	}
+	
+	public RendererDebug getShapeRenderer() {
+		return shapeRenderer;
+	}
+
+	public void setShapeRenderer(RendererDebug shapeRenderer) {
+		this.shapeRenderer = shapeRenderer;
+	}
 
 	public SnakeDebug(CollisionBody collisionBody) {
 		super(collisionBody);
@@ -33,8 +50,13 @@ public class SnakeDebug extends Snake {
 	public void draw (SpriteBatch batch) {
 		super.draw(batch);
 		
+		if(gameDebug == null) {
+			System.err.println(this.getClass().getName() + ": Game debug is null or empty!");
+			System.exit(0);
+		}
+
 		if(shapeRenderer != null) {
-			((RendererDebug)shapeRenderer).render(batch);
+			((RendererDebug)shapeRenderer).render(batch, gameDebug, this);
 		}
 	}
 

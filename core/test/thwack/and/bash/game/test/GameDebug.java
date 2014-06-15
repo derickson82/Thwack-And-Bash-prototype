@@ -22,16 +22,10 @@ public class GameDebug extends Game implements GameScreen {
 	// private Stage stage;
 	// private ScreenViewport viewport;
 	private Snake snake;
-
-	class SnakeShapeRenderer extends ShapeRenderer implements RendererDebug {
-		public void render(SpriteBatch batch) {
-			draw((ShapeRenderer)((SnakeDebug)snake).shapeRenderer, batch, 1);
-		}
-	}
 	
 	@Override
 	public void create() {
-		super.create();
+//		super.create();
 
 		// viewport = new ScreenViewport(Objects.SCREEN_CAMERA);
 		// stage = new Stage(viewport);
@@ -43,9 +37,10 @@ public class GameDebug extends Game implements GameScreen {
 		setScreen(screen);
 		Snake realSnake = ((PlayScreen) screen).getSnake();
 		snake = new SnakeDebug(realSnake.getCollisionBody());
+		((SnakeDebug)snake).setGameDebug(this);
 		((PlayScreen) screen).setSnake(snake);	//replace with fake snake!
-		((SnakeDebug)snake).shapeRenderer = new SnakeShapeRenderer();	//note: it is snake own shapeRenderer, that is the trick! ;)
-		((ShapeRenderer)((SnakeDebug)snake).shapeRenderer).setColor(Color.RED);
+		((SnakeDebug)snake).setShapeRenderer(new SnakeShapeRenderer());	//note: it is snake own shapeRenderer, that is the trick! ;)
+		((ShapeRenderer)((SnakeDebug)snake).getShapeRenderer()).setColor(Color.RED);
 		// speed up for test ;)
 		if (snake != null) {
 			snake.setWinderingSpeed(snake.getWinderingSpeed() * 10);

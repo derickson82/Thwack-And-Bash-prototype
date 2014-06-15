@@ -23,11 +23,11 @@ import com.badlogic.gdx.physics.box2d.World;
 //ALL THIS CODE IS USED FOR THE GAMES PROTOTYPE, IT'S NOT FINAL
 public class PlayScreen implements GameScreen {
 
-	private Bat bat;
-	private Snake snake;
-	private Player player;
+	protected Bat bat;
+	protected Snake snake;
+	protected Player player;
 	private GameUI gameUI;
-	private World world;
+	protected World world;
 
 	private Box2DDebugRenderer box2DRenderer;
 
@@ -41,6 +41,14 @@ public class PlayScreen implements GameScreen {
 		return snake;
 	}
 	
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
 	public World getWorld() {
 		return world;
 	}

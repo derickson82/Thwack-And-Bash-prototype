@@ -54,11 +54,23 @@ public class Game extends ApplicationAdapter {
 	}
 
 	public static float getWidth () {
-		return Objects.SCREEN_CAMERA.viewportWidth;
+		float ret = 0;
+		try {
+			ret = Objects.SCREEN_CAMERA.viewportWidth;
+		} catch (Exception e) {
+			System.err.println("Util.java unable to get game width from camera, hopefully this is just a run from a unit test! ;)");
+		}
+		return ret;
 	}
 
 	public static float getHeight () {
-		return Objects.GAME_CAMERA.viewportHeight;
+		float ret = 0;
+		try {
+			ret = Objects.GAME_CAMERA.viewportHeight;
+		} catch (Exception e) {
+			System.err.println("Util.java unable to get game height from camera, hopefully this is just a run from a unit test! ;)");
+		}
+		return ret;
 	}
 
 	@Override
