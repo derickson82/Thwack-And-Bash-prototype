@@ -1,4 +1,4 @@
-package thwack.and.bash.game.test;
+package thwack.and.bash.game.desktop;
 
 import static org.junit.Assert.*;
 
@@ -13,6 +13,7 @@ import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.screen.GameScreen;
 import thwack.and.bash.game.screen.PlayScreen;
+import thwack.and.bash.game.test.GameDebug;
 import thwack.and.bash.game.util.Util.Box2D;
 import thwack.and.bash.game.util.Util.Pixels;
 
@@ -24,7 +25,8 @@ import com.badlogic.gdx.physics.box2d.World;
 public class SnakeTest {
 
 	public class Globals {
-		public static final float NORMAL_TICK_RATE = 1f/60;	//in fps
+		public static final float NORMAL_TICK_RATE = 1f/30;	//in fps
+		public static final float HIGH_TICK_RATE = 1f/60;	//in fps
 	}
 
 	@BeforeClass
