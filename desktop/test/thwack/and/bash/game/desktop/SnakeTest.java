@@ -31,7 +31,6 @@ public class SnakeTest {
 
 	@BeforeClass
 	public static void setupGdx() {
-		//encountered: com.badlogic.gdx.utils.GdxRuntimeException: Couldn't load shared library 'gdx.dll' for target: Windows 8, 32-bit
 		final HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
 		config.renderInterval = Globals.NORMAL_TICK_RATE;
 		new HeadlessApplication(new GameDebug(), config);
