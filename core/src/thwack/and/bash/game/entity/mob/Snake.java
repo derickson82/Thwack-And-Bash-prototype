@@ -33,6 +33,10 @@ public class Snake extends Mob {
 	private static int surHeight = 18;	//gennerally the total rows of the tmx but does not have to be
 	final int TILE_SIZE = 32;	//this generally is fixed during the game and could be retrieved from a common constant
 	final float PI = 3.1415f;
+	float mobWidth = 0;
+	float mobHeight = 0;
+	float mobX = -1;	//initial pos
+	float mobY = -1;	//initial pos
 	
 	public World getWorld() {
 		return world;
@@ -58,6 +62,22 @@ public class Snake extends Mob {
 		this.surHeight = surHeight;
 	}
 	
+	public float getModWidth() {
+		return mobWidth;
+	}
+
+	public void setModWidth(float mobWidth) {
+		this.mobWidth = mobWidth;
+	}
+
+	public float getModHeight() {
+		return mobHeight;
+	}
+
+	public void setModHeight(float mobHeight) {
+		this.mobHeight = mobHeight;
+	}
+
 	public AI getAi() {
 		return ai;
 	}
@@ -70,12 +90,12 @@ public class Snake extends Mob {
 		collisionBody.getFixture().setUserData(SnakeCollisionHelper.SNAKE_ID);
 		setWorld(collisionBody.getBody().getWorld());
         world.setContactListener((ContactListener) los);
+		}
 		//line of sight setup
-		Vector2 foreHeadPos = new Vector2().set(sprite.getWidth()/2, sprite.getHeight()/2);	//supposed to be its head but set it to be casting from its tummy instead :)
-		Vector2 furthestFrontSightPos = new Vector2().set(sprite.getX() - sprite.getWidth()*2, sprite.getY() + sprite.getHeight());	//yes, it can only see so much!
+		Vector2 foreHeadPos = new Vector2().set(mobWidth/2, mobHeight/2);	//supposed to be its head but set it to be casting from its tummy instead :)
+		Vector2 furthestFrontSightPos = new Vector2().set(mobX - mobWidth*2, mobY + mobHeight);	//yes, it can only see so much!
 //		losFront = new SnakeRaycastGuard(foreHeadPos, furthestFrontSightPos);	//TODO this is the crapiest guard ever invented!
 		los = new SnakeBox2dGuard(foreHeadPos, furthestFrontSightPos);
-		}
 		ai = new AI();
 		movement = new Vector2(0, 0);
 		ai.setState(SnakeAnimationType.WINDERING.ID);	//if it is not idling, it better be moving!

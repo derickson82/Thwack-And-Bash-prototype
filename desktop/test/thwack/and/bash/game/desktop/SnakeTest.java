@@ -46,35 +46,34 @@ public class SnakeTest {
 
 	@Test
 	public void testSnakeNearPlayer() {
-		PlayScreen screen = new PlayScreenDebug();
+		PlayScreenDebug screen = new PlayScreenDebug();
 		game.setScreen(screen);
-		Snake realSnake = ((PlayScreen) screen).getSnake();
-		SnakeDebug snake = new SnakeDebug(realSnake.getCollisionBody());
-		((PlayScreen) screen).setSnake(snake);	//replace with fake snake!
-		((SnakeDebug)snake).setShapeRenderer(new SnakeShapeRenderer());	//note: it is snake own shapeRenderer, that is the trick! ;)
-		((ShapeRenderer)((SnakeDebug)snake).getShapeRenderer()).setColor(Color.RED);
-		// speed up for test ;)
-		if (snake != null) {
-			snake.setWinderingSpeed(snake.getWinderingSpeed() * 10);
-			snake.setDirectionChangeSpeed(1000);
-		}
-
-//		World world = new World(new Vector2(0, 0), false);
-//		Snake snake = new Snake(null);
-//		Vector2 sPos = new Vector2();
-//		sPos.x = 10;
-//		sPos.y = 10;
-//		snake.setPosition(sPos);
-//		Player player = new Player(Box2D.createSimpleDynamicBody(
-//				new Vector2(Pixels.toMeters(Game.getWidth() / 2), Pixels.toMeters(Game.getHeight() / 2)), // Position
-//				new Vector2(Pixels.toMeters(35), Pixels.toMeters(46)), // Size
-//				null));
+		screen.show();
+		Snake snake = screen.getSnake();
+		Vector2 sPos = new Vector2();
+		sPos.x = 10;
+		sPos.y = 10;
+		snake.setPosition(sPos);
 		Vector2 pPos = new Vector2();
 		pPos.x = 10;
 		pPos.y = 10;
 		screen.getPlayer().setPosition(pPos);
 		snake.updateAI(1);
 		Assert.assertTrue(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);
+	}
+
+	@Test
+	public void testSnakeNotNearPlayer() {
+		PlayScreenDebug screen = new PlayScreenDebug();
+		game.setScreen(screen);
+		screen.show();
+		Snake snake = screen.getSnake();
+		Vector2 pPos = new Vector2();
+		pPos.x = 10;
+		pPos.y = 10;
+		screen.getPlayer().setPosition(pPos);
+		snake.updateAI(1);
+		Assert.assertFalse(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);
 	}
 
 //	@Test

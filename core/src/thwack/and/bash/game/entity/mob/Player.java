@@ -17,9 +17,14 @@ public class Player extends Mob {
 
 	public Player (CollisionBody collisionBody) {
 		super(collisionBody);
-		super.initMobAnimation(createMobAnimation());
-		collisionBody.getBody().setUserData("player");
-		collisionBody.getFixture().setUserData("player");
+		
+		try {
+			super.initMobAnimation(createMobAnimation());
+			collisionBody.getBody().setUserData("player");
+			collisionBody.getFixture().setUserData("player");
+		} catch (Exception e) {
+			System.err.println("Player.java error="+e+", hopefully this is just a run from a unit test! ;)");
+		}
 	}
 
 	@Override

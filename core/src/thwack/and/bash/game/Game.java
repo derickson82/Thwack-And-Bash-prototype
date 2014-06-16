@@ -25,7 +25,11 @@ public class Game extends ApplicationAdapter {
 			Game.lastScreen = Game.screen;
 		}
 		Game.screen = screen;
-		Game.screen.show();
+		try {
+			Game.screen.show();
+		} catch (Exception e) {
+			System.err.println("Game.java error in setScreen(): error="+e+", hopefully this is just a run from a unit test! ;)");
+		}
 	}
 
 	public static void startLastScreen () {

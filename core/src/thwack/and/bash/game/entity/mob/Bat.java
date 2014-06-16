@@ -68,15 +68,19 @@ public class Bat extends Mob {
 
 	@Override
 	public MobAnimation createMobAnimation () {
-		Texture flyingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/bat_64x62.png"));
-		TextureRegion[][] flyingRegions2DArray = TextureRegion.split(flyingRegionsSheet, 64, 52);
-		TextureRegion[] flyingRegionsArray = Util.toArray(flyingRegions2DArray, 3, 1);
-
 		MobAnimation batAnimation = new MobAnimation();
-		batAnimation.beginSettingAnimations();
-		batAnimation.setAnimation(new Animation(.1f, flyingRegionsArray), BatAnimationType.FLYING.ID);
-		batAnimation.setStillAnimationFrame(1);
-		batAnimation.endSettingAnimations();
+		try {
+			Texture flyingRegionsSheet = new Texture(Gdx.files.internal("textureatlas/play/input/bat_64x62.png"));
+			TextureRegion[][] flyingRegions2DArray = TextureRegion.split(flyingRegionsSheet, 64, 52);
+			TextureRegion[] flyingRegionsArray = Util.toArray(flyingRegions2DArray, 3, 1);
+
+			batAnimation.beginSettingAnimations();
+			batAnimation.setAnimation(new Animation(.1f, flyingRegionsArray), BatAnimationType.FLYING.ID);
+			batAnimation.setStillAnimationFrame(1);
+			batAnimation.endSettingAnimations();
+		} catch (Exception e) {
+			System.err.println("Bat.java error="+e+", hopefully this is just a run from a unit test! ;)");
+		}
 		return batAnimation;
 	}
 
