@@ -24,7 +24,8 @@ public class SnakeDebug extends Snake implements MobDebug {
 
 	private GameDebug gameDebug;
 	private RendererDebug shapeRenderer;
-	
+	private Vector2 position = new Vector2();
+
 	public GameDebug getGameDebug() {
 		return gameDebug;
 	}
@@ -45,6 +46,22 @@ public class SnakeDebug extends Snake implements MobDebug {
 		super(collisionBody);
 		// TODO Auto-generated constructor stub
 	}
+
+	//BEGIN override Entity's
+	@Override
+	public Vector2 getPosition () {
+		return position;
+	}
+
+	public void setPosition (Vector2 pos) {
+		position = pos;
+	}
+
+	public void setPosition (float x, float y) {
+		position.x = x;
+		position.y = y;
+	}
+	//END
 
 	@Override
 	public void draw (SpriteBatch batch) {

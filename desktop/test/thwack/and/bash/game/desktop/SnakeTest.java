@@ -47,7 +47,7 @@ public class SnakeTest {
 	@Test
 	public void testSnakeNearPlayer() {
 		PlayScreenDebug screen = new PlayScreenDebug();
-		game.setScreen(screen);
+		Game.setScreen(screen);
 		screen.show();
 		Snake snake = screen.getSnake();
 		Vector2 sPos = new Vector2();
@@ -59,13 +59,15 @@ public class SnakeTest {
 		pPos.y = 10;
 		screen.getPlayer().setPosition(pPos);
 		snake.updateAI(1);
+//		snake.updateAI(2);
+//		snake.updateAI(3);
 		Assert.assertTrue(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);
 	}
 
-	@Test
+//	@Test
 	public void testSnakeNotNearPlayer() {
 		PlayScreenDebug screen = new PlayScreenDebug();
-		game.setScreen(screen);
+		Game.setScreen(screen);
 		screen.show();
 		Snake snake = screen.getSnake();
 		Vector2 pPos = new Vector2();

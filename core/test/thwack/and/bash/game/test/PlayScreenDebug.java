@@ -35,7 +35,7 @@ public class PlayScreenDebug extends PlayScreen {
 
 		bat = new Bat(null);
 		
-		snake = new Snake(null);
+		snake = new SnakeDebug(null);
 
 //		gameUI = new GameUI();
 

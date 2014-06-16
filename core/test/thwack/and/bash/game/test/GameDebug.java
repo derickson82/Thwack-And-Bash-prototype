@@ -36,11 +36,18 @@ public class GameDebug extends Game implements GameScreen {
 		screen = new PlayScreen();
 		setScreen(screen);
 		Snake realSnake = ((PlayScreen) screen).getSnake();
-		snake = new SnakeDebug(realSnake.getCollisionBody());
+		try {
+			snake = new SnakeDebug(realSnake.getCollisionBody());
+			((SnakeDebug)snake).setShapeRenderer(new SnakeShapeRenderer());	//note: it is snake own shapeRenderer, that is the trick! ;)
+			((ShapeRenderer)((SnakeDebug)snake).getShapeRenderer()).setColor(Color.RED);
+		} catch (Exception e) {
+			System.err.println("GameDebug.java error: " + e + ", hopefully this is just a run from a unit test!");
+			if(snake == null) {
+				snake = new SnakeDebug(null);	//must be from unit test
+			}
+		}
 		((SnakeDebug)snake).setGameDebug(this);
 		((PlayScreen) screen).setSnake(snake);	//replace with fake snake!
-		((SnakeDebug)snake).setShapeRenderer(new SnakeShapeRenderer());	//note: it is snake own shapeRenderer, that is the trick! ;)
-		((ShapeRenderer)((SnakeDebug)snake).getShapeRenderer()).setColor(Color.RED);
 		// speed up for test ;)
 		if (snake != null) {
 			snake.setWinderingSpeed(snake.getWinderingSpeed() * 10);

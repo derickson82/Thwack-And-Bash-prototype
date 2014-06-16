@@ -259,7 +259,13 @@ public class Snake extends Mob {
 			SnakeWinding m1 = new SnakeWinding(movement.x, movement.y);
 			m1.move(winderingSpeed , 210);
 			movement.set(m1.getX()/2, m1.getY()/2);
-		} 
+			Vector2 pos = getPosition();
+			if(pos != null) {
+				Gdx.app.log(this.getClass().getName(), "current pos [" + pos.x + "," + pos.y + "]");
+			} else {
+				Gdx.app.log(this.getClass().getName(), "Snake current position is null/empty!?");
+			}
+		}
 		else {
 			//change direction
 			SnakeChangingDirection m2 = new SnakeChangingDirection(movement.x, movement.y);
@@ -331,7 +337,10 @@ public class Snake extends Mob {
 	}
 
 	private void doNothing() throws Exception {
-		if(snakeAnimation == null) throw new Exception("MobAnimation is null or empty!");
+		if(snakeAnimation == null) {
+			System.err.println("MobAnimation is null or empty!");
+			return;
+		}
 
 		snakeAnimation.beginSettingAnimations();
 		nativeAnimation = new Animation(.1f, windingRegionsArray[STILL_FRAME_INDEX]);
