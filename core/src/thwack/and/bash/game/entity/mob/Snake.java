@@ -86,10 +86,10 @@ public class Snake extends Mob {
 		super(collisionBody);
 		super.initMobAnimation(createMobAnimation());
 		if(collisionBody != null) {
-		collisionBody.getBody().setUserData(SnakeCollisionHelper.SNAKE_ID);
-		collisionBody.getFixture().setUserData(SnakeCollisionHelper.SNAKE_ID);
-		setWorld(collisionBody.getBody().getWorld());
-        world.setContactListener((ContactListener) los);
+			collisionBody.getBody().setUserData(SnakeCollisionHelper.SNAKE_ID);
+			collisionBody.getFixture().setUserData(SnakeCollisionHelper.SNAKE_ID);
+			setWorld(collisionBody.getBody().getWorld());
+	        world.setContactListener((ContactListener) los);
 		}
 		//line of sight setup
 		Vector2 foreHeadPos = new Vector2().set(mobWidth/2, mobHeight/2);	//supposed to be its head but set it to be casting from its tummy instead :)
