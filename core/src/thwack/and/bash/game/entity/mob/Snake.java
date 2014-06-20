@@ -6,10 +6,12 @@ import thwack.and.bash.game.animation.SnakeChangingDirection;
 import thwack.and.bash.game.animation.SnakeWinding;
 import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
+import thwack.and.bash.game.collision.SnakeBoundingBoxGuard;
 import thwack.and.bash.game.collision.SnakeBox2dGuard;
 import thwack.and.bash.game.collision.SnakeCollisionHelper;
 import thwack.and.bash.game.collision.SnakeGuard;
 import thwack.and.bash.game.collision.SnakeRaycastGuard;
+import thwack.and.bash.game.entity.Entity;
 import thwack.and.bash.game.entity.mob.ai.AI;
 import thwack.and.bash.game.util.Util;
 import thwack.and.bash.game.util.Util.Meters;
@@ -95,12 +97,16 @@ public class Snake extends Mob {
 		Vector2 foreHeadPos = new Vector2().set(mobWidth/2, mobHeight/2);	//supposed to be its head but set it to be casting from its tummy instead :)
 		Vector2 furthestFrontSightPos = new Vector2().set(mobX - mobWidth*2, mobY + mobHeight);	//yes, it can only see so much!
 //		losFront = new SnakeRaycastGuard(foreHeadPos, furthestFrontSightPos);	//TODO this is the crapiest guard ever invented!
-		los = new SnakeBox2dGuard(foreHeadPos, furthestFrontSightPos);
+//		los = new SnakeBox2dGuard(foreHeadPos, furthestFrontSightPos);
+		los = new SnakeBoundingBoxGuard();
 		ai = new AI();
 		movement = new Vector2(0, 0);
 		ai.setState(SnakeAnimationType.WINDERING.ID);	//if it is not idling, it better be moving!
 //		ai.setState(SnakeAnimationType.ATTACK.ID);
 
+		if(losFront == null && los == null) {
+			System.err.println("You need at least one guard for the snake. Otherwise, collision detection would not work!");
+		}
 	}
 
 	private AI ai;
@@ -207,17 +213,18 @@ public class Snake extends Mob {
 			time = 0;
 		}
 		
+		move(movement);
+
 		if(world != null) {
 			if(losFront != null) { 
 				world.rayCast((RayCastCallback) losFront, losFront.getStartLOS(), losFront.getEndLOS());
 			}
-//			else {
-//				System.err.println("Guard is empty or null");
-//			}
-		} else {
-			System.err.println("World is empty or null. Collision detection would not work!");
 		}
-		move(movement);
+		else
+		if(los != null) {
+			Entity collided = los.hit(movement.x, movement.y);
+			//TODO
+		}
 	}
 
 	private Vector2 translate(Vector2 pos, Vector2 offset) {
@@ -288,7 +295,7 @@ public class Snake extends Mob {
 //			//reverse the snake direction
 //			movement.set(-movement.x, -movement.y);
 //		}
-		if(((SnakeBox2dGuard)los).isPlayerNearby()) {
+		if(los.isPlayerNearby()) {
 			ai.setState(SnakeAnimationType.ATTACK.ID);
 			//attackCounter = 0;
 		}

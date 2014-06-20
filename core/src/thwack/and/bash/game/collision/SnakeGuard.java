@@ -18,4 +18,6 @@ public interface SnakeGuard {
 
 	public Object getCollision();
 
+	public boolean isPlayerNearby();
+
 }
