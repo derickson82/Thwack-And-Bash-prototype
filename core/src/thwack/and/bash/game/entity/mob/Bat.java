@@ -19,6 +19,7 @@ public class Bat extends Mob {
 	public Bat (CollisionBody collisionBody) {
 		super(collisionBody);
 		super.initMobAnimation(createMobAnimation());
+		id = "bat";	//for unit test
 		ai = new AI();
 		movement = new Vector2(0, 0);
 	}

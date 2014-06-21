@@ -88,4 +88,10 @@ public class SnakeRaycastGuard implements SnakeGuard, RayCastCallback {
 		return null;
 	}
 
+	@Override
+	public boolean isPlayerNearby() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

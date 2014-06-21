@@ -1,5 +1,7 @@
 package thwack.and.bash.game.collision;
 
+import thwack.and.bash.game.entity.Entity;
+
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
@@ -41,6 +43,13 @@ public class SnakeCollisionHelper {
 			}
 		}
 
+		return ret;
+	}
+
+	public boolean isPlayer(Entity contact) {
+		boolean ret = false;
+
+//		if(contact.get)
 		return ret;
 	}
 }

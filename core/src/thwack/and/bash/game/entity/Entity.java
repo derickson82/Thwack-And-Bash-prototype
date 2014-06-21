@@ -25,6 +25,7 @@ public abstract class Entity {
 		entities.add(this);
 	}
 
+	protected String id;
 	protected Sprite sprite;
 	protected final CollisionBody COLLISION_BODY;
 
@@ -39,6 +40,10 @@ public abstract class Entity {
 		}
 		System.out.println("Couldn't find entity with name " + name);
 		return null;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public void draw (SpriteBatch batch) {

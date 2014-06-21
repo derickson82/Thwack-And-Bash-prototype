@@ -87,9 +87,11 @@ public class Snake extends Mob {
 	public Snake(CollisionBody collisionBody) {
 		super(collisionBody);
 		super.initMobAnimation(createMobAnimation());
+		String type = SnakeCollisionHelper.SNAKE_ID;
+		id = type;	//for unit test
 		if(collisionBody != null) {
-			collisionBody.getBody().setUserData(SnakeCollisionHelper.SNAKE_ID);
-			collisionBody.getFixture().setUserData(SnakeCollisionHelper.SNAKE_ID);
+			collisionBody.getBody().setUserData(id);
+			collisionBody.getFixture().setUserData(id);
 			setWorld(collisionBody.getBody().getWorld());
 	        world.setContactListener((ContactListener) los);
 		}
@@ -223,7 +225,6 @@ public class Snake extends Mob {
 		else
 		if(los != null) {
 			Entity collided = los.hit(movement.x, movement.y);
-			//TODO
 		}
 	}
 
