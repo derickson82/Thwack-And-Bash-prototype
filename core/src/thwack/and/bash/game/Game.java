@@ -86,14 +86,18 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		clearScreen();
-
-		Objects.SCREEN_CAMERA.update();
-		Objects.GAME_CAMERA.update();
-		//batch.setTransformMatrix(Objects.SCREEN_CAMERA.combined);
-
-		screen.update(Gdx.graphics.getDeltaTime());
-		screen.render(batch);
+		try {
+			clearScreen();
+	
+			Objects.SCREEN_CAMERA.update();
+			Objects.GAME_CAMERA.update();
+			//batch.setTransformMatrix(Objects.SCREEN_CAMERA.combined);
+	
+			screen.update(Gdx.graphics.getDeltaTime());
+			screen.render(batch);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

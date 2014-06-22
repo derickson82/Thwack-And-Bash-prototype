@@ -42,7 +42,7 @@ public class Level {
 	private static Player player;
 
 	public static void update (float delta) {
-		world.step(1 / 60f, 6, 2);
+		if(world != null) world.step(1 / 60f, 6, 2);
 	}
 
 	public static void render () {

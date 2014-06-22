@@ -32,9 +32,9 @@ public class Player extends Mob {
 	@Override
 	public void update (float delta) {
 		Vector2 movement = PlayerMovement.getMovement(5f);
-		mobAnimation.update(delta, calculateDirection(movement));
+		if(mobAnimation != null) mobAnimation.update(delta, calculateDirection(movement));
 		move(movement);
-		sprite.setRegion(mobAnimation.getCurrentFrame());
+		if(sprite != null) sprite.setRegion(mobAnimation.getCurrentFrame());
 	}
 
 	// TODO: LET ANDREW DECIDE WHICH DIRECTIONS SHOULD BE IN FAVOR if two or more keys are pressed

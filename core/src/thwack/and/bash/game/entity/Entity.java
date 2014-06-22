@@ -26,6 +26,7 @@ public abstract class Entity {
 	}
 
 	protected String id;
+	protected Vector2 position;
 	protected Sprite sprite;
 	protected final CollisionBody COLLISION_BODY;
 
@@ -71,11 +72,20 @@ public abstract class Entity {
 	public void setPosition (Vector2 pos) {
 		if (getBody()!=null) {
 			getBody().setTransform(pos, getBody().getAngle());
+		} else {
+			position = pos;
 		}
 	}
 
 	public void setPosition (float x, float y) {
-		getBody().setTransform(x, y, getBody().getAngle());
+		if(getBody() != null) {
+			getBody().setTransform(x, y, getBody().getAngle());
+		} else {
+			Vector2 pos = new Vector2();
+			pos.x = x;
+			pos.y = y;
+			position = pos;
+		}
 	}
 
 	public void addToX (float x) {

@@ -38,7 +38,7 @@ public class MobAnimation {
 		} else {
 			stateTime = stillFrame * animations.get(animationKey).frameDuration;
 		}
-		currentFrame = animations.get(animationKey).getKeyFrame(stateTime, true);
+		if(animations != null && animations.get(animationKey) != null) currentFrame = animations.get(animationKey).getKeyFrame(stateTime, true);
 	}
 
 	public TextureRegion getCurrentFrame () {

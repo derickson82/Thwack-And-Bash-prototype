@@ -30,8 +30,8 @@ public class Bat extends Mob {
 
 	@Override
 	public void update (float delta) {
-		mobAnimation.update(delta, BatAnimationType.FLYING.ID);
-		sprite.setRegion(mobAnimation.getCurrentFrame());
+		if(mobAnimation != null) mobAnimation.update(delta, BatAnimationType.FLYING.ID);
+		if(sprite != null) sprite.setRegion(mobAnimation.getCurrentFrame());
 		time += delta;
 		if (time >= 1) {
 			updateAI();

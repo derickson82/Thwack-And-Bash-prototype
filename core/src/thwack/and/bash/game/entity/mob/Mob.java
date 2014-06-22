@@ -46,7 +46,14 @@ public abstract class Mob extends Entity {
 			movement.x = movement.x * 0.75f;
 			movement.y = movement.y * 0.75f;
 		}
-		if(getBody() != null) getBody().setLinearVelocity(movement);
+		if(getBody() != null) {
+			getBody().setLinearVelocity(movement);
+		} else {
+			if(position != null && movement != null) {
+				position.x += movement.x;
+				position.y += movement.y;
+			}
+		}
 	}
 
 }
