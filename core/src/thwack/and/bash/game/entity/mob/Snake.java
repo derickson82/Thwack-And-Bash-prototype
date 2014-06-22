@@ -135,6 +135,14 @@ public class Snake extends Mob {
 	private SnakeGuard los;
 	private World world;
 
+	public SnakeGuard getLos() {
+		return los;
+	}
+
+	public void setLos(SnakeGuard los) {
+		this.los = los;
+	}
+
 	public SnakeGuard getLosFront() {
 		return losFront;
 	}
@@ -206,8 +214,8 @@ public class Snake extends Mob {
 		time += delta;
 		wTime += delta;
 		if (wTime >= WINDERING_INTERVAL) {
-			mobAnimation.update(wTime, SnakeAnimationType.IDLING.ID);
-			sprite.setRegion(mobAnimation.getCurrentFrame());
+			if(mobAnimation != null) mobAnimation.update(wTime, SnakeAnimationType.IDLING.ID);
+			if(sprite != null) sprite.setRegion(mobAnimation.getCurrentFrame());
 			wTime = 0;
 		}
 		if (time >= 1) {

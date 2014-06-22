@@ -6,10 +6,21 @@ import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.Entity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 //Movable entity
 public abstract class Mob extends Entity {
+
+	protected Rectangle boundingBox;	//can be anything, does not neccessarily be the box of the body (good for unit test)
+
+	public Rectangle getBoundingBox() {
+		return boundingBox;
+	}
+
+	public void setBoundingBox(Rectangle boundingBox) {
+		this.boundingBox = boundingBox;
+	}
 
 	public Mob (CollisionBody collisionBody) {
 		super(null, collisionBody);
@@ -35,7 +46,7 @@ public abstract class Mob extends Entity {
 			movement.x = movement.x * 0.75f;
 			movement.y = movement.y * 0.75f;
 		}
-		getBody().setLinearVelocity(movement);
+		if(getBody() != null) getBody().setLinearVelocity(movement);
 	}
 
 }

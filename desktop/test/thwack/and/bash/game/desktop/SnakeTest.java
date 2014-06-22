@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import thwack.and.bash.game.Game;
 import thwack.and.bash.game.animation.types.SnakeAnimationType;
+import thwack.and.bash.game.collision.SnakeBoundingBoxGuard;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -51,16 +53,27 @@ public class SnakeTest {
 		screen.show();
 		Snake snake = screen.getSnake();
 		Vector2 sPos = new Vector2();
+		Rectangle sBox = new Rectangle();
+		sBox.width= 64;
+		sBox.height = 64;
+		snake.setBoundingBox(sBox);
+		SnakeBoundingBoxGuard guard = (SnakeBoundingBoxGuard) snake.getLos();
+		guard.setSnake(snake);
 		sPos.x = 10;
 		sPos.y = 10;
 		snake.setPosition(sPos);
 		Vector2 pPos = new Vector2();
+		Rectangle pBox = new Rectangle();
+		pBox.width= 64;
+		pBox.height = 64;
+		Player player = screen.getPlayer();
+		player.setBoundingBox(pBox);
+		guard.setCollidedObject(player);
 		pPos.x = 10;
 		pPos.y = 10;
-		screen.getPlayer().setPosition(pPos);
-		snake.updateAI(1);
-//		snake.updateAI(2);
-//		snake.updateAI(3);
+		player.setPosition(pPos);
+		float delta = 1;	//current tick
+		snake.update(delta);
 		Assert.assertTrue(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);
 	}
 
