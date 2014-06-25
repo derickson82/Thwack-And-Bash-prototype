@@ -72,8 +72,8 @@ public class SnakeTest {
 		pPos.x = 10;
 		pPos.y = 10;
 		player.setPosition(pPos);
-		float delta = 1;	//maximum tick before the assert
-		for(int i=0; i<delta; i++) {
+		float delta = 3000;	//maximum tick before the assert
+		for(int i=1; i<delta; i++) {
 			screen.update(i);
 		}
 		Assert.assertTrue(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);

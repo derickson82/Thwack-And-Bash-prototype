@@ -2,6 +2,7 @@
 package thwack.and.bash.game.screen;
 
 import thwack.and.bash.game.Game;
+import thwack.and.bash.game.collision.SnakeCollisionHelper;
 import thwack.and.bash.game.entity.mob.Bat;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
@@ -95,11 +96,13 @@ public class PlayScreen implements GameScreen {
 			new Vector2(Pixels.toMeters(Game.getWidth() / 2), Pixels.toMeters(Game.getHeight() / 2)), // Position
 			new Vector2(Pixels.toMeters(35), Pixels.toMeters(46)), // Size
 			world));
+		player.setId(SnakeCollisionHelper.PLAYER_ID);
 
 		bat = new Bat(Box2D.createSimpleDynamicBody(
 			new Vector2(3, 15), //Position
 			new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 			world));
+		bat.setId(SnakeCollisionHelper.BAT_ID);
 		
 		snake = new Snake(Box2D.createSimpleDynamicBody(
 				new Vector2(Snake.getSurWidth(), Snake.getSurHeight() /* TODO will get the real one one day! */), //initial position
@@ -109,7 +112,7 @@ public class PlayScreen implements GameScreen {
 		float mH = snake.getSprite().getHeight();
 		snake.setModWidth(mW);
 		snake.setModHeight(mH);
-		
+		snake.setId(SnakeCollisionHelper.SNAKE_ID);
 		gameUI = new GameUI();
 
 		Level.load("demo2.tmx", world);

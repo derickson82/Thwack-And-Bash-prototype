@@ -96,7 +96,7 @@ public class Game extends ApplicationAdapter {
 			screen.update(Gdx.graphics.getDeltaTime());
 			screen.render(batch);
 		} catch(Exception e) {
-			e.printStackTrace();
+			System.err.println("Game.java error="+e+", hopefully this is just a run from a unit test! ;)");
 		}
 	}
 
