@@ -25,7 +25,7 @@ public class GameDebug extends Game implements GameScreen {
 	
 	@Override
 	public void create() {
-//		super.create();
+		super.create();
 
 		// viewport = new ScreenViewport(Objects.SCREEN_CAMERA);
 		// stage = new Stage(viewport);
@@ -33,7 +33,7 @@ public class GameDebug extends Game implements GameScreen {
 		GameScreen screen = null;
 		// set to any screen that you work on - no need splash or whatever that
 		// slows you down! :)
-		screen = new PlayScreen();
+		screen = new PlayScreenDebug();
 		setScreen(screen);
 		Snake realSnake = ((PlayScreen) screen).getSnake();
 		try {
@@ -50,8 +50,8 @@ public class GameDebug extends Game implements GameScreen {
 		((PlayScreen) screen).setSnake(snake);	//replace with fake snake!
 		// speed up for test ;)
 		if (snake != null) {
-			snake.setWinderingSpeed(snake.getWinderingSpeed() * 10);
-			snake.setDirectionChangeSpeed(1000);
+//			snake.setWinderingSpeed(snake.getWinderingSpeed() * 10);
+//			snake.setDirectionChangeSpeed(1000);
 		}
 	}
 

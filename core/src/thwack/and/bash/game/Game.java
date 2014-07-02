@@ -28,7 +28,7 @@ public class Game extends ApplicationAdapter {
 		try {
 			Game.screen.show();
 		} catch (Exception e) {
-			System.err.println("Game.java error in setScreen(): error="+e+", hopefully this is just a run from a unit test! ;)");
+			System.err.println("Game.java error 1 in setScreen(): error="+e+", hopefully this is just a run from a unit test! ;)");
 		}
 	}
 
@@ -62,7 +62,7 @@ public class Game extends ApplicationAdapter {
 		try {
 			ret = Objects.SCREEN_CAMERA.viewportWidth;
 		} catch (Exception e) {
-			System.err.println("Util.java unable to get game width from camera, hopefully this is just a run from a unit test! ;)");
+			System.err.println("Game.java error 2: Util.java unable to get game width from camera, hopefully this is just a run from a unit test! ;)");
 		}
 		return ret;
 	}
@@ -72,7 +72,7 @@ public class Game extends ApplicationAdapter {
 		try {
 			ret = Objects.GAME_CAMERA.viewportHeight;
 		} catch (Exception e) {
-			System.err.println("Util.java unable to get game height from camera, hopefully this is just a run from a unit test! ;)");
+			System.err.println("Game.java error 3: Util.java unable to get game height from camera, hopefully this is just a run from a unit test! ;)");
 		}
 		return ret;
 	}
@@ -96,7 +96,7 @@ public class Game extends ApplicationAdapter {
 			screen.update(Gdx.graphics.getDeltaTime());
 			screen.render(batch);
 		} catch(Exception e) {
-			System.err.println("Game.java error="+e+", hopefully this is just a run from a unit test! ;)");
+			System.err.println("Game.java error 4: "+e+", hopefully this is just a run from a unit test! ;)");
 		}
 	}
 

@@ -25,6 +25,7 @@ public class PlayScreenDebug extends PlayScreen {
 
 	@Override
 	public void show () {
+		super.show();
 
 //		box2DRenderer = new Box2DDebugRenderer();
 
