@@ -52,12 +52,13 @@ public abstract class Entity {
 	}
 
 	public void draw (SpriteBatch batch) {
-		if (sprite.getTexture() != null) {
+		if (sprite != null && sprite.getTexture() != null && getBody() != null) {
 			sprite.setPosition(Meters.toPixels(getBody().getPosition().x) - sprite.getWidth() / 2, Meters.toPixels(getBody().getPosition().y) - sprite.getHeight() / 2);
 			sprite.setRotation((float)Math.toDegrees(getBody().getAngle()));
 			sprite.draw(batch);
 		} else {
-			System.out.println("Entity with the name + " + COLLISION_BODY.getBody().getUserData() + "'s Texture is null");
+//			System.out.println("Entity with the name + " + COLLISION_BODY.getBody().getUserData() + "'s Texture is null");
+			System.out.println("Entity with the id [" + id + "] either it's sprite, texture or body is null: sprite [" + sprite + "] body [" + getBody() + "]");
 		}
 	}
 

@@ -33,7 +33,8 @@ public class GameDebug extends Game implements GameScreen {
 		GameScreen screen = null;
 		// set to any screen that you work on - no need splash or whatever that
 		// slows you down! :)
-		screen = new PlayScreenDebug();
+//		screen = new PlayScreenDebug();
+		screen = new PlayScreen();
 		setScreen(screen);
 		Snake realSnake = ((PlayScreen) screen).getSnake();
 		try {

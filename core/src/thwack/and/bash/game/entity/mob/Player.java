@@ -22,8 +22,10 @@ public class Player extends Mob {
 			super.initMobAnimation(createMobAnimation());
 			String type = "player";
 			id = type;	//for unit test
-			collisionBody.getBody().setUserData(id);
-			collisionBody.getFixture().setUserData(id);
+			if(collisionBody != null) {
+				collisionBody.getBody().setUserData(id);
+				collisionBody.getFixture().setUserData(id);
+			}
 		} catch (Exception e) {
 			System.err.println("Player.java error="+e+", hopefully this is just a run from a unit test! ;)");
 		}
