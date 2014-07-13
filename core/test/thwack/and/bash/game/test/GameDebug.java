@@ -2,6 +2,7 @@ package thwack.and.bash.game.test;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -22,7 +23,9 @@ public class GameDebug extends Game implements GameScreen {
 	// private Stage stage;
 	// private ScreenViewport viewport;
 	private Snake snake;
-	
+	BitmapFont debugFont;
+	private static float STATUS_TEXT_SCALE = 1.0f;
+
 	@Override
 	public void create() {
 		super.create();
@@ -54,6 +57,10 @@ public class GameDebug extends Game implements GameScreen {
 //			snake.setWinderingSpeed(snake.getWinderingSpeed() * 10);
 //			snake.setDirectionChangeSpeed(1000);
 		}
+		
+		debugFont = new BitmapFont();
+		debugFont.setColor(1.0f, 0.0f, 0.0f, 1.0f);
+		debugFont.scale(STATUS_TEXT_SCALE*.3f);
 	}
 
 	@Override
@@ -98,6 +105,11 @@ public class GameDebug extends Game implements GameScreen {
 	public void render() {
 		super.render();
 		
+		batch.begin();
+//		font.draw(batch, "" + debugStatusText, 50, 110);
+//		font.draw(batch, "" + debugStatusTextExt, 50, 80);
+		debugFont.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), 20, 25);
+		batch.end();
 	}
 
 	//c.f. https://code.google.com/p/libgdx/wiki/scene2d
