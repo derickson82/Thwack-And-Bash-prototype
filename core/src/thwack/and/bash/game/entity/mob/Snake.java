@@ -98,7 +98,7 @@ public class Snake extends Mob {
 		//line of sight setup
 		Vector2 foreHeadPos = new Vector2().set(mobWidth/2, mobHeight/2);	//supposed to be its head but set it to be casting from its tummy instead :)
 		Vector2 furthestFrontSightPos = new Vector2().set(mobX - mobWidth*2, mobY + mobHeight);	//yes, it can only see so much!
-//		losFront = new SnakeRaycastGuard(foreHeadPos, furthestFrontSightPos);	//TODO this is the crapiest guard ever invented!
+		losFront = new SnakeRaycastGuard(foreHeadPos, furthestFrontSightPos);	//TODO this is the crapiest guard ever invented!
 //		los = new SnakeBox2dGuard(foreHeadPos, furthestFrontSightPos);
 		los = new SnakeBoundingBoxGuard();
 		ai = new AI();
