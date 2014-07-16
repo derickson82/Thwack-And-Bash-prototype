@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
@@ -109,6 +110,7 @@ public class Snake extends Mob {
 		if(losFront == null && los == null) {
 			System.err.println("You need at least one guard for the snake. Otherwise, collision detection would not work!");
 		}
+		((SnakeBoundingBoxGuard)los).setSnake(this);
 	}
 
 	private AI ai;
@@ -134,6 +136,7 @@ public class Snake extends Mob {
 //	private SnakeGuard losRight;
 	private SnakeGuard los;
 	private World world;
+	private Mob collidedObject;
 
 	public SnakeGuard getLos() {
 		return los;
@@ -149,6 +152,14 @@ public class Snake extends Mob {
 
 	public void setLosFront(SnakeGuard losFront) {
 		this.losFront = losFront;
+	}
+	
+	public Mob getCollidedObject() {
+		return collidedObject;
+	}
+
+	public void setCollidedObject(Mob collidedObject) {
+		this.collidedObject = collidedObject;
 	}
 
 	public float getWinderingSpeed() {
@@ -230,8 +241,9 @@ public class Snake extends Mob {
 				world.rayCast((RayCastCallback) losFront, losFront.getStartLOS(), losFront.getEndLOS());
 			}
 		}
-		else
+
 		if(los != null) {
+			System.out.println("Current movement (" + movement.x + "," + movement.y + ")");
 			Entity collided = los.hit(movement.x, movement.y);
 		}
 	}
@@ -253,6 +265,7 @@ public class Snake extends Mob {
 	}
 
 	public void updateAI(float delta) {
+		((SnakeBoundingBoxGuard)los).setCollidedObject(collidedObject);
 		if (ai.getState() == State.IDLING.STATE) {
 			//mobAnimation.update(delta, STILL_FRAME_FLAG);	//this does not work for some reason, oh well until then
 			idlingCounter++;

@@ -113,6 +113,7 @@ public class PlayScreen implements GameScreen {
 		snake.setModWidth(mW);
 		snake.setModHeight(mH);
 		snake.setId(SnakeCollisionHelper.SNAKE_ID);
+		snake.setCollidedObject(player);  //only interested in biting the player, at least for now :)
 		gameUI = new GameUI();
 
 		Level.load("demo2.tmx", world);
