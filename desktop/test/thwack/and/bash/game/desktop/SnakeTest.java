@@ -68,7 +68,7 @@ public class SnakeTest {
 		pBox.height = 64;
 		Player player = screen.getPlayer();
 		player.setBoundingBox(pBox);
-		guard.setCollidedObject(player);
+//		guard.setCollidedObject(player);
 		pPos.x = 10;
 		pPos.y = 10;
 		player.setPosition(pPos);

@@ -2,8 +2,10 @@
 package thwack.and.bash.game.screen;
 
 import thwack.and.bash.game.Game;
+import thwack.and.bash.game.collision.SnakeBoundingBoxGuard;
 import thwack.and.bash.game.collision.SnakeCollisionHelper;
 import thwack.and.bash.game.entity.mob.Bat;
+import thwack.and.bash.game.entity.mob.Mob;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.level.Level;
@@ -113,7 +115,8 @@ public class PlayScreen implements GameScreen {
 		snake.setModWidth(mW);
 		snake.setModHeight(mH);
 		snake.setId(SnakeCollisionHelper.SNAKE_ID);
-		snake.setCollidedObject(player);  //only interested in biting the player, at least for now :)
+		((SnakeBoundingBoxGuard) snake.getLos()).setCollidedObject((Mob)player);  //only interested in biting the player, at least for now :)
+		((SnakeBoundingBoxGuard) snake.getLos()).setSnake(snake);  //only interested in biting the player, at least for now :)
 		gameUI = new GameUI();
 
 		Level.load("demo2.tmx", world);

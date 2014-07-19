@@ -30,13 +30,13 @@ public class PlayScreenDebug extends PlayScreen {
 //		box2DRenderer = new Box2DDebugRenderer();
 
 //		world = new World(new Vector2(0, 0), false);
-		world = null;	//all logic must work without a real world - ala TDD style!
-
-		player = new Player(null);
-
-		bat = new Bat(null);
-		
-		snake = new SnakeDebug(null);
+//		world = null;	//all logic must work without a real world - ala TDD style!
+//
+//		player = new Player(null);
+//
+//		bat = new Bat(null);
+//		
+//		snake = new SnakeDebug(null);
 
 //		gameUI = new GameUI();
 

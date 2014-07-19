@@ -1,5 +1,8 @@
 package thwack.and.bash.game.entity.mob;
 
+import java.awt.Rectangle;
+
+import thwack.and.bash.game.Game;
 import thwack.and.bash.game.animation.AnimatedSprite;
 import thwack.and.bash.game.animation.MobAnimation;
 import thwack.and.bash.game.animation.SnakeChangingDirection;
@@ -13,6 +16,7 @@ import thwack.and.bash.game.collision.SnakeGuard;
 import thwack.and.bash.game.collision.SnakeRaycastGuard;
 import thwack.and.bash.game.entity.Entity;
 import thwack.and.bash.game.entity.mob.ai.AI;
+import thwack.and.bash.game.screen.PlayScreen;
 import thwack.and.bash.game.util.Util;
 import thwack.and.bash.game.util.Util.Meters;
 
@@ -110,7 +114,7 @@ public class Snake extends Mob {
 		if(losFront == null && los == null) {
 			System.err.println("You need at least one guard for the snake. Otherwise, collision detection would not work!");
 		}
-		((SnakeBoundingBoxGuard)los).setSnake(this);
+		
 	}
 
 	private AI ai;
@@ -136,7 +140,6 @@ public class Snake extends Mob {
 //	private SnakeGuard losRight;
 	private SnakeGuard los;
 	private World world;
-	private Mob collidedObject;
 
 	public SnakeGuard getLos() {
 		return los;
@@ -154,14 +157,6 @@ public class Snake extends Mob {
 		this.losFront = losFront;
 	}
 	
-	public Mob getCollidedObject() {
-		return collidedObject;
-	}
-
-	public void setCollidedObject(Mob collidedObject) {
-		this.collidedObject = collidedObject;
-	}
-
 	public float getWinderingSpeed() {
 		return winderingSpeed;
 	}
@@ -204,6 +199,19 @@ public class Snake extends Mob {
 		end.y = Meters.toPixels(((Vector2)getLosFront().getNormal()).y);
 	}
 
+	private void updateBoundingBox() {
+		if(sprite != null) {
+			//=== make it bigger than the real sprite rect, otherwise overlap of boundingbox won't work!
+			//first the snake's
+			com.badlogic.gdx.math.Rectangle rect = new com.badlogic.gdx.math.Rectangle();
+			rect.width = (int) sprite.getWidth() + 20;
+			rect.height = (int) (sprite.getHeight() + 20);
+			boundingBox = rect;
+			//then the player's
+			//...
+		}
+	}
+
 	@Override
 	public void move (Vector2 movement) {
 		super.move(movement);
@@ -242,10 +250,6 @@ public class Snake extends Mob {
 			}
 		}
 
-		if(los != null) {
-			System.out.println("Current movement (" + movement.x + "," + movement.y + ")");
-			Entity collided = los.hit(movement.x, movement.y);
-		}
 	}
 
 	private Vector2 translate(Vector2 pos, Vector2 offset) {
@@ -265,7 +269,18 @@ public class Snake extends Mob {
 	}
 
 	public void updateAI(float delta) {
-		((SnakeBoundingBoxGuard)los).setCollidedObject(collidedObject);
+		PlayScreen screen = (PlayScreen) Game.getCurrentScreen();
+		Player player = screen.getPlayer();	//(Player)((SnakeBoundingBoxGuard) los).getCollidedObject();
+		Snake snake = this;	//(Snake)((SnakeBoundingBoxGuard) los).getSnake();
+		((SnakeBoundingBoxGuard) los).setCollidedObject(player);
+		((SnakeBoundingBoxGuard) los).setSnake(this);
+//		player = (Player)((SnakeBoundingBoxGuard) los).getCollidedObject();
+//		snake = (Snake)((SnakeBoundingBoxGuard) los).getSnake();
+		if(los != null) {
+			System.out.println("Current movement (" + movement.x + "," + movement.y + ")");
+			Entity collided = los.hit(movement.x, movement.y);
+		}
+
 		if (ai.getState() == State.IDLING.STATE) {
 			//mobAnimation.update(delta, STILL_FRAME_FLAG);	//this does not work for some reason, oh well until then
 			idlingCounter++;
