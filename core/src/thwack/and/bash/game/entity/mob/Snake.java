@@ -23,6 +23,7 @@ import thwack.and.bash.game.util.Util.Meters;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -103,7 +104,7 @@ public class Snake extends Mob {
 		//line of sight setup
 		Vector2 foreHeadPos = new Vector2().set(mobWidth/2, mobHeight/2);	//supposed to be its head but set it to be casting from its tummy instead :)
 		Vector2 furthestFrontSightPos = new Vector2().set(mobX - mobWidth*2, mobY + mobHeight);	//yes, it can only see so much!
-		losFront = new SnakeRaycastGuard(foreHeadPos, furthestFrontSightPos);	//TODO this is the crapiest guard ever invented!
+		losFront = new SnakeRaycastGuard(foreHeadPos, furthestFrontSightPos);	//this is the crapiest guard ever invented!
 //		los = new SnakeBox2dGuard(foreHeadPos, furthestFrontSightPos);
 		los = new SnakeBoundingBoxGuard();
 		ai = new AI();
@@ -207,8 +208,20 @@ public class Snake extends Mob {
 			rect.width = (int) sprite.getWidth() + 20;
 			rect.height = (int) (sprite.getHeight() + 20);
 			boundingBox = rect;
-			//then the player's
-			//...
+			//TODO then the player's
+			PlayScreen screen = (PlayScreen) Game.getCurrentScreen();
+			com.badlogic.gdx.math.Rectangle pBox = screen.getPlayer().getBoundingBox();
+			Sprite pSprite = null;
+			if(pBox != null) {
+				pSprite = screen.getPlayer().getSprite();
+			} else {
+				System.out.println("pSprite is null!");
+			}
+			if(pSprite != null) {
+				pBox.set(pSprite.getBoundingRectangle());
+			} else {
+				System.out.println("pBox is null!");
+			}
 		}
 	}
 
@@ -250,6 +263,7 @@ public class Snake extends Mob {
 			}
 		}
 
+		updateBoundingBox();
 	}
 
 	private Vector2 translate(Vector2 pos, Vector2 offset) {
@@ -345,7 +359,6 @@ public class Snake extends Mob {
 				doNothing();
 				ai.setState(SnakeAnimationType.IDLING.ID);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -356,7 +369,6 @@ public class Snake extends Mob {
 				ai.setState(SnakeAnimationType.WINDERING.ID);
 				idlingCounter = 0;
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -369,7 +381,6 @@ public class Snake extends Mob {
 		//System.out.println(this.getClass() +": state = " + ai.getState());
 	}
 
-	//TODO is this necessary, we already have an enum type in thwack.and.bash.game.animation.types.SnakeAnimationType, can we reuse that?
 	private enum State {
 		IDLING(0), WINDERING(1), REVERSE(2), ATTACK(3);
 		State(int state) {
@@ -424,7 +435,6 @@ public class Snake extends Mob {
 		try {
 			move();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return snakeAnimation;
