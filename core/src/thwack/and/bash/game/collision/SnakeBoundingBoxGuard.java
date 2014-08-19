@@ -39,12 +39,14 @@ public class SnakeBoundingBoxGuard implements SnakeGuard {
 				Player player = (Player)collidedObject;
 				Rectangle r2 = player.getBoundingBox();
 				if(r1 != null && r2 != null && r1.overlaps(r2)) {
-					if(r2.contains(x, y)) {
+//					if(r2.contains(x, y)) {
 						if(player != null && player.getId() != null && player.getId().equals(SnakeCollisionHelper.PLAYER_ID)) {
 							retVal = player;	//returns the hit object
 							isPlayerNearby = true;
 						}
-					}
+//					}
+				} else {
+					isPlayerNearby = false;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

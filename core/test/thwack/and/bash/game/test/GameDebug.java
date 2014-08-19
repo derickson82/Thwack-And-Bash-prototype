@@ -22,7 +22,7 @@ public class GameDebug extends Game implements GameScreen {
 
 	// private Stage stage;
 	// private ScreenViewport viewport;
-	private Snake snake;
+	private SnakeDebug snake;
 	BitmapFont debugFont;
 	private static float STATUS_TEXT_SCALE = 1.0f;
 

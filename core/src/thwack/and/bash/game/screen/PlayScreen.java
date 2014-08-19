@@ -99,6 +99,7 @@ public class PlayScreen implements GameScreen {
 			new Vector2(Pixels.toMeters(35), Pixels.toMeters(46)), // Size
 			world));
 		player.setId(SnakeCollisionHelper.PLAYER_ID);
+		player.setBoundingBox(player.getSprite().getBoundingRectangle());
 
 		bat = new Bat(Box2D.createSimpleDynamicBody(
 			new Vector2(3, 15), //Position
@@ -117,6 +118,7 @@ public class PlayScreen implements GameScreen {
 		snake.setId(SnakeCollisionHelper.SNAKE_ID);
 		((SnakeBoundingBoxGuard) snake.getLos()).setCollidedObject((Mob)player);  //only interested in biting the player, at least for now :)
 		((SnakeBoundingBoxGuard) snake.getLos()).setSnake(snake);  //only interested in biting the player, at least for now :)
+		snake.setBoundingBox(snake.getSprite().getBoundingRectangle());
 		gameUI = new GameUI();
 
 		Level.load("demo2.tmx", world);

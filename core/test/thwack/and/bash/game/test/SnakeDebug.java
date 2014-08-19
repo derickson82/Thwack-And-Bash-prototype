@@ -24,8 +24,8 @@ public class SnakeDebug extends Snake implements MobDebug {
 
 	private GameDebug gameDebug;
 	private RendererDebug shapeRenderer;
-	private Vector2 position = new Vector2();
 
+	private Vector2 position = new Vector2();
 	public GameDebug getGameDebug() {
 		return gameDebug;
 	}
@@ -77,4 +77,11 @@ public class SnakeDebug extends Snake implements MobDebug {
 		}
 	}
 
+	@Override
+	protected void updateBoundingBox() {
+		super.updateBoundingBox();
+		//TODO replace Sprite's bounding boxes with the mocked boxes!!!
+
+	}
+	
 }

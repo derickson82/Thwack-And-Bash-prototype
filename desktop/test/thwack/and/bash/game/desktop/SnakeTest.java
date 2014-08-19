@@ -50,7 +50,7 @@ public class SnakeTest {
 	public void testSnakeNearPlayer() {
 		PlayScreenDebug screen = new PlayScreenDebug();
 		Game.setScreen(screen);
-		screen.show();
+screen.show();	//TODO to mock this method
 		Snake snake = screen.getSnake();
 		Vector2 sPos = new Vector2();
 		Rectangle sBox = new Rectangle();
