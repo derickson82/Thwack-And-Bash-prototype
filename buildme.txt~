@@ -8,9 +8,7 @@ To run the build:
 
 edit local.properties file to point to your local android project e.g.
 
-sdk.dir=C:/android-sdk-win
-
-Note: The directory separator is forward slash not backward!!!
+sdk.dir=C:\android-sdk-win
 
 gradlew
 

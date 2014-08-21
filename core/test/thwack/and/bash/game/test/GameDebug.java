@@ -28,8 +28,6 @@ public class GameDebug extends Game implements GameScreen {
 
 	@Override
 	public void create() {
-		super.create();
-
 		// viewport = new ScreenViewport(Objects.SCREEN_CAMERA);
 		// stage = new Stage(viewport);
 
@@ -58,9 +56,13 @@ public class GameDebug extends Game implements GameScreen {
 //			snake.setDirectionChangeSpeed(1000);
 		}
 		
-		debugFont = new BitmapFont();
-		debugFont.setColor(1.0f, 0.0f, 0.0f, 1.0f);
-		debugFont.scale(STATUS_TEXT_SCALE*.3f);
+//		try {
+//			debugFont = new BitmapFont();
+//			debugFont.setColor(1.0f, 0.0f, 0.0f, 1.0f);
+//			debugFont.scale(STATUS_TEXT_SCALE*.3f);
+//		} catch (Exception e) {
+//			System.err.println("GameDebug.java error="+e+", hopefully this is just a run from a unit test! ;)");
+//		}
 	}
 
 	@Override

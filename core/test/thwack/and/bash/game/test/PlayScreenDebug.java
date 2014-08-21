@@ -1,8 +1,13 @@
 
 package thwack.and.bash.game.test;
 
+import com.badlogic.gdx.math.Rectangle;
+
 import thwack.and.bash.game.Game;
+import thwack.and.bash.game.collision.SnakeBoundingBoxGuard;
+import thwack.and.bash.game.collision.SnakeCollisionHelper;
 import thwack.and.bash.game.entity.mob.Bat;
+import thwack.and.bash.game.entity.mob.Mob;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.level.Level;
@@ -25,22 +30,36 @@ public class PlayScreenDebug extends PlayScreen {
 
 	@Override
 	public void show () {
-		super.show();
+		try {
+			bat = new Bat(null);
+		} catch (Exception e) {
+			//e.printStackTrace();
+			//no one cares about these entities (at least for now)
+		}
 
-//		box2DRenderer = new Box2DDebugRenderer();
+		try {
+			player = new PlayerDebug(null);
+		} catch (Exception e) {
+			//e.printStackTrace();
+			//it possibly will crash, yadah yadah we know, but no one cares in unit test world!
+		}
+		player.setId(SnakeCollisionHelper.PLAYER_ID);
+		Rectangle playerBoundingBox = new Rectangle(200, 300, 32, 32);
+		player.setBoundingBox(playerBoundingBox);	//mock it, hell ya
 
-//		world = new World(new Vector2(0, 0), false);
-//		world = null;	//all logic must work without a real world - ala TDD style!
-//
-//		player = new Player(null);
-//
-//		bat = new Bat(null);
-//		
-//		snake = new SnakeDebug(null);
-
-//		gameUI = new GameUI();
-
-//		Level.load("demo2.tmx", world);
+		try {
+			snake = new SnakeDebug(null);
+		} catch (Exception e) {
+			//e.printStackTrace();
+			//it possibly will crash, yadah yadah we know, but no one cares in unit test world!
+		}
+//		float mW = 32;
+//		float mH = 32;
+//		snake.setModWidth(mW);
+//		snake.setModHeight(mH);
+		snake.setId(SnakeCollisionHelper.SNAKE_ID);
+		Rectangle snakeBoundingBox = new Rectangle(100, 100, 32, 32);
+		snake.setBoundingBox(snakeBoundingBox);
 
 	}
 

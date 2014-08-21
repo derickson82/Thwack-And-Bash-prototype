@@ -50,31 +50,39 @@ public class SnakeTest {
 	public void testSnakeNearPlayer() {
 		PlayScreenDebug screen = new PlayScreenDebug();
 		Game.setScreen(screen);
-screen.show();	//TODO to mock this method
-		Snake snake = screen.getSnake();
-		Vector2 sPos = new Vector2();
-		Rectangle sBox = new Rectangle();
-		sBox.width= 64;
-		sBox.height = 64;
-		snake.setBoundingBox(sBox);
-		SnakeBoundingBoxGuard guard = (SnakeBoundingBoxGuard) snake.getLos();
-		guard.setSnake(snake);
-		sPos.x = 10;
-		sPos.y = 10;
-		snake.setPosition(sPos);
-		Vector2 pPos = new Vector2();
-		Rectangle pBox = new Rectangle();
-		pBox.width= 64;
-		pBox.height = 64;
-		Player player = screen.getPlayer();
-		player.setBoundingBox(pBox);
-//		guard.setCollidedObject(player);
-		pPos.x = 10;
-		pPos.y = 10;
-		player.setPosition(pPos);
+		screen.show();	//mocked show()
+//		Vector2 sPos = new Vector2();
+//		Rectangle sBox = new Rectangle();
+//		sBox.width= 64;
+//		sBox.height = 64;
+//		snake.setBoundingBox(sBox);
+//		SnakeBoundingBoxGuard guard = (SnakeBoundingBoxGuard) snake.getLos();
+//		guard.setSnake(snake);
+//		sPos.x = 10;
+//		sPos.y = 10;
+//		snake.setPosition(sPos);
+//		Vector2 pPos = new Vector2();
+//		Rectangle pBox = new Rectangle();
+//		pBox.width= 64;
+//		pBox.height = 64;
+//		Player player = screen.getPlayer();
+//		player.setBoundingBox(pBox);
+//		pPos.x = 10;
+//		pPos.y = 10;
+//		player.setPosition(pPos);
+
+		Snake snake = null;
+		Player player = null;
 		float delta = 3000;	//maximum tick before the assert
 		for(int i=1; i<delta; i++) {
-			screen.update(i);
+			try {
+				screen.update(i);
+				player = screen.getPlayer();	//need to get the player only after the previous call, after the screen update()!!!
+				snake = screen.getSnake();	//need to get the snake only after the previous call, after the screen update()!!!
+				System.out.println("Snake pos[" + snake.getX() + "," + snake.getY() + "] player pos[" + player.getX() + "," + player.getY() + "]");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		Assert.assertTrue(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);
 	}

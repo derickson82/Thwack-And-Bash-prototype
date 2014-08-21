@@ -1,10 +1,12 @@
 
 package thwack.and.bash.game.entity.mob;
 
+import thwack.and.bash.game.Game;
 import thwack.and.bash.game.animation.MobAnimation;
 import thwack.and.bash.game.animation.types.PlayerAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.input.PlayerMovement;
+import thwack.and.bash.game.screen.PlayScreen;
 import thwack.and.bash.game.util.Util;
 
 import com.badlogic.gdx.Gdx;
@@ -82,6 +84,13 @@ public class Player extends Mob {
 		playerAnimation.setStillAnimationFrame(1);
 		playerAnimation.endSettingAnimations();
 		return playerAnimation;
+	}
+
+	protected void updateBoundingBox() {
+		if(sprite != null) {
+			PlayScreen screen = (PlayScreen) Game.getCurrentScreen();
+			screen.getPlayer().setBoundingBox(screen.getPlayer().getSprite().getBoundingRectangle());
+		}
 	}
 
 }

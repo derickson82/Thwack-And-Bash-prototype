@@ -1,12 +1,15 @@
 package thwack.and.bash.game.test;
 
+import thwack.and.bash.game.Game;
 import thwack.and.bash.game.collision.CollisionBody;
+import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
+import thwack.and.bash.game.screen.PlayScreen;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class SnakeDebug extends Snake implements MobDebug {
+public class PlayerDebug extends Player implements MobDebug {
 
 	private GameDebug gameDebug;
 	private RendererDebug shapeRenderer;
@@ -28,7 +31,7 @@ public class SnakeDebug extends Snake implements MobDebug {
 		this.shapeRenderer = shapeRenderer;
 	}
 
-	public SnakeDebug(CollisionBody collisionBody) {
+	public PlayerDebug(CollisionBody collisionBody) {
 		super(collisionBody);
 		// TODO Auto-generated constructor stub
 	}
@@ -99,7 +102,7 @@ public class SnakeDebug extends Snake implements MobDebug {
 		boundingBox.x = position.x;
 		boundingBox.y = position.y;
 	}
-	
+
 	@Override
 	public void move (Vector2 movement) {
 		position = movement;

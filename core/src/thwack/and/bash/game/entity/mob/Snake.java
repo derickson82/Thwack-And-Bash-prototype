@@ -204,46 +204,27 @@ public class Snake extends Mob {
 
 	protected void updateBoundingBox() {
 		if(sprite != null) {
-			//=== make it bigger than the real sprite rect, otherwise overlap of boundingbox won't work!
-			//first the snake's
-//			com.badlogic.gdx.math.Rectangle rect = new com.badlogic.gdx.math.Rectangle();
-//			rect.width = (int) sprite.getWidth() + 20;
-//			rect.height = (int) (sprite.getHeight() + 20);
-//			boundingBox = rect;
-//			//TODO then the player's
 			PlayScreen screen = (PlayScreen) Game.getCurrentScreen();
-//			com.badlogic.gdx.math.Rectangle pBox = screen.getPlayer().getBoundingBox();
-//			Sprite pSprite = null;
-//			if(screen.getPlayer() != null) {
-//				pSprite = screen.getPlayer().getSprite();
-//			} else {
-//				System.out.println("screen.getPlayer() is null!");
-//			}
-//			if(pSprite != null && pBox != null) {
-//				pBox.set(pSprite.getBoundingRectangle());
-//			} else {
-//				System.out.println("pSprite or pBox is null!");
-//			}
-			screen.getPlayer().setBoundingBox(screen.getPlayer().getSprite().getBoundingRectangle());
+//			screen.getPlayer().setBoundingBox(screen.getPlayer().getSprite().getBoundingRectangle());
 			screen.getSnake().setBoundingBox(screen.getSnake().getSprite().getBoundingRectangle());
 		}
 	}
 
-	@Override
-	public void move (Vector2 movement) {
-		super.move(movement);
-
-//		if (ai.getState() != State.IDLING.STATE) {
-//			if (movement.x != 0 && movement.y != 0) {
-//				movement.x = movement.x * 0.75f;
-//				movement.y = movement.y * 0.75f;
-//			}
-//			getBody().setLinearVelocity(movement);
-//		}
-//		else
-//		if(ai.getState() == SnakeAnimationType.REVERSE.ID) {
-//		}
-	}
+//	@Override
+//	public void move (Vector2 movement) {
+//		super.move(movement);
+//
+////		if (ai.getState() != State.IDLING.STATE) {
+////			if (movement.x != 0 && movement.y != 0) {
+////				movement.x = movement.x * 0.75f;
+////				movement.y = movement.y * 0.75f;
+////			}
+////			getBody().setLinearVelocity(movement);
+////		}
+////		else
+////		if(ai.getState() == SnakeAnimationType.REVERSE.ID) {
+////		}
+//	}
 
 	@Override
 	public void update(float delta) {
@@ -295,7 +276,7 @@ public class Snake extends Mob {
 //		player = (Player)((SnakeBoundingBoxGuard) los).getCollidedObject();
 //		snake = (Snake)((SnakeBoundingBoxGuard) los).getSnake();
 		if(los != null) {
-			System.out.println("Current movement (" + movement.x + "," + movement.y + ")");
+			System.out.println("Snake.java: before hit() check: current movement (" + movement.x + "," + movement.y + ")");
 			Entity collided = los.hit(movement.x, movement.y);
 		}
 
