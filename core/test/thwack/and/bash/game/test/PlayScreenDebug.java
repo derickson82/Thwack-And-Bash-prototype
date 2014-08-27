@@ -58,7 +58,7 @@ public class PlayScreenDebug extends PlayScreen {
 //		snake.setModWidth(mW);
 //		snake.setModHeight(mH);
 		snake.setId(SnakeCollisionHelper.SNAKE_ID);
-		Rectangle snakeBoundingBox = new Rectangle(100, 100, 32, 32);
+		Rectangle snakeBoundingBox = new Rectangle(1000, 1000, 32, 32);
 		snake.setBoundingBox(snakeBoundingBox);
 
 	}

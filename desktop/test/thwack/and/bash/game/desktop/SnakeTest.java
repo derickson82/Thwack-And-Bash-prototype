@@ -84,6 +84,7 @@ public class SnakeTest {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("snake.getAi().getState() = [" + snake.getAi().getState() + "]");
 		Assert.assertTrue(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);
 	}
 

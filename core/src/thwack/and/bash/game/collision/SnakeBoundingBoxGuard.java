@@ -38,6 +38,7 @@ public class SnakeBoundingBoxGuard implements SnakeGuard {
 			try {
 				Player player = (Player)collidedObject;
 				Rectangle r2 = player.getBoundingBox();
+				System.out.println("Checking sbox (" + r1.getX() + "," + r1.getY() + ") with pbox (" + r2.getX() + "," + r2.getY() + ")");
 				if(r1 != null && r2 != null && r1.overlaps(r2)) {
 //					if(r2.contains(x, y)) {
 						if(player != null && player.getId() != null && player.getId().equals(SnakeCollisionHelper.PLAYER_ID)) {
