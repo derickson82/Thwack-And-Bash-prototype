@@ -286,9 +286,13 @@ public class Snake extends Mob {
 		}
 		else
 		if (ai.getState() == State.ATTACK.STATE) {
-			AnimatedSprite attackSprite = new AnimatedSprite("textureatlas/play/input/snake-attack_79x41.png", 1, 3);
-			totalAttackFrames = attackSprite.getFrameCols()*attackSprite.getFrameCols();
-			sprite.setRegion(attackSprite.getAnimation().getKeyFrame(delta%totalAttackFrames));
+			try {
+				AnimatedSprite attackSprite = new AnimatedSprite("textureatlas/play/input/snake-attack_79x41.png", 1, 3);
+				totalAttackFrames = attackSprite.getFrameCols()*attackSprite.getFrameCols();
+				sprite.setRegion(attackSprite.getAnimation().getKeyFrame(delta%totalAttackFrames));
+			} catch (Exception e) {
+				System.err.println("Snake.java animated sprite error="+e+", hopefully this is just a run from a unit test! ;)");
+			}
 			attackCounter++;
 		}
 //		else

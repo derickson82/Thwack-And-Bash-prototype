@@ -28,6 +28,19 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class PlayScreenDebug extends PlayScreen {
 
+	PlayerDebug player;
+	SnakeDebug snake;
+	
+	@Override
+	public Player getPlayer() {
+		return player;
+	}
+
+	@Override
+	public Snake getSnake() {
+		return snake;
+	}
+
 	@Override
 	public void show () {
 		try {
@@ -40,7 +53,7 @@ public class PlayScreenDebug extends PlayScreen {
 		try {
 			player = new PlayerDebug(null);
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			//it possibly will crash, yadah yadah we know, but no one cares in unit test world!
 		}
 		player.setId(SnakeCollisionHelper.PLAYER_ID);
@@ -50,7 +63,7 @@ public class PlayScreenDebug extends PlayScreen {
 		try {
 			snake = new SnakeDebug(null);
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			//it possibly will crash, yadah yadah we know, but no one cares in unit test world!
 		}
 //		float mW = 32;
@@ -61,6 +74,16 @@ public class PlayScreenDebug extends PlayScreen {
 		Rectangle snakeBoundingBox = new Rectangle(1000, 1000, 32, 32);
 		snake.setBoundingBox(snakeBoundingBox);
 
+	}
+
+	@Override
+	public void update (float delta) {
+		player.update(delta);
+		player.updateBoundingBox();	//tips: comment out or uncomment to stop movement if you like
+		bat.update(delta);
+		snake.update(delta);
+		snake.updateBoundingBox();	//tips: comment out or uncomment to stop movement if you like
+		Level.update(delta);
 	}
 
 }

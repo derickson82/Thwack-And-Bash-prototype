@@ -16,6 +16,7 @@ import thwack.and.bash.game.screen.GameScreen;
 import thwack.and.bash.game.screen.PlayScreen;
 import thwack.and.bash.game.test.GameDebug;
 import thwack.and.bash.game.test.PlayScreenDebug;
+import thwack.and.bash.game.test.PlayerDebug;
 import thwack.and.bash.game.test.SnakeDebug;
 import thwack.and.bash.game.test.SnakeShapeRenderer;
 import thwack.and.bash.game.util.Util.Box2D;
@@ -71,15 +72,19 @@ public class SnakeTest {
 //		pPos.y = 10;
 //		player.setPosition(pPos);
 
-		Snake snake = null;
-		Player player = null;
+		SnakeDebug snake = null;
+		PlayerDebug player = null;
 		float delta = 3000;	//maximum tick before the assert
+		Rectangle r1 = null;
+		Rectangle r2 = null;
 		for(int i=1; i<delta; i++) {
 			try {
 				screen.update(i);
-				player = screen.getPlayer();	//need to get the player only after the previous call, after the screen update()!!!
-				snake = screen.getSnake();	//need to get the snake only after the previous call, after the screen update()!!!
-				System.out.println("Snake pos[" + snake.getX() + "," + snake.getY() + "] player pos[" + player.getX() + "," + player.getY() + "]");
+				player = (PlayerDebug) screen.getPlayer();	//need to get the player only after the previous call, after the screen update()!!!
+				r2 = player.getBoundingBox();
+				snake = (SnakeDebug) screen.getSnake();	//need to get the snake only after the previous call, after the screen update()!!!
+				r1 = snake.getBoundingBox();
+				System.out.println("Snake pos[" + r1.getX() + "," + r1.getY() + "] player pos[" + r2.getX() + "," + r2.getY() + "]");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
