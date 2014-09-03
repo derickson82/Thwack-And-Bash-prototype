@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import thwack.and.bash.game.Game;
+import thwack.and.bash.game.animation.SnakeChangingDirection;
 import thwack.and.bash.game.animation.types.SnakeAnimationType;
 import thwack.and.bash.game.collision.SnakeBoundingBoxGuard;
 import thwack.and.bash.game.entity.mob.Bat;
@@ -47,30 +48,11 @@ public class SnakeTest {
 		new HeadlessApplication(game, config);
 	}
 
-	@Test
+//	@Test
 	public void testSnakeNearPlayer() {
 		PlayScreenDebug screen = new PlayScreenDebug();
 		Game.setScreen(screen);
 		screen.show();	//mocked show()
-//		Vector2 sPos = new Vector2();
-//		Rectangle sBox = new Rectangle();
-//		sBox.width= 64;
-//		sBox.height = 64;
-//		snake.setBoundingBox(sBox);
-//		SnakeBoundingBoxGuard guard = (SnakeBoundingBoxGuard) snake.getLos();
-//		guard.setSnake(snake);
-//		sPos.x = 10;
-//		sPos.y = 10;
-//		snake.setPosition(sPos);
-//		Vector2 pPos = new Vector2();
-//		Rectangle pBox = new Rectangle();
-//		pBox.width= 64;
-//		pBox.height = 64;
-//		Player player = screen.getPlayer();
-//		player.setBoundingBox(pBox);
-//		pPos.x = 10;
-//		pPos.y = 10;
-//		player.setPosition(pPos);
 
 		SnakeDebug snake = null;
 		PlayerDebug player = null;
@@ -93,7 +75,7 @@ public class SnakeTest {
 		Assert.assertTrue(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);
 	}
 
-//	@Test
+	@Test
 	public void testSnakeNotNearPlayer() {
 		PlayScreenDebug screen = new PlayScreenDebug();
 		Game.setScreen(screen);
@@ -107,13 +89,36 @@ public class SnakeTest {
 		Assert.assertFalse(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);
 	}
 
-//	@Test
+	@Test
 	public void testSnakeInGame() {
-//		bat = new Bat(Box2D.createSimpleDynamicBody(
-//		new Vector2(3, 15), //Position
-//		new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
-//		world));
-        fail("Not yet implemented");
-	}
+//        fail("Not yet implemented");
+		PlayScreenDebug screen = new PlayScreenDebug();
+		Game.setScreen(screen);
+		screen.show();
+		Snake snake = screen.getSnake();
+		Vector2 sPos = new Vector2();
+		sPos.x = 10;
+		sPos.y = 10;
+		snake.setPosition(sPos);
+//		snake.updateAI(1);
+		float directionChangeSpeed = .5f;
+		float delta = 3000;	//maximum tick before the assert
+		SnakeChangingDirection m2 = new SnakeChangingDirection(sPos.x, sPos.y);
+		Rectangle r1 = null;
+		for(int i=1; i<delta; i++) {
+			try {
+				screen.update(i);
+				snake = (SnakeDebug) screen.getSnake();	//need to get the snake only after the previous call, after the screen update()!!!
+				m2.move(directionChangeSpeed, -1, delta);
+				r1 = snake.getBoundingBox();
+				System.out.println("Snake pos[" + r1.getX() + "," + r1.getY() + "]");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Final snake position (" + m2.getX()/2 + ", " + m2.getY()/2 + ")");
 
+		//Assert.assertFalse(snake.getAi().getState() == SnakeAnimationType.ATTACK.ID);
+	}
+	
 }
