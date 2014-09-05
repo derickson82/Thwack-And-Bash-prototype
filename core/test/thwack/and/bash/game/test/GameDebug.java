@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import thwack.and.bash.game.Game;
+import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.screen.GameScreen;
 import thwack.and.bash.game.screen.PlayScreen;
@@ -28,27 +29,30 @@ public class GameDebug extends Game implements GameScreen {
 
 	@Override
 	public void create() {
+		try {
+			batch = new SpriteBatch();
+		} catch (Exception e1) {
+			System.err.println("GameDebug.java error 1: " + e1 + ", hopefully this is just a run from a unit test!");
+		}
+
 		// viewport = new ScreenViewport(Objects.SCREEN_CAMERA);
 		// stage = new Stage(viewport);
 
-		GameScreen screen = null;
+		GameScreen playScreen = null;
 		// set to any screen that you work on - no need splash or whatever that
 		// slows you down! :)
-		screen = new PlayScreenDebug();
-//		screen = new PlayScreen();
-		setScreen(screen);
-		Snake realSnake = ((PlayScreen) screen).getSnake();
+		playScreen = new PlayScreenDebug();
+		setScreen(playScreen);
 		try {
-			snake = new SnakeDebug(realSnake.getCollisionBody());
+			Snake snake = ((PlayScreenDebug)playScreen).getSnake();
 			((SnakeDebug)snake).setShapeRenderer(new SnakeShapeRenderer());	//note: it is snake own shapeRenderer, that is the trick! ;)
 			((ShapeRenderer)((SnakeDebug)snake).getShapeRenderer()).setColor(Color.RED);
 			((SnakeDebug)snake).setGameDebug(this);
-			((PlayScreen) screen).setSnake(snake);	//replace with fake snake!
-		} catch (Exception e) {
-			System.err.println("GameDebug.java error: " + e + ", hopefully this is just a run from a unit test!");
-//			if(snake == null) {
-//				snake = new SnakeDebug(null);	//must be from unit test
-//			}
+			Player player = ((PlayScreenDebug)playScreen).getPlayer();
+			((PlayerDebug)player).setGameDebug(this);
+
+		} catch (Exception e2) {
+			System.err.println("GameDebug.java error 2: " + e2 + ", hopefully this is just a run from a unit test!");
 		}
 		// speed up for test ;)
 		if (snake != null) {
@@ -107,11 +111,11 @@ public class GameDebug extends Game implements GameScreen {
 	public void render() {
 		super.render();
 		
-		batch.begin();
-//		font.draw(batch, "" + debugStatusText, 50, 110);
-//		font.draw(batch, "" + debugStatusTextExt, 50, 80);
-		debugFont.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), 20, 25);
-		batch.end();
+//		batch.begin();
+////		font.draw(batch, "" + debugStatusText, 50, 110);
+////		font.draw(batch, "" + debugStatusTextExt, 50, 80);
+//		debugFont.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), 20, 25);
+//		batch.end();
 	}
 
 	//c.f. https://code.google.com/p/libgdx/wiki/scene2d

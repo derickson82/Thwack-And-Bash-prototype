@@ -32,7 +32,7 @@ public class PlayScreen implements GameScreen {
 	private GameUI gameUI;
 	protected World world;
 
-	private Box2DDebugRenderer box2DRenderer;
+//	private Box2DDebugRenderer box2DRenderer;
 
 	private FPSLogger fpsLogger;
 
@@ -79,7 +79,7 @@ public class PlayScreen implements GameScreen {
 		// staticBatch.begin();
 		// gameUI.drawSprites(staticBatch);
 		// staticBatch.end();
-		box2DRenderer.render(Level.getWorld(), Objects.GAME_CAMERA.combined.scl(Values.PIXELS_PER_METER));
+//		box2DRenderer.render(Level.getWorld(), Objects.GAME_CAMERA.combined.scl(Values.PIXELS_PER_METER));
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class PlayScreen implements GameScreen {
 	@Override
 	public void show () {
 
-		box2DRenderer = new Box2DDebugRenderer();
+//		box2DRenderer = new Box2DDebugRenderer();
 
 		world = new World(new Vector2(0, 0), false);
 

@@ -4,6 +4,7 @@ package thwack.and.bash.game.test;
 import com.badlogic.gdx.math.Rectangle;
 
 import thwack.and.bash.game.Game;
+import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.collision.SnakeBoundingBoxGuard;
 import thwack.and.bash.game.collision.SnakeCollisionHelper;
 import thwack.and.bash.game.entity.mob.Bat;
@@ -20,16 +21,23 @@ import thwack.and.bash.game.util.Util.Pixels;
 import thwack.and.bash.game.util.Util.Values;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class PlayScreenDebug extends PlayScreen {
 
-	PlayerDebug player;
-	SnakeDebug snake;
+	private Box2DDebugRenderer box2DRenderer;
+
+//	PlayerDebug player;
+//	SnakeDebug snake;
+	private CollisionBody playerBody;
+	private CollisionBody batBody;
+	private CollisionBody snakeBody;
 	
 	@Override
 	public Player getPlayer() {
@@ -44,14 +52,40 @@ public class PlayScreenDebug extends PlayScreen {
 	@Override
 	public void show () {
 		try {
-			bat = new Bat(null);
-		} catch (Exception e) {
-			//e.printStackTrace();
-			//no one cares about these entities (at least for now)
+			box2DRenderer = new Box2DDebugRenderer();
+		} catch (Exception e2) {
+			System.err.println("PlayScreenDebug.java error: " + e2 + ", hopefully this is just a run from a unit test!");
 		}
 
 		try {
-			player = new PlayerDebug(null);
+			world = new World(new Vector2(0, 0), false);
+			playerBody = Box2D.createSimpleDynamicBody(
+					new Vector2(Pixels.toMeters(Game.getWidth() / 2), Pixels.toMeters(Game.getHeight() / 2)), // Position
+					new Vector2(Pixels.toMeters(35), Pixels.toMeters(46)), // Size
+					world);
+			batBody = Box2D.createSimpleDynamicBody(
+					new Vector2(3, 15), //Position
+					new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
+					world);
+			snakeBody = Box2D.createSimpleDynamicBody(
+						new Vector2(Snake.getSurWidth(), Snake.getSurHeight() /* TODO will get the real one one day! */), //initial position
+						new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
+						world);
+
+			Level.load("demo2.tmx", world);
+		} catch (Exception e1) {
+			System.err.println("PlayScreenDebug.java: World initialization error! Is this from a unit test or the world is really messed up??!");
+		}
+
+		try {
+			bat = new Bat(batBody);
+		} catch (Exception e) {
+			//e.printStackTrace();
+			//who cares about these entities at this point anyway (at least for now)
+		}
+
+		try {
+			player = new PlayerDebug(playerBody);
 		} catch (Exception e) {
 			e.printStackTrace();
 			//it possibly will crash, yadah yadah we know, but no one cares in unit test world!
@@ -61,7 +95,7 @@ public class PlayScreenDebug extends PlayScreen {
 		player.setBoundingBox(playerBoundingBox);	//mock it, hell ya
 
 		try {
-			snake = new SnakeDebug(null);
+			snake = new SnakeDebug(snakeBody);
 		} catch (Exception e) {
 			e.printStackTrace();
 			//it possibly will crash, yadah yadah we know, but no one cares in unit test world!
@@ -79,11 +113,18 @@ public class PlayScreenDebug extends PlayScreen {
 	@Override
 	public void update (float delta) {
 		player.update(delta);
-		player.updateBoundingBox();	//tips: comment out or uncomment to stop movement if you like
+		((PlayerDebug)player).updateBoundingBox();	//tips: comment out or uncomment to stop movement if you like
 		bat.update(delta);
 		snake.update(delta);
-		snake.updateBoundingBox();	//tips: comment out or uncomment to stop movement if you like
+		((SnakeDebug)snake).updateBoundingBox();	//tips: comment out or uncomment to stop movement if you like
 		Level.update(delta);
+	}
+
+	@Override
+	public void render (SpriteBatch batch) {
+		super.render(batch);
+
+		box2DRenderer.render(Level.getWorld(), Objects.GAME_CAMERA.combined.scl(Values.PIXELS_PER_METER));
 	}
 
 }

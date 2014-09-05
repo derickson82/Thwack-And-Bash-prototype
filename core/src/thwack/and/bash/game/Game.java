@@ -24,12 +24,14 @@ public class Game extends ApplicationAdapter {
 			Game.screen.dispose();
 			Game.lastScreen = Game.screen;
 		}
-		Game.screen = screen;
-		try {
-			Game.screen.show();
-		} catch (Exception e) {
-			System.err.println("Game.java error 1 in setScreen(): error="+e+", hopefully this is just a run from a unit test! ;)");
-		}
+//		if(screen != null) {
+			Game.screen = screen;
+			try {
+				Game.screen.show();
+			} catch (Exception e) {
+				System.err.println("Game.java error 1 in setScreen(): error="+e+", hopefully this is just a run from a unit test! ;)");
+			}
+//		}
 	}
 
 	public static void startLastScreen () {

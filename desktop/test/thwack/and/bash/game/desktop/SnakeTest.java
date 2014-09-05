@@ -48,7 +48,7 @@ public class SnakeTest {
 		new HeadlessApplication(game, config);
 	}
 
-//	@Test
+	@Test
 	public void testSnakeNearPlayer() {
 		PlayScreenDebug screen = new PlayScreenDebug();
 		Game.setScreen(screen);
