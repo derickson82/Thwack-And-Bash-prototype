@@ -21,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class Util {
 
+	public static final String PLAYER_ID = "player";
+	
 	public static final class Objects {
 		public static final OrthographicCamera GAME_CAMERA = Init.createGameCamera();
 		public static final OrthographicCamera SCREEN_CAMERA = Init.createScreenCamera();

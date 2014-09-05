@@ -22,7 +22,7 @@ public class Player extends Mob {
 		
 		try {
 			super.initMobAnimation(createMobAnimation());
-			String type = "player";
+			String type = Util.PLAYER_ID;	//"player";
 			id = type;	//for unit test
 			if(collisionBody != null) {
 				collisionBody.getBody().setUserData(id);

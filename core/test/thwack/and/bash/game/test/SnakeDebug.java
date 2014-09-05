@@ -35,11 +35,15 @@ public class SnakeDebug extends Snake implements MobDebug {
 
 	@Override
 	public void setPosition (Vector2 pos) {
+		super.setPosition(pos);
+		
 		position = pos;
 	}
 
 	@Override
 	public void setPosition (float x, float y) {
+		super.setPosition(x, y);
+		
 		position.x = x;
 		position.y = y;
 	}
@@ -102,6 +106,8 @@ public class SnakeDebug extends Snake implements MobDebug {
 	
 	@Override
 	public void move (Vector2 movement) {
+		super.move(movement);
+
 		position = movement;
 	}
 }

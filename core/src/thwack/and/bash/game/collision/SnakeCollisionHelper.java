@@ -1,13 +1,14 @@
 package thwack.and.bash.game.collision;
 
 import thwack.and.bash.game.entity.Entity;
+import thwack.and.bash.game.util.Util;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
 public class SnakeCollisionHelper {
 
-	public static final String PLAYER_ID = "player";
+	public static final String PLAYER_ID = Util.PLAYER_ID;
 	public static final String SNAKE_ID = "snake";
 	public static final String TILE_ID = "tile";
 	public static final String BAT_ID = "bat";

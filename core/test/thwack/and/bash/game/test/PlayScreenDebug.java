@@ -15,6 +15,7 @@ import thwack.and.bash.game.level.Level;
 import thwack.and.bash.game.screen.PlayScreen;
 import thwack.and.bash.game.test.GameDebug;
 import thwack.and.bash.game.ui.GameUI;
+import thwack.and.bash.game.util.Util;
 import thwack.and.bash.game.util.Util.Box2D;
 import thwack.and.bash.game.util.Util.Objects;
 import thwack.and.bash.game.util.Util.Pixels;
@@ -63,6 +64,7 @@ public class PlayScreenDebug extends PlayScreen {
 					new Vector2(Pixels.toMeters(Game.getWidth() / 2), Pixels.toMeters(Game.getHeight() / 2)), // Position
 					new Vector2(Pixels.toMeters(35), Pixels.toMeters(46)), // Size
 					world);
+			playerBody.getBody().setUserData(Util.PLAYER_ID);
 			batBody = Box2D.createSimpleDynamicBody(
 					new Vector2(3, 15), //Position
 					new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size

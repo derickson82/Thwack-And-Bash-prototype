@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import thwack.and.bash.game.entity.Entity;
 import thwack.and.bash.game.entity.mob.Player;
+import thwack.and.bash.game.util.Util;
 import thwack.and.bash.game.util.Util.Objects;
 import thwack.and.bash.game.util.Util.Pixels;
 
@@ -56,7 +57,7 @@ public class Level {
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		addBox2D();
 		setContactListener();
-		player = (Player)Entity.getEntity("player");
+		player = (Player)Entity.getEntity(Util.PLAYER_ID);	//("player");
 	}
 
 	public static World getWorld () {

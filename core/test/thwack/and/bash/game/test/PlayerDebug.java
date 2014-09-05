@@ -33,16 +33,19 @@ public class PlayerDebug extends Player implements MobDebug {
 
 	public PlayerDebug(CollisionBody collisionBody) {
 		super(collisionBody);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void setPosition (Vector2 pos) {
+		super.setPosition(pos);
+
 		position = pos;
 	}
 
 	@Override
 	public void setPosition (float x, float y) {
+		super.setPosition(x, y);
+		
 		position.x = x;
 		position.y = y;
 	}
@@ -105,6 +108,8 @@ public class PlayerDebug extends Player implements MobDebug {
 
 	@Override
 	public void move (Vector2 movement) {
+		super.move(movement);
+
 		position = movement;
 	}
 }
