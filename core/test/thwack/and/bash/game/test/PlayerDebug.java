@@ -5,6 +5,7 @@ import thwack.and.bash.game.collision.CollisionBody;
 import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.screen.PlayScreen;
+import thwack.and.bash.game.util.Util.Meters;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -33,6 +34,12 @@ public class PlayerDebug extends Player implements MobDebug {
 
 	public PlayerDebug(CollisionBody collisionBody) {
 		super(collisionBody);
+		
+		if(sprite != null) {
+			boundingBox = sprite.getBoundingRectangle();
+//			boundingBox.x = sprite.getX();
+//			boundingBox.y = sprite.getY();
+		}
 	}
 
 	@Override
@@ -102,8 +109,13 @@ public class PlayerDebug extends Player implements MobDebug {
 
 	@Override
 	protected void updateBoundingBox() {
-		boundingBox.x = position.x;
-		boundingBox.y = position.y;
+		if(COLLISION_BODY != null) {
+			boundingBox.x = Meters.toPixels(getBody().getPosition().x);
+			boundingBox.y = Meters.toPixels(getBody().getPosition().y);
+		} else {
+			boundingBox.x = position.x;
+			boundingBox.y = position.y;
+		}
 	}
 
 	@Override

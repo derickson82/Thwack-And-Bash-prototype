@@ -77,6 +77,10 @@ public class PlayScreenDebug extends PlayScreen {
 			Level.load("demo2.tmx", world);
 		} catch (Exception e1) {
 			System.err.println("PlayScreenDebug.java: World initialization error! Is this from a unit test or the world is really messed up??!");
+			world = null;	//this is important for unit test to know!
+			playerBody = null;
+			batBody = null;
+			snakeBody = null;
 		}
 
 		try {
@@ -93,11 +97,31 @@ public class PlayScreenDebug extends PlayScreen {
 			//it possibly will crash, yadah yadah we know, but no one cares in unit test world!
 		}
 		player.setId(SnakeCollisionHelper.PLAYER_ID);
-		Rectangle playerBoundingBox = new Rectangle(200, 300, 32, 32);
-		player.setBoundingBox(playerBoundingBox);	//mock it, hell ya
-
+		
+		float x = -1;
+		float y = -1;
+		if(playerBody != null) {
+			x = playerBody.getBody().getPosition().x;
+			y = playerBody.getBody().getPosition().y;
+		} else {
+			x = 200;
+			y = 300;
+			Rectangle playerBoundingBox = new Rectangle(x, y, 32, 32);
+			player.setBoundingBox(playerBoundingBox);	//must be from unit test, mock it, hell ya
+		}
+		player.setPosition(x, y);
 		try {
 			snake = new SnakeDebug(snakeBody);
+			if(playerBody != null) {
+				x = snakeBody.getBody().getPosition().x;
+				y = snakeBody.getBody().getPosition().y;
+			} else {
+				x = 10;
+				y = 20;
+				Rectangle snakeBoundingBox = new Rectangle(x, y, 32, 32);
+				snake.setBoundingBox(snakeBoundingBox);	//must be from unit test, mock it, hell ya
+			}
+			snake.setPosition(x, y);
 		} catch (Exception e) {
 			e.printStackTrace();
 			//it possibly will crash, yadah yadah we know, but no one cares in unit test world!

@@ -28,7 +28,7 @@ public class DesktopLauncher {
 		 * 2. Add the "test/" folder and use it as a source folder :)
 		 * The choice is yours!
 		 */
-		new LwjglApplication(new Game(), config);	//use this if you like! :)
-//		new LwjglApplication(new GameDebug(), config);	//use this if you like! :)
+//		new LwjglApplication(new Game(), config);	//use this if you like! :)
+		new LwjglApplication(new GameDebug(), config);	//use this if you like! :)
 	}
 }
