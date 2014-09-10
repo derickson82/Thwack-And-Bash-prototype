@@ -4,6 +4,7 @@ import thwack.and.bash.game.entity.Entity;
 import thwack.and.bash.game.util.Util.Meters;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -92,6 +93,12 @@ public class SnakeRaycastGuard implements SnakeGuard, RayCastCallback {
 	public boolean isPlayerNearby() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void setDebugRenderer(ShapeRenderer renderer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

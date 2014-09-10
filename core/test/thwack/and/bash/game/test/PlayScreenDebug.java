@@ -133,7 +133,6 @@ public class PlayScreenDebug extends PlayScreen {
 		snake.setId(SnakeCollisionHelper.SNAKE_ID);
 		Rectangle snakeBoundingBox = new Rectangle(1000, 1000, 32, 32);
 		snake.setBoundingBox(snakeBoundingBox);
-
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package thwack.and.bash.game.collision;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import thwack.and.bash.game.entity.Entity;
@@ -20,4 +21,6 @@ public interface SnakeGuard {
 
 	public boolean isPlayerNearby();
 
+	public void setDebugRenderer(ShapeRenderer renderer);
+	
 }

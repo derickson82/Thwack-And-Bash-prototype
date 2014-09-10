@@ -29,7 +29,7 @@ public class PlayScreen implements GameScreen {
 	protected Bat bat;
 	protected Snake snake;
 	protected Player player;
-	private GameUI gameUI;
+//	private GameUI gameUI;
 	protected World world;
 
 //	private Box2DDebugRenderer box2DRenderer;
@@ -119,7 +119,7 @@ public class PlayScreen implements GameScreen {
 		((SnakeBoundingBoxGuard) snake.getLos()).setCollidedObject((Mob)player);  //only interested in biting the player, at least for now :)
 		((SnakeBoundingBoxGuard) snake.getLos()).setSnake(snake);  //only interested in biting the player, at least for now :)
 		snake.setBoundingBox(snake.getSprite().getBoundingRectangle());
-		gameUI = new GameUI();
+//		gameUI = new GameUI();
 
 		Level.load("demo2.tmx", world);
 

@@ -3,6 +3,7 @@ package thwack.and.bash.game.collision;
 import thwack.and.bash.game.entity.Entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -91,6 +92,12 @@ public class SnakeBox2dGuard implements SnakeGuard, ContactListener {
 	public Object getCollision() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setDebugRenderer(ShapeRenderer renderer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

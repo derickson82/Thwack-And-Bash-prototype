@@ -26,9 +26,15 @@ public class GameDebug extends Game implements GameScreen {
 	private SnakeDebug snake;
 	BitmapFont debugFont;
 	private static float STATUS_TEXT_SCALE = 1.0f;
+	private ShapeRenderer debugRender;
+	
+	public ShapeRenderer getDebugRender() {
+		return debugRender;
+	}
 
 	@Override
 	public void create() {
+		debugRender = new ShapeRenderer();
 		try {
 			batch = new SpriteBatch();
 		} catch (Exception e1) {
@@ -50,7 +56,7 @@ public class GameDebug extends Game implements GameScreen {
 			((SnakeDebug)snake).setGameDebug(this);
 			Player player = ((PlayScreenDebug)playScreen).getPlayer();
 			((PlayerDebug)player).setGameDebug(this);
-
+			snake.getLos().setDebugRenderer(debugRender);
 		} catch (Exception e2) {
 			System.err.println("GameDebug.java error 2: " + e2 + ", hopefully this is just a run from a unit test!");
 		}
@@ -60,13 +66,13 @@ public class GameDebug extends Game implements GameScreen {
 //			snake.setDirectionChangeSpeed(1000);
 		}
 		
-//		try {
-//			debugFont = new BitmapFont();
-//			debugFont.setColor(1.0f, 0.0f, 0.0f, 1.0f);
-//			debugFont.scale(STATUS_TEXT_SCALE*.3f);
-//		} catch (Exception e) {
-//			System.err.println("GameDebug.java error="+e+", hopefully this is just a run from a unit test! ;)");
-//		}
+		try {
+			debugFont = new BitmapFont();
+			debugFont.setColor(1.0f, 0.0f, 0.0f, 1.0f);
+			debugFont.scale(STATUS_TEXT_SCALE*.3f);
+		} catch (Exception e) {
+			System.err.println("GameDebug.java error="+e+", hopefully this is just a run from a unit test! ;)");
+		}
 	}
 
 	@Override
@@ -111,11 +117,12 @@ public class GameDebug extends Game implements GameScreen {
 	public void render() {
 		super.render();
 		
-//		batch.begin();
-////		font.draw(batch, "" + debugStatusText, 50, 110);
-////		font.draw(batch, "" + debugStatusTextExt, 50, 80);
-//		debugFont.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), 20, 25);
-//		batch.end();
+		batch.begin();
+//		font.draw(batch, "" + debugStatusText, 50, 110);
+//		font.draw(batch, "" + debugStatusTextExt, 50, 80);
+		debugFont.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), 20, 25);
+		drawRect(debugRender, 100, 100, 32, 32);	//TODO to remove this once collision issue is resolved
+		batch.end();
 	}
 
 	//c.f. https://code.google.com/p/libgdx/wiki/scene2d
@@ -129,7 +136,7 @@ public class GameDebug extends Game implements GameScreen {
 //		drawLine(renderer, snake.getPosition(), snake.getLosFront().getEndLOS());
 		//renderer.rect(0, 0, getWidth(), getHeight());
 
-//		drawCross(renderer, ((Vector2)snake.getLosFront().getCollision()).x, ((Vector2)snake.getLosFront().getCollision()).y);
+		//drawCross(renderer, ((Vector2)snake.getLosFront().getCollision()).x, ((Vector2)snake.getLosFront().getCollision()).y);	//this will make the debug renderer disappear for some reason!!!???
 
 		batch.begin();
 	}
@@ -140,6 +147,15 @@ public class GameDebug extends Game implements GameScreen {
 		shapeRenderer.setColor(255, 0, 0, 0.5f);
 		shapeRenderer.line(x - 10, y, x + 10, y); // horizontal line
 		shapeRenderer.line(x, y + 10, x, y - 10); // vertical line
+		shapeRenderer.end();
+	}
+
+	public static void drawRect(ShapeRenderer shapeRenderer, float x, float y, float width, float height) {
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.identity();
+		// shapeRenderer.translate(20, 12, 2);
+		// shapeRenderer.rotate(0, 0, 1, 90);
+		shapeRenderer.box(x, y, 0, width, height, 0);
 		shapeRenderer.end();
 	}
 
