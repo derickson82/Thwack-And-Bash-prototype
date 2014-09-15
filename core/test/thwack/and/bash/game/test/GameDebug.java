@@ -151,11 +151,12 @@ public class GameDebug extends Game implements GameScreen {
 	}
 
 	public static void drawRect(ShapeRenderer shapeRenderer, float x, float y, float width, float height) {
-		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.identity();
 		// shapeRenderer.translate(20, 12, 2);
 		// shapeRenderer.rotate(0, 0, 1, 90);
-		shapeRenderer.box(x, y, 0, width, height, 0);
+		shapeRenderer.box(x, y, 0, width, height, 0);	//TODO
+		shapeRenderer.rect(-width / 2, -height / 2, width, height);
 		shapeRenderer.end();
 	}
 

@@ -149,6 +149,8 @@ public class PlayScreenDebug extends PlayScreen {
 	public void render (SpriteBatch batch) {
 		super.render(batch);
 
+//		GameDebug.drawRect((ShapeRenderer)box2DRenderer, 50, 50, 400, 1000);
+
 		box2DRenderer.render(Level.getWorld(), Objects.GAME_CAMERA.combined.scl(Values.PIXELS_PER_METER));
 	}
 
