@@ -247,7 +247,8 @@ public class Snake extends Mob {
 			}
 		}
 
-		updateBoundingBox(null);	//this sucks I know, just in the name of unit test we are doing this!
+//		Rectangle bound = sprite.getBoundingRectangle();
+//		updateBoundingBox(bound);	//this sucks I know, just in the name of unit test we are doing this!
 	}
 
 	private Vector2 translate(Vector2 pos, Vector2 offset) {

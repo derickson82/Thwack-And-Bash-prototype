@@ -58,6 +58,10 @@ public class PlayScreenDebug extends PlayScreen {
 			System.err.println("PlayScreenDebug.java error: " + e2 + ", hopefully this is just a run from a unit test!");
 		}
 
+		float snakeInitialPosX = Snake.getSurWidth();
+		float snakeInitialPosY = Snake.getSurHeight();
+		int snakePixlWidth = 64;
+		int snakePixlHeight = 62;
 		try {
 			world = new World(new Vector2(0, 0), false);
 			playerBody = Box2D.createSimpleDynamicBody(
@@ -70,8 +74,8 @@ public class PlayScreenDebug extends PlayScreen {
 					new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
 					world);
 			snakeBody = Box2D.createSimpleDynamicBody(
-						new Vector2(Snake.getSurWidth(), Snake.getSurHeight() /* TODO will get the real one one day! */), //initial position
-						new Vector2(Pixels.toMeters(64), Pixels.toMeters(62)), // size
+						new Vector2(snakeInitialPosX, snakeInitialPosY /* TODO will get the real one one day! */), //initial position
+						new Vector2(Pixels.toMeters(snakePixlWidth), Pixels.toMeters(snakePixlHeight)), // size
 						world);
 
 			Level.load("demo2.tmx", world);
@@ -118,7 +122,7 @@ public class PlayScreenDebug extends PlayScreen {
 			} else {
 				x = 10;
 				y = 20;
-				Rectangle snakeBoundingBox = new Rectangle(x, y, 32, 32);
+				Rectangle snakeBoundingBox = new Rectangle(x, y, 64, 62);
 				snake.setBoundingBox(snakeBoundingBox);	//must be from unit test, mock it, hell ya
 			}
 			snake.setPosition(x, y);
@@ -131,7 +135,7 @@ public class PlayScreenDebug extends PlayScreen {
 //		snake.setModWidth(mW);
 //		snake.setModHeight(mH);
 		snake.setId(SnakeCollisionHelper.SNAKE_ID);
-		Rectangle snakeBoundingBox = new Rectangle(1000, 1000, 32, 32);
+		Rectangle snakeBoundingBox = new Rectangle(1000, 1000, snakePixlWidth, snakePixlHeight);
 		snake.setBoundingBox(snakeBoundingBox);
 	}
 

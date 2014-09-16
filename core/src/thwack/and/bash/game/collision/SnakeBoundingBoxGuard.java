@@ -59,7 +59,7 @@ public class SnakeBoundingBoxGuard implements SnakeGuard {
 					System.out.println("SnakeBoundingBoxGuard.java debug renderer is not active!");
 				}
 
-				if(r1 != null && r2 != null && r1.overlaps(r2)) {
+				if(r1 != null && r2 != null && r1.overlaps(r2) || near(r1, r2)) {
 					System.out.println("player id [" + player.getId() + "]");
 //					if(r2.contains(x, y)) {
 						if(player != null && player.getId() != null && player.getId().equals(SnakeCollisionHelper.PLAYER_ID)) {
@@ -76,6 +76,20 @@ public class SnakeBoundingBoxGuard implements SnakeGuard {
 		}
 
 		return retVal;
+	}
+
+	public boolean near(Rectangle r1, Rectangle r2) {
+		boolean ret = false;
+		boolean cond1 = false;
+		boolean cond2 = false;
+		
+		if(r1 != null && r2 != null) {
+			if(Math.round(Math.abs((r2.x - r1.x))) == 0) cond1 = true;
+			if(Math.round(Math.abs((r2.y - r1.y))) == 0) cond2 = true;
+		}
+		if(cond1 && cond2) ret = true;
+		
+		return ret;
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import thwack.and.bash.game.util.Util.Values;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -61,6 +62,8 @@ public class PlayScreen implements GameScreen {
 		player.update(delta);
 		bat.update(delta);
 		snake.update(delta);
+//		Rectangle bound = sprite.getBoundingRectangle();
+//		updateBoundingBox(bound);	//this sucks I know, just in the name of unit test we are doing this!
 		Level.update(delta);
 	}
 
@@ -99,7 +102,6 @@ public class PlayScreen implements GameScreen {
 			new Vector2(Pixels.toMeters(35), Pixels.toMeters(46)), // Size
 			world));
 		player.setId(SnakeCollisionHelper.PLAYER_ID);
-		player.setBoundingBox(player.getSprite().getBoundingRectangle());
 
 		bat = new Bat(Box2D.createSimpleDynamicBody(
 			new Vector2(3, 15), //Position
