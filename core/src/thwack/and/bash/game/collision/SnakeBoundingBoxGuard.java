@@ -53,9 +53,8 @@ public class SnakeBoundingBoxGuard implements SnakeGuard {
 				Rectangle r2 = player.getBoundingBox();
 				System.out.println("/* snake */ fillRect(" + r1.getX() + "," + r1.getY() + "," + r1.getWidth() + "," + r1.getHeight() + "); /* player */ fillRect(" + r2.getX() + "," + r2.getY() + "," + r2.getWidth() + "," + r2.getHeight() + ");");
 				if(debugRender != null) {
-					GameDebug.drawRect(debugRender, 150, 50, 430, 500);
-					GameDebug.drawRect(debugRender, r1.getX(), r1.getY(), r1.getWidth(), r1.getHeight());
-					GameDebug.drawRect(debugRender, r2.getX(), r2.getY(), r2.getWidth(), r2.getHeight());
+//					GameDebug.drawRect(debugRender, r1.getX(), r1.getY(), r1.getWidth(), r1.getHeight());
+//					GameDebug.drawRect(debugRender, r2.getX(), r2.getY(), r2.getWidth(), r2.getHeight());
 				} else {
 					System.out.println("SnakeBoundingBoxGuard.java debug renderer is not active!");
 				}

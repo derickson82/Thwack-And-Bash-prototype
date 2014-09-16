@@ -137,11 +137,18 @@ public class PlayScreenDebug extends PlayScreen {
 
 	@Override
 	public void update (float delta) {
+		Rectangle bodySpec = new Rectangle();
+//		bodySpec.x = (int) position.x;
+//		bodySpec.y = (int) position.y;
 		player.update(delta);
-		((PlayerDebug)player).updateBoundingBox();	//tips: comment out or uncomment to stop movement if you like
+		bodySpec.width = player.getBoundingBox().getWidth();
+		bodySpec.height = player.getBoundingBox().getHeight();
+		((PlayerDebug)player).updateBoundingBox(bodySpec);	//tips: comment out or uncomment to stop movement if you like
 		bat.update(delta);
 		snake.update(delta);
-		((SnakeDebug)snake).updateBoundingBox();	//tips: comment out or uncomment to stop movement if you like
+		bodySpec.width = snake.getBoundingBox().getWidth();
+		bodySpec.height = snake.getBoundingBox().getHeight();
+		((SnakeDebug)snake).updateBoundingBox(bodySpec);	//tips: comment out or uncomment to stop movement if you like
 		Level.update(delta);
 	}
 

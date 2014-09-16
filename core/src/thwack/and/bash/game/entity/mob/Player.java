@@ -5,6 +5,7 @@ import thwack.and.bash.game.Game;
 import thwack.and.bash.game.animation.MobAnimation;
 import thwack.and.bash.game.animation.types.PlayerAnimationType;
 import thwack.and.bash.game.collision.CollisionBody;
+import thwack.and.bash.game.entity.Entity;
 import thwack.and.bash.game.input.PlayerMovement;
 import thwack.and.bash.game.screen.PlayScreen;
 import thwack.and.bash.game.util.Util;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends Mob {
@@ -86,7 +88,7 @@ public class Player extends Mob {
 		return playerAnimation;
 	}
 
-	protected void updateBoundingBox() {
+	protected void updateBoundingBox(Rectangle bodySpec) {
 		if(sprite != null) {
 			PlayScreen screen = (PlayScreen) Game.getCurrentScreen();
 			screen.getPlayer().setBoundingBox(screen.getPlayer().getSprite().getBoundingRectangle());

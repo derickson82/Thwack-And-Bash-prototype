@@ -1,7 +1,5 @@
 package thwack.and.bash.game.entity.mob;
 
-import java.awt.Rectangle;
-
 import thwack.and.bash.game.Game;
 import thwack.and.bash.game.animation.AnimatedSprite;
 import thwack.and.bash.game.animation.MobAnimation;
@@ -30,6 +28,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -202,7 +201,7 @@ public class Snake extends Mob {
 		end.y = Meters.toPixels(((Vector2)getLosFront().getNormal()).y);
 	}
 
-	protected void updateBoundingBox() {
+	protected void updateBoundingBox(Rectangle bodySpec) {
 		if(sprite != null) {
 			PlayScreen screen = (PlayScreen) Game.getCurrentScreen();
 //			screen.getPlayer().setBoundingBox(screen.getPlayer().getSprite().getBoundingRectangle());
@@ -248,7 +247,7 @@ public class Snake extends Mob {
 			}
 		}
 
-		updateBoundingBox();
+		updateBoundingBox(null);	//this sucks I know, just in the name of unit test we are doing this!
 	}
 
 	private Vector2 translate(Vector2 pos, Vector2 offset) {

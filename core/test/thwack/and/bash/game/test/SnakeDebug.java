@@ -5,6 +5,7 @@ import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.util.Util.Meters;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class SnakeDebug extends Snake implements MobDebug {
@@ -105,7 +106,7 @@ public class SnakeDebug extends Snake implements MobDebug {
 	}
 
 	@Override
-	protected void updateBoundingBox() {
+	protected void updateBoundingBox(Rectangle bodySpec) {
 		if(COLLISION_BODY != null) {
 			boundingBox.x = Meters.toPixels(getBody().getPosition().x);
 			boundingBox.y = Meters.toPixels(getBody().getPosition().y);

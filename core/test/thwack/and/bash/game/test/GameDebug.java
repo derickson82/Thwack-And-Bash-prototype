@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -27,6 +28,7 @@ public class GameDebug extends Game implements GameScreen {
 	BitmapFont debugFont;
 	private static float STATUS_TEXT_SCALE = 1.0f;
 	private ShapeRenderer debugRender;
+	GameScreen playScreen = null;
 	
 	public ShapeRenderer getDebugRender() {
 		return debugRender;
@@ -44,7 +46,6 @@ public class GameDebug extends Game implements GameScreen {
 		// viewport = new ScreenViewport(Objects.SCREEN_CAMERA);
 		// stage = new Stage(viewport);
 
-		GameScreen playScreen = null;
 		// set to any screen that you work on - no need splash or whatever that
 		// slows you down! :)
 		playScreen = new PlayScreenDebug();
@@ -121,7 +122,16 @@ public class GameDebug extends Game implements GameScreen {
 //		font.draw(batch, "" + debugStatusText, 50, 110);
 //		font.draw(batch, "" + debugStatusTextExt, 50, 80);
 		debugFont.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), 20, 25);
-		drawRect(debugRender, 100, 100, 32, 32);	//TODO to remove this once collision issue is resolved
+	
+		//=== begin of bounding box debugging
+		Player player = ((PlayScreenDebug)playScreen).getPlayer();
+		Snake snake = ((PlayScreenDebug)playScreen).getSnake();
+		Rectangle r1 = snake.getBoundingBox();
+		Rectangle r2 = player.getBoundingBox();
+		drawRect(debugRender, r1.getX(), r1.getY(), r1.getWidth(), r1.getHeight());
+		drawRect(debugRender, r2.getX(), r2.getY(), r2.getWidth(), r2.getHeight());
+		//=== end of bounding box debugging
+		
 		batch.end();
 	}
 
@@ -155,8 +165,8 @@ public class GameDebug extends Game implements GameScreen {
 		shapeRenderer.identity();
 		// shapeRenderer.translate(20, 12, 2);
 		// shapeRenderer.rotate(0, 0, 1, 90);
-		shapeRenderer.box(x, y, 0, width, height, 0);	//TODO
-		shapeRenderer.rect(-width / 2, -height / 2, width, height);
+		shapeRenderer.box(x, y, 0, width, height, 0);
+		//shapeRenderer.rect(-width / 2, -height / 2, width, height);	//nope
 		shapeRenderer.end();
 	}
 

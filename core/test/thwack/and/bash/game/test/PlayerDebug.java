@@ -8,6 +8,7 @@ import thwack.and.bash.game.screen.PlayScreen;
 import thwack.and.bash.game.util.Util.Meters;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerDebug extends Player implements MobDebug {
@@ -108,8 +109,10 @@ public class PlayerDebug extends Player implements MobDebug {
 	}
 
 	@Override
-	protected void updateBoundingBox() {
+	protected void updateBoundingBox(Rectangle bodySpec) {
 		if(COLLISION_BODY != null) {
+//			boundingBox.x = Meters.toPixels(getBody().getPosition().x - bodySpec.width/2);
+//			boundingBox.y = Meters.toPixels(getBody().getPosition().y - bodySpec.height/2);
 			boundingBox.x = Meters.toPixels(getBody().getPosition().x);
 			boundingBox.y = Meters.toPixels(getBody().getPosition().y);
 		} else {
