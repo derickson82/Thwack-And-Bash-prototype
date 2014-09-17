@@ -10,6 +10,7 @@ import thwack.and.bash.game.entity.mob.Player;
 import thwack.and.bash.game.entity.mob.Snake;
 import thwack.and.bash.game.level.Level;
 import thwack.and.bash.game.test.GameDebug;
+import thwack.and.bash.game.test.SnakeDebug;
 import thwack.and.bash.game.ui.GameUI;
 import thwack.and.bash.game.util.Util.Box2D;
 import thwack.and.bash.game.util.Util.Objects;
@@ -59,11 +60,20 @@ public class PlayScreen implements GameScreen {
 
 	@Override
 	public void update (float delta) {
+		Rectangle bodySpec = new Rectangle();
+		
 		player.update(delta);
+		bodySpec.width = player.getBoundingBox().getWidth();
+		bodySpec.height = player.getBoundingBox().getHeight();
+		player.updateBoundingBox(bodySpec);	//tips: comment out or uncomment to stop movement if you like
+
 		bat.update(delta);
+		
 		snake.update(delta);
-//		Rectangle bound = sprite.getBoundingRectangle();
-//		updateBoundingBox(bound);	//this sucks I know, just in the name of unit test we are doing this!
+		bodySpec.width = snake.getBoundingBox().getWidth();
+		bodySpec.height = snake.getBoundingBox().getHeight();
+		snake.updateBoundingBox(bodySpec);	//tips: comment out or uncomment to stop movement if you like
+		
 		Level.update(delta);
 	}
 
@@ -102,6 +112,7 @@ public class PlayScreen implements GameScreen {
 			new Vector2(Pixels.toMeters(35), Pixels.toMeters(46)), // Size
 			world));
 		player.setId(SnakeCollisionHelper.PLAYER_ID);
+		player.setBoundingBox(player.getSprite().getBoundingRectangle());
 
 		bat = new Bat(Box2D.createSimpleDynamicBody(
 			new Vector2(3, 15), //Position

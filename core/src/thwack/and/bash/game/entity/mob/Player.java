@@ -9,6 +9,7 @@ import thwack.and.bash.game.entity.Entity;
 import thwack.and.bash.game.input.PlayerMovement;
 import thwack.and.bash.game.screen.PlayScreen;
 import thwack.and.bash.game.util.Util;
+import thwack.and.bash.game.util.Util.Meters;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -88,11 +89,23 @@ public class Player extends Mob {
 		return playerAnimation;
 	}
 
-	protected void updateBoundingBox(Rectangle bodySpec) {
+	public void updateBoundingBox(Rectangle bodySpec) {
 		if(sprite != null) {
 			PlayScreen screen = (PlayScreen) Game.getCurrentScreen();
 			screen.getPlayer().setBoundingBox(screen.getPlayer().getSprite().getBoundingRectangle());
 		}
+		
+		if(COLLISION_BODY != null) {
+			boundingBox.x = Meters.toPixels(getBody().getPosition().x) - bodySpec.width/2;
+			boundingBox.y = Meters.toPixels(getBody().getPosition().y) - bodySpec.height/2;
+			//keep the following to debug bounding box properly (in white)
+			//boundingBox.x = Meters.toPixels(getBody().getPosition().x);
+			//boundingBox.y = Meters.toPixels(getBody().getPosition().y);
+		} else {
+			boundingBox.x = position.x;
+			boundingBox.y = position.y;
+		}
+		
 	}
 
 }

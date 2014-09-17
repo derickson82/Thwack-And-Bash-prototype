@@ -201,12 +201,24 @@ public class Snake extends Mob {
 		end.y = Meters.toPixels(((Vector2)getLosFront().getNormal()).y);
 	}
 
-	protected void updateBoundingBox(Rectangle bodySpec) {
+	public void updateBoundingBox(Rectangle bodySpec) {
 		if(sprite != null) {
 			PlayScreen screen = (PlayScreen) Game.getCurrentScreen();
 //			screen.getPlayer().setBoundingBox(screen.getPlayer().getSprite().getBoundingRectangle());
 			screen.getSnake().setBoundingBox(screen.getSnake().getSprite().getBoundingRectangle());
 		}
+		
+		if(COLLISION_BODY != null) {
+			boundingBox.x = Meters.toPixels(getBody().getPosition().x) - 50;
+			boundingBox.y = Meters.toPixels(getBody().getPosition().y) - 50;
+			//keep the following to debug bounding box properly (in white)
+			//boundingBox.x = Meters.toPixels(getBody().getPosition().x);
+			//boundingBox.y = Meters.toPixels(getBody().getPosition().y);
+		} else {
+			boundingBox.x = position.x;
+			boundingBox.y = position.y;
+		}
+
 	}
 
 //	@Override

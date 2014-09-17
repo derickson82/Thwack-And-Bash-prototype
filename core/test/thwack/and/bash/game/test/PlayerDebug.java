@@ -109,17 +109,8 @@ public class PlayerDebug extends Player implements MobDebug {
 	}
 
 	@Override
-	protected void updateBoundingBox(Rectangle bodySpec) {
-		if(COLLISION_BODY != null) {
-			boundingBox.x = Meters.toPixels(getBody().getPosition().x) - bodySpec.width/2;
-			boundingBox.y = Meters.toPixels(getBody().getPosition().y) - bodySpec.height/2;
-			//keep the following to debug bounding box properly (in white)
-			//boundingBox.x = Meters.toPixels(getBody().getPosition().x);
-			//boundingBox.y = Meters.toPixels(getBody().getPosition().y);
-		} else {
-			boundingBox.x = position.x;
-			boundingBox.y = position.y;
-		}
+	public void updateBoundingBox(Rectangle bodySpec) {
+		super.updateBoundingBox(bodySpec);
 	}
 
 	@Override

@@ -108,8 +108,8 @@ public class PlayScreenDebug extends PlayScreen {
 			x = playerBody.getBody().getPosition().x;
 			y = playerBody.getBody().getPosition().y;
 		} else {
-			x = 200;
-			y = 300;
+			x = 10;
+			y = 20;
 			Rectangle playerBoundingBox = new Rectangle(x, y, 32, 32);
 			player.setBoundingBox(playerBoundingBox);	//must be from unit test, mock it, hell ya
 		}
@@ -120,8 +120,8 @@ public class PlayScreenDebug extends PlayScreen {
 				x = snakeBody.getBody().getPosition().x;
 				y = snakeBody.getBody().getPosition().y;
 			} else {
-				x = 10;
-				y = 20;
+				x = 200;
+				y = 300;
 				Rectangle snakeBoundingBox = new Rectangle(x, y, 64, 62);
 				snake.setBoundingBox(snakeBoundingBox);	//must be from unit test, mock it, hell ya
 			}
@@ -142,17 +142,19 @@ public class PlayScreenDebug extends PlayScreen {
 	@Override
 	public void update (float delta) {
 		Rectangle bodySpec = new Rectangle();
-//		bodySpec.x = (int) position.x;
-//		bodySpec.y = (int) position.y;
+
 		player.update(delta);
 		bodySpec.width = player.getBoundingBox().getWidth();
 		bodySpec.height = player.getBoundingBox().getHeight();
 		((PlayerDebug)player).updateBoundingBox(bodySpec);	//tips: comment out or uncomment to stop movement if you like
+		
 		bat.update(delta);
+		
 		snake.update(delta);
 		bodySpec.width = snake.getBoundingBox().getWidth();
 		bodySpec.height = snake.getBoundingBox().getHeight();
 		((SnakeDebug)snake).updateBoundingBox(bodySpec);	//tips: comment out or uncomment to stop movement if you like
+		
 		Level.update(delta);
 	}
 
